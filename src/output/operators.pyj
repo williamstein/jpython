@@ -215,6 +215,14 @@ def print_binary_op(self, output):
             output.spaced(nan_check, '!==' if self.operator is '===' else '===', nan_check)
         else:
             output.spaced(self.left, self.operator, self.right)
+    elif self.operator is '+':
+        output.print('ρσ_operator_add('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
+    elif self.operator is '-':
+        output.print('ρσ_operator_sub('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
+    elif self.operator is '*':
+        output.print('ρσ_operator_mul('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
+    elif self.operator is '/':
+        output.print('ρσ_operator_div('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
     else:
         output.spaced(self.left, self.operator, self.right)
 

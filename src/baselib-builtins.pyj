@@ -4,6 +4,18 @@
 
 # globals: exports, console, ρσ_iterator_symbol, ρσ_kwargs_symbol, ρσ_arraylike, ρσ_list_contains
 
+def ρσ_operator_add(a, b):
+    return v"typeof a == 'object' ? a.__add__(b) : a + b"
+
+def ρσ_operator_sub(a, b):
+    return v"typeof a == 'object' ? a.__sub__(b) : a - b"
+
+def ρσ_operator_mul(a, b):
+    return v"typeof a == 'object' ? a.__mul__(b) : a * b"
+
+def ρσ_operator_div(a, b):
+    return v"typeof a == 'object' ? a.__div__(b) : a / b"
+
 def ρσ_bool(val):
     return v'!!val'
 
