@@ -8,7 +8,7 @@ import shutil
 args = sys.argv[1:]
 source = None
 
-cmd = ['bin/rapydscript']
+cmd = ['bin/jpython']
 
 while args:
     if args[0] in ('-m', '-x'):

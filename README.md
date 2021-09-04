@@ -1,6 +1,6 @@
 # JPython
+## A Javascript/Python friendly language for use in sagejs
 
-A Javascript/Python friendly language for use by Sagejs.
-
-History: This is a fork of RapydScript that is modified for use by the sagejs
-project. See https://github.com/kovidgoyal/rapydscript-ng for some helpful documentation...
+**History:** This is **built from RapydScript-ng** that I'm playing around with
+modifying for use by the sagejs project. See
+https://github.com/kovidgoyal/rapydscript-ng for some helpful documentation...
