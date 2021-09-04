@@ -1,6 +1,6 @@
 # Hacking the JPython compiler
 
-The JPython compiler is written in JPython itself and uses theJPython import system to modularize its code. The compiler source code isin the `src` directory. The compiled compiler is by default in the `release`directory.  The compiler itself _**only takes a few seconds**_ to build from source and bootstrap itself.
+The JPython compiler is written in JPython itself and uses theJPython import system to modularize its code. The compiler source code isin the `src` directory. The compiled compiler is by default in the `release`directory. The compiler itself _**only takes a few seconds**_ to build from source and bootstrap itself.
 
 In order to start hacking on the compiler, run the command
 
@@ -18,7 +18,7 @@ The way the compiler works, given some JPython source code:
 - The tokens are parsed into a Abstract Syntax Tree (`src/parse.pyj and src/ast.pyj`)
 - During parsing any import statement are resolved (this is different frompython, where imports happen at runtime, not compile time).
 - The Abstract Syntax Tree is transformed into the output JavaScript (`src/output/*.pyj`)
-- Various bits of functionality in JPython depend upon the *Base Library*
+- Various bits of functionality in JPython depend upon the _Base Library_
   (`src/baselib*.pyj`). This includes things like the basic container types
   (list/set/dict) string functions such as `str.format()`, etc. The baselib
   is automatically inserted into the start of the output JavaScript.
@@ -43,7 +43,7 @@ rapydscript test classes
 
 ## Modifying the compiler
 
-Edit the files in the `src` directory to make your changes, then use the`./try.py` script to test them.  This script will compile an updated version ofthe compiler with your changes, if any, and use it to run the snippet of codeyou pass to it.
+Edit the files in the `src` directory to make your changes, then use the`./try.py` script to test them. This script will compile an updated version ofthe compiler with your changes, if any, and use it to run the snippet of codeyou pass to it.
 
 For example:
 
