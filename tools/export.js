@@ -167,7 +167,6 @@ var regenerator = null;
 var crypto = null,
   fs = require("fs");
 
-
 function regenerate(code, beautify) {
   var orig = fs.readFileSync;
   fs.readFileSync = function (name) {
@@ -242,9 +241,9 @@ function compile(code, filename, options) {
     omit_baselib: !!options.omit_baselib,
     js_version: options.js_version || 5,
   };
-  if (!out_ops.omit_baselib)
-    out_ops.baselib_plain =
-      data["baselib-plain-" + (out_ops.beautify ? "pretty" : "ugly") + ".js"];
+  if (!out_ops.omit_baselib) {
+    out_ops.baselib_plain = data["baselib-plain-pretty.js"];
+  }
   var out = new RapydScript.OutputStream(out_ops);
   ast.print(out);
   return out.get();

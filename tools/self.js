@@ -19,7 +19,7 @@ function compile_baselib(RapydScript, src_path) {
       name.slice(-4) == ".pyj"
     );
   });
-  var ans = { pretty: "", ugly: "" };
+  var ans = { pretty: "" };
 
   items.sort().forEach(function (fname) {
     var name = fname.slice("baselib-".length, -4),
@@ -32,16 +32,14 @@ function compile_baselib(RapydScript, src_path) {
       console.error(e.toString());
       process.exit(1);
     }
-    [true, false].forEach(function (beautify) {
-      var output = new RapydScript.OutputStream({
-        beautify: beautify,
-        write_name: false,
-        private_scope: false,
-        omit_baselib: true,
-      });
-      ast.print(output);
-      ans[beautify ? "pretty" : "ugly"] += output.get();
+    var output = new RapydScript.OutputStream({
+      beautify: true,
+      write_name: false,
+      private_scope: false,
+      omit_baselib: true,
     });
+    ast.print(output);
+    ans["pretty"] += output.get();
   });
   return ans;
 }
@@ -154,11 +152,6 @@ function compile(src_path, lib_path, sources, source_hash, profile) {
   fs.writeFileSync(
     path.join(out_path, "baselib-plain-pretty.js"),
     compiled_baselib.pretty,
-    "utf-8"
-  );
-  fs.writeFileSync(
-    path.join(out_path, "baselib-plain-ugly.js"),
-    compiled_baselib.ugly,
     "utf-8"
   );
   console.log(
