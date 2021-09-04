@@ -30,7 +30,7 @@ function compile_baselib(RapydScript, src_path) {
         }
         [true, false].forEach(function (beautify) {
             var output = new RapydScript.OutputStream({
-                beautify: beautify, write_name: false, private_scope:false, omit_baselib: true,  
+                beautify: beautify, write_name: false, private_scope:false, omit_baselib: true,
             });
             ast.print(output);
             ans[(beautify) ? 'pretty' : 'ugly'] += output.get();
@@ -73,14 +73,14 @@ function check_for_changes(base_path, src_path, signatures) {
         hashes[fname.split('.')[0]] = h.digest('hex');
     });
     var compiler_files = [module.filename, path.join(base_path, 'tools', 'compiler.js')];
-    compiler_files.forEach(function(fpath) { 
+    compiler_files.forEach(function(fpath) {
         compiler_hash.update(fs.readFileSync(fpath, 'utf-8'));
     });
     hashes['#compiler#'] = compiler_hash.digest('hex');
     hashes['#compiled_with#'] = saved_hashes['#compiler#'] || 'unknown';
     source_hash = source_hash.digest('hex');
     if (hashes['#compiler#'] != saved_hashes['#compiler#']) {
-        console.log('There are changes to the source files of the compiler, rebuiliding');
+        console.log('There are changes to the source files of the compiler, rebuilding');
         compiler_changed = true;
     } else if (hashes['#compiled_with#'] != saved_hashes['#compiled_with#']) {
         console.log('Re-building compiler with updated version of itself');
@@ -145,7 +145,7 @@ function run_single_compile(base_path, src_path, lib_path, profile) {
     var signatures = path.join(out_path, 'signatures.json');
     var temp = check_for_changes(base_path, src_path, signatures);
     var source_hash = temp[0], compiler_changed = temp[1], sources = temp[2], hashes = temp[3];
-    
+
     if (compiler_changed) {
         compile(src_path, lib_path, sources, source_hash, profile);
         fs.writeFileSync(signatures, JSON.stringify(hashes, null, 4));
