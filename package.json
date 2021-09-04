@@ -13,7 +13,8 @@
     "test": "node bin/jpython self --complete --test",
     "start": "node bin/jpython",
     "build": "node bin/jpython self --complete",
-    "format": "prettier --write ."
+    "prettier": "prettier --write .",
+    "yapf": "yapf --write ."
   },
   "version": "0.1",
   "license": "BSD-2-Clause",
@@ -32,8 +33,7 @@
   },
   "dependencies": {
     "prettier": "^2.3.2",
-    "regenerator": ">= 0.12.1",
-    "uglify-js": ">= 3.0.15"
+    "regenerator": ">= 0.12.1"
   },
   "optionalDependencies": {
     "v8-profiler": ">= 5.2.9"

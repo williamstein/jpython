@@ -52,7 +52,7 @@ module.exports = function (start_time, argv, base_path, src_path, lib_path) {
   // configure settings for the output
   var cache_dir = argv.cache_dir ? process_cache_dir(argv.cache_dir) : "";
   var OUTPUT_OPTIONS = {
-    beautify: !argv.uglify,
+    beautify: true,
     private_scope: !argv.bare,
     omit_baselib: argv.omit_baselib,
     js_version: parseInt(argv.js_version),

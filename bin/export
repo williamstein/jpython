@@ -1,4 +1,4 @@
-#!/usr/bin/env node 
+#!/usr/bin/env node
 // vim:ft=javascript:ts=4:et
 
 "use strict";
@@ -13,7 +13,7 @@ var compiler_dir = path.join(base, 'dev');
 if (!path_exists(path.join(compiler_dir, 'compiler.js'))) compiler_dir = path.join(base, 'release');
 
 var manifest = {}, total = 0;
-['compiler.js', 'baselib-plain-pretty.js', 'baselib-plain-ugly.js'].forEach(function(x) {
+['compiler.js', 'baselib-plain-pretty.js'].forEach(function(x) {
     manifest[x] = fs.readFileSync(path.join(compiler_dir, x), {'encoding':'utf-8'});
     total += manifest[x].length;
 });
@@ -36,7 +36,7 @@ function path_exists(path) {
     }
 }
 
-function sha1sum(data) { 
+function sha1sum(data) {
     var h = crypto.createHash('sha1');
     h.update(data);
     return h.digest('hex');

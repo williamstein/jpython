@@ -14,7 +14,6 @@ var fs = require("fs");
 var crypto = require("crypto");
 var vm = require("vm");
 var regenerator = require("regenerator");
-var UglifyJS = require("uglify-js");
 
 function sha1sum(data) {
   var h = crypto.createHash("sha1");
@@ -31,19 +30,10 @@ function path_exists(path) {
   }
 }
 
-function uglify(code) {
-  var ans = UglifyJS.minify(code);
-  if (ans.error) throw ans.error;
-  return ans.code;
-}
-
 function regenerate(code, beautify) {
   var ans, start, end;
   if (code) {
     ans = regenerator.compile(code).code;
-    if (!beautify) {
-      ans = uglify(ans);
-    }
   } else {
     // Return the runtime
     ans = regenerator.compile("", { includeRuntime: true }).code;
@@ -51,10 +41,6 @@ function regenerate(code, beautify) {
     end = ans.lastIndexOf("typeof");
     end = ans.lastIndexOf("}(", end);
     ans = ans.slice(start + 1, end);
-    if (!beautify) {
-      var extra = "})()";
-      ans = uglify(ans + extra).slice(0, extra.length);
-    }
   }
   return ans;
 }

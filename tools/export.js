@@ -163,17 +163,10 @@ function vrequire(name, base) {
   return load(modpath);
 }
 
-var UglifyJS = null,
-  regenerator = null;
+var regenerator = null;
 var crypto = null,
   fs = require("fs");
 
-function uglify(x) {
-  if (!UglifyJS) UglifyJS = vrequire("uglify-js");
-  ans = UglifyJS.minify(x);
-  if (ans.error) throw ans.error;
-  return ans.code;
-}
 
 function regenerate(code, beautify) {
   var orig = fs.readFileSync;
@@ -194,7 +187,6 @@ function regenerate(code, beautify) {
       );
       throw e;
     }
-    if (!beautify) ans = uglify(ans);
   } else {
     // Return the runtime
     ans = regenerator.compile("", { includeRuntime: true }).code;
@@ -202,10 +194,6 @@ function regenerate(code, beautify) {
     end = ans.lastIndexOf("typeof");
     end = ans.lastIndexOf("}(", end);
     ans = ans.slice(start + 1, end);
-    if (!beautify) {
-      var extra = "})()";
-      ans = uglify(ans + extra).slice(0, extra.length);
-    }
   }
   fs.readFileSync = orig;
   return ans;

@@ -328,12 +328,6 @@ without the assert statements.
 */
 });
 
-opt("uglify", "u", "bool", false, function () {
-  /*
-Minify the output instead of pretty printing it.
-*/
-});
-
 opt("omit_baselib", "m", "bool", false, function () {
   /*
 Omit baselib functions. Use this if you have a

@@ -4,6 +4,7 @@
 *.tmp
 *.orig
 *.pyj-cached
+*.py-cached
 node_modules
 dev
 self.cpuprofile
