@@ -7,7 +7,7 @@
   "scripts": {
     "test": "node bin/jpython self --complete --test",
     "start": "node bin/jpython",
-    "build-self": "node bin/jpython self --complete"
+    "build": "node bin/jpython self --complete"
   },
   "version": "0.1",
   "license": "BSD-2-Clause",
@@ -32,6 +32,6 @@
     "v8-profiler": ">= 5.2.9"
   },
   "bin": {
-    "jscript": "bin/jscript"
+    "jpython": "bin/jpython"
   }
 }
