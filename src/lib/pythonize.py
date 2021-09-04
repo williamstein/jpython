@@ -2,11 +2,13 @@
 # License: BSD Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 # globals: ρσ_str
 
+
 def strings():
     string_funcs = set((
         'capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase'
         ' center count endswith startswith find rfind index rindex format join ljust rjust'
-        ' partition rpartition replace split rsplit splitlines zfill').split(' '))
+        ' partition rpartition replace split rsplit splitlines zfill'
+    ).split(' '))
 
     if not arguments.length:
         exclude = {'split', 'replace'}
