@@ -1,4 +1,4 @@
-#!/usr/bin/env node 
+#!/usr/bin/env node
 // vim:ft=javascript:ts=4:et
 
 "use strict";
@@ -67,7 +67,7 @@ rs += '}).call(jsSHA);\n';
 rs += '// End embedded sha1 implementation }}}\n\n';
 rs += 'var exports = namespace;\n';
 rs += fs.readFileSync(path.join(base, 'tools', 'export.js'), {'encoding':'utf-8'});
-rs += 'external_namespace.RapydScript = namespace;\n';
+rs += 'external_namespace.JPython = namespace;\n';
 rs += '})(this);\n';
 
 
@@ -91,12 +91,12 @@ try {
     if (e.code === 'ENOTDIR') { console.error(base_dir + ' is not a directory'); process.exit(1); }
     throw e;
 }
-fs.writeFileSync('rapydscript.js', rs, {'encoding':'utf-8'});
+fs.writeFileSync('jpython.js', rs, {'encoding':'utf-8'});
 var web_repl = path.join(base, 'web-repl');
 fs.readdirSync(web_repl).forEach(function(x) {
     if (['sha1.js', 'env.js'].indexOf(x) !== -1) return;
     var data = fs.readFileSync(path.join(web_repl, x), {'encoding':'utf-8'});
     fs.writeFileSync(x, data, {'encoding':'utf-8'});
 });
-console.log('RapydScript compiler (uncompressed) size: ' + (total/(1024)).toFixed(1) + ' KB');
+console.log('JPython compiler (uncompressed) size: ' + (total/(1024)).toFixed(1) + ' KB');
 console.log('web-repl exported to: ' + base_dir);

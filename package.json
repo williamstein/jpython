@@ -1,33 +1,28 @@
 {
-  "name": "rapydscript-ng",
-  "description": "Pythonic JavaScript that doesn't suck",
-  "homepage": "https://github.com/kovidgoyal/rapydscript-ng",
-  "keywords": [
-    "javascript",
-    "rapydscript",
-    "language",
-    "compiler"
-  ],
+  "name": "@sagemath/jpython",
+  "description": "A Javascript/Python friendly language for use by Sagejs",
+  "homepage": "https://github.com/williamstein/jpython",
+  "keywords": ["javascript", "python", "language", "compiler"],
   "main": "tools/compiler.js",
   "scripts": {
-    "test": "node bin/rapydscript self --complete --test",
-    "start": "node bin/rapydscript",
-    "build-self": "node bin/rapydscript self --complete"
+    "test": "node bin/jpython self --complete --test",
+    "start": "node bin/jpython",
+    "build-self": "node bin/jpython self --complete"
   },
-  "version": "0.7.21",
+  "version": "0.1",
   "license": "BSD-2-Clause",
   "engines": {
     "node": ">=0.12.0"
   },
   "maintainers": [
     {
-      "name": "Kovid Goyal",
-      "email": "kovid@kovidgoyal.net"
+      "name": "William Stein",
+      "email": "wstein@sagemath.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/kovidgoyal/rapydscript-ng.git"
+    "url": "https://github.com/williamstein/jpython"
   },
   "dependencies": {
     "regenerator": ">= 0.12.1",
@@ -37,6 +32,6 @@
     "v8-profiler": ">= 5.2.9"
   },
   "bin": {
-    "rapydscript": "bin/rapydscript"
+    "jscript": "bin/jscript"
   }
 }
