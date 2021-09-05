@@ -192,7 +192,8 @@ module.exports = function (options) {
     }
 
     if (result !== undefined) {
-      options.console.log(util.inspect(result, { colors: options.terminal }));
+      // We just print out the last result using normal Python printing.
+      ρσ_print(result);
     }
   }
 

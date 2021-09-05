@@ -10,12 +10,26 @@ def xgcd(a, b):
         a, b = b, r
     return a, prevx, prevy
 
+
 def bench_xgcd():
     from time import time
     t = time()
     s = 0
     for i in range(10**6):
-        s += xgcd(92250, 922350+i)[0]
-    print(s, time()-t)
+        s += xgcd(92250, 922350 + i)[0]
+    print(s, time() - t)
 
-bench_xgcd()
+
+def inverse_mod(a, N):
+    """
+    Compute multiplicative inverse of a modulo N.
+    """
+    if a == 1 or N <= 1:  # common special cases
+        return a % N
+    [g, s, _] = xgcd(a, N)
+    if g != 1:
+        raise ZeroDivisionError
+    b = s % N
+    if b < 0:
+        b += N
+    return b

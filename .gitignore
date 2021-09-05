@@ -2,6 +2,7 @@
 *~
 *.swp
 *.tmp
+*.term
 *.orig
 *.py-cached
 node_modules
