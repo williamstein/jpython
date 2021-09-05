@@ -380,13 +380,12 @@ opt(
   "cache_dir",
   "C",
   "string",
-  `/tmp/${require("os").userInfo().username}`,
+  "",
   function () {
     /*
 directory to use to store the cached files generated
-by the compiler. If set to '', then these are stored right next to
-every compiled pyj file, with the extension pyj-cached. This
-option allows them to be consolidated in a single directory.
+by the compiler. If set to '' (the default) then no
+cached files are stored at all.
 */
   }
 );
