@@ -132,6 +132,8 @@ module.exports = function (options) {
   }
 
   function initContext() {
+    global.__require__ = require;
+    global.require = (name) => __require__(process.cwd() + '/' + name)
     vm.runInThisContext(
       print_ast(JPython.parse("(def ():\n yield 1\n)"), true)
     );
@@ -187,11 +189,17 @@ module.exports = function (options) {
       // so, in case this bug is fixed later, we turn it off explicitly.
       result = vm.runInThisContext(js);
     } catch (e) {
-      if (e.stack) options.console.error(e.stack);
-      else options.console.error(e.toString());
+      if (e.stack) {
+        options.console.error(e.stack);
+      } else {
+        options.console.error(e.toString());
+      }
     }
 
-    if (result !== undefined) {
+    // TODO: very dumb heuristic involving "="!
+    // We don't want to print anything when the result is
+    // from an assignment.  Easy to fool this of course with input "'='".
+    if (result !== undefined && !js.includes('=')) {
       // We just print out the last result using normal Python printing.
       ρσ_print(result);
     }
