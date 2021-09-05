@@ -4,6 +4,7 @@
     var ρσ_kwargs_symbol = (typeof Symbol === "function") ? Symbol("kwargs-object") : "kwargs-object-Symbol-5d0927e5554349048cf0e3762a228256";
     var ρσ_cond_temp, ρσ_expr_temp, ρσ_last_exception;
     var ρσ_object_counter = 0;
+    if( typeof HTMLCollection !== "undefined" && typeof Symbol === "function") NodeList.prototype[Symbol.iterator] = HTMLCollection.prototype[Symbol.iterator] = NamedNodeMap.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 var ρσ_len;
 function ρσ_operator_add(a, b) {
     return (typeof a == 'object'  && a.__add__ != null) ? a.__add__(b) : a + b;
@@ -629,9 +630,10 @@ function ρσ_max() {
     }
     if (kwargs.key) {
         args = (function() {
-            var ρσ_Iter = ρσ_Iterable(args), ρσ_Result = [], x;
-            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                x = ρσ_Iter[ρσ_Index];
+            var ρσ_Iter = args, ρσ_Result = [], x;
+            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+            for (var ρσ_Index of ρσ_Iter) {
+                x = ρσ_Index;
                 ρσ_Result.push(kwargs.key(x));
             }
             ρσ_Result = ρσ_list_constructor(ρσ_Result);
@@ -3096,9 +3098,10 @@ if (!zip.__module__) Object.defineProperties(zip, {
 
 function any(iterable) {
     var i;
-    var ρσ_Iter0 = ρσ_Iterable(iterable);
-    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-        i = ρσ_Iter0[ρσ_Index0];
+    var ρσ_Iter0 = iterable;
+    ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+    for (var ρσ_Index0 of ρσ_Iter0) {
+        i = ρσ_Index0;
         if (i) {
             return true;
         }
@@ -3112,9 +3115,10 @@ if (!any.__argnames__) Object.defineProperties(any, {
 
 function all(iterable) {
     var i;
-    var ρσ_Iter1 = ρσ_Iterable(iterable);
-    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-        i = ρσ_Iter1[ρσ_Index1];
+    var ρσ_Iter1 = iterable;
+    ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
+    for (var ρσ_Index1 of ρσ_Iter1) {
+        i = ρσ_Index1;
         if (!i) {
             return false;
         }
@@ -3153,9 +3157,10 @@ if (!ρσ_repr_js_builtin.__argnames__) Object.defineProperties(ρσ_repr_js_bui
 function ρσ_html_element_to_string(elem) {
     var attrs, val, attr, ans;
     attrs = [];
-    var ρσ_Iter0 = ρσ_Iterable(elem.attributes);
-    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-        attr = ρσ_Iter0[ρσ_Index0];
+    var ρσ_Iter0 = elem.attributes;
+    ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+    for (var ρσ_Index0 of ρσ_Iter0) {
+        attr = ρσ_Index0;
         if (attr.specified) {
             val = attr.value;
             if (val.length > 10) {
@@ -4428,9 +4433,10 @@ var str = ρσ_str, repr = ρσ_repr;;
         function array_to_hash(a) {
             var ret, i;
             ret = Object.create(null);
-            var ρσ_Iter0 = ρσ_Iterable(range(len(a)));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                i = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter0 = range(len(a));
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                i = ρσ_Index0;
                 ret[ρσ_bound_index(a[(typeof i === "number" && i < 0) ? a.length + i : i], ret)] = true;
             }
             return ret;
@@ -4523,17 +4529,19 @@ return this.__repr__();
             }
             ret = args || Object.create(null);
             if (croak) {
-                var ρσ_Iter2 = ρσ_Iterable(ret);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    i = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter2 = ret;
+                ρσ_Iter2 = ((typeof ρσ_Iter2[Symbol.iterator] === "function") ? (ρσ_Iter2 instanceof Map ? ρσ_Iter2.keys() : ρσ_Iter2) : Object.keys(ρσ_Iter2));
+                for (var ρσ_Index2 of ρσ_Iter2) {
+                    i = ρσ_Index2;
                     if (!has_prop(defs, i)) {
                         throw new DefaultsError(i, defs);
                     }
                 }
             }
-            var ρσ_Iter3 = ρσ_Iterable(defs);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                i = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter3 = defs;
+            ρσ_Iter3 = ((typeof ρσ_Iter3[Symbol.iterator] === "function") ? (ρσ_Iter3 instanceof Map ? ρσ_Iter3.keys() : ρσ_Iter3) : Object.keys(ρσ_Iter3));
+            for (var ρσ_Index3 of ρσ_Iter3) {
+                i = ρσ_Index3;
                 ret[(typeof i === "number" && i < 0) ? ret.length + i : i] = (args && has_prop(args, i)) ? args[(typeof i === "number" && i < 0) ? args.length + i : i] : defs[(typeof i === "number" && i < 0) ? defs.length + i : i];
             }
             return ret;
@@ -4545,9 +4553,10 @@ return this.__repr__();
 
         function merge(obj, ext) {
             var i;
-            var ρσ_Iter4 = ρσ_Iterable(ext);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                i = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter4 = ext;
+            ρσ_Iter4 = ((typeof ρσ_Iter4[Symbol.iterator] === "function") ? (ρσ_Iter4 instanceof Map ? ρσ_Iter4.keys() : ρσ_Iter4) : Object.keys(ρσ_Iter4));
+            for (var ρσ_Index4 of ρσ_Iter4) {
+                i = ρσ_Index4;
                 obj[(typeof i === "number" && i < 0) ? obj.length + i : i] = ext[(typeof i === "number" && i < 0) ? ext.length + i : i];
             }
             return obj;
@@ -4608,18 +4617,20 @@ return this.__repr__();
                             ret.reverse();
                             top.reverse();
                         } else {
-                            var ρσ_Iter6 = ρσ_Iterable(range(len(a)));
-                            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                                i = ρσ_Iter6[ρσ_Index6];
+                            var ρσ_Iter6 = range(len(a));
+                            ρσ_Iter6 = ((typeof ρσ_Iter6[Symbol.iterator] === "function") ? (ρσ_Iter6 instanceof Map ? ρσ_Iter6.keys() : ρσ_Iter6) : Object.keys(ρσ_Iter6));
+                            for (var ρσ_Index6 of ρσ_Iter6) {
+                                i = ρσ_Index6;
                                 if (doit()) {
                                     break;
                                 }
                             }
                         }
                     } else {
-                        var ρσ_Iter7 = ρσ_Iterable(a);
-                        for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                            i = ρσ_Iter7[ρσ_Index7];
+                        var ρσ_Iter7 = a;
+                        ρσ_Iter7 = ((typeof ρσ_Iter7[Symbol.iterator] === "function") ? (ρσ_Iter7 instanceof Map ? ρσ_Iter7.keys() : ρσ_Iter7) : Object.keys(ρσ_Iter7));
+                        for (var ρσ_Index7 of ρσ_Iter7) {
+                            i = ρσ_Index7;
                             if (doit()) {
                                 break;
                             }
@@ -4832,9 +4843,10 @@ return this.__repr__();
                 words = words.split(" ");
             }
             a = Object.create(null);
-            var ρσ_Iter9 = ρσ_Iterable(words);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                k = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter9 = words;
+            ρσ_Iter9 = ((typeof ρσ_Iter9[Symbol.iterator] === "function") ? (ρσ_Iter9 instanceof Map ? ρσ_Iter9.keys() : ρσ_Iter9) : Object.keys(ρσ_Iter9));
+            for (var ρσ_Index9 of ρσ_Iter9) {
+                k = ρσ_Index9;
                 a[(typeof k === "number" && k < 0) ? a.length + k : k] = true;
             }
             return a;
@@ -4958,9 +4970,10 @@ return this.__repr__();
             var ρσ_anonfunc = function () {
                 var ans, line, parts, code_point;
                 ans = {};
-                var ρσ_Iter10 = ρσ_Iterable(DB.split("\n"));
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    line = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter10 = DB.split("\n");
+                ρσ_Iter10 = ((typeof ρσ_Iter10[Symbol.iterator] === "function") ? (ρσ_Iter10 instanceof Map ? ρσ_Iter10.keys() : ρσ_Iter10) : Object.keys(ρσ_Iter10));
+                for (var ρσ_Index10 of ρσ_Iter10) {
+                    line = ρσ_Index10;
                     line = line.trim();
                     if (!line || line[0] === "#") {
                         continue;
@@ -5126,9 +5139,10 @@ return this.__repr__();
             if (include_name) {
                 p(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(pad, yellow), self.constructor.name.slice(4)), reset));
             }
-            var ρσ_Iter11 = ρσ_Iterable(self);
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                key = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter11 = self;
+            ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
+            for (var ρσ_Index11 of ρσ_Iter11) {
+                key = ρσ_Index11;
                 if (ρσ_in(key, omit)) {
                     continue;
                 }
@@ -5136,15 +5150,17 @@ return this.__repr__();
                     if (self[(typeof key === "number" && key < 0) ? self.length + key : key].length) {
                         p(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(pad, " "), blue), key), ": "), reset), "["));
                         if (depth > 1) {
-                            var ρσ_Iter12 = ρσ_Iterable(self[(typeof key === "number" && key < 0) ? self.length + key : key]);
-                            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                                element = ρσ_Iter12[ρσ_Index12];
+                            var ρσ_Iter12 = self[(typeof key === "number" && key < 0) ? self.length + key : key];
+                            ρσ_Iter12 = ((typeof ρσ_Iter12[Symbol.iterator] === "function") ? (ρσ_Iter12 instanceof Map ? ρσ_Iter12.keys() : ρσ_Iter12) : Object.keys(ρσ_Iter12));
+                            for (var ρσ_Index12 of ρσ_Iter12) {
+                                element = ρσ_Index12;
                                 element._dump(ρσ_operator_sub(depth, 1), omit, ρσ_operator_add(offset, 1), true);
                             }
                         } else {
-                            var ρσ_Iter13 = ρσ_Iterable(self[(typeof key === "number" && key < 0) ? self.length + key : key]);
-                            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                                element = ρσ_Iter13[ρσ_Index13];
+                            var ρσ_Iter13 = self[(typeof key === "number" && key < 0) ? self.length + key : key];
+                            ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
+                            for (var ρσ_Index13 of ρσ_Iter13) {
+                                element = ρσ_Index13;
                                 p(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(pad, "   "), yellow), element.constructor.name.slice(4)), reset));
                             }
                         }
@@ -5157,9 +5173,10 @@ return this.__repr__();
                         tname = self[(typeof key === "number" && key < 0) ? self.length + key : key].constructor.name.slice(4);
                         if (tname === "Token") {
                             p(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(pad, " "), blue), key), ": "), magenta), tname), reset));
-                            var ρσ_Iter14 = ρσ_Iterable(self[(typeof key === "number" && key < 0) ? self.length + key : key]);
-                            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                                property = ρσ_Iter14[ρσ_Index14];
+                            var ρσ_Iter14 = self[(typeof key === "number" && key < 0) ? self.length + key : key];
+                            ρσ_Iter14 = ((typeof ρσ_Iter14[Symbol.iterator] === "function") ? (ρσ_Iter14 instanceof Map ? ρσ_Iter14.keys() : ρσ_Iter14) : Object.keys(ρσ_Iter14));
+                            for (var ρσ_Index14 of ρσ_Iter14) {
+                                property = ρσ_Index14;
                                 p(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(pad, "   "), blue), property), ": "), reset), (ρσ_expr_temp = self[(typeof key === "number" && key < 0) ? self.length + key : key])[(typeof property === "number" && property < 0) ? ρσ_expr_temp.length + property : property]));
                             }
                         } else {
@@ -5374,9 +5391,10 @@ return this.__repr__();
             if (is_node_type(node.body, AST_Statement)) {
                 node.body._walk(visitor);
             } else if (node.body) {
-                var ρσ_Iter15 = ρσ_Iterable(node.body);
-                for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                    stat = ρσ_Iter15[ρσ_Index15];
+                var ρσ_Iter15 = node.body;
+                ρσ_Iter15 = ((typeof ρσ_Iter15[Symbol.iterator] === "function") ? (ρσ_Iter15 instanceof Map ? ρσ_Iter15.keys() : ρσ_Iter15) : Object.keys(ρσ_Iter15));
+                for (var ρσ_Index15 of ρσ_Iter15) {
+                    stat = ρσ_Index15;
                     stat._walk(visitor);
                 }
             }
@@ -5795,9 +5813,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var exp;
-                    var ρσ_Iter16 = ρσ_Iterable(self.clauses);
-                    for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                        exp = ρσ_Iter16[ρσ_Index16];
+                    var ρσ_Iter16 = self.clauses;
+                    ρσ_Iter16 = ((typeof ρσ_Iter16[Symbol.iterator] === "function") ? (ρσ_Iter16 instanceof Map ? ρσ_Iter16.keys() : ρσ_Iter16) : Object.keys(ρσ_Iter16));
+                    for (var ρσ_Index16 of ρσ_Iter16) {
+                        exp = ρσ_Index16;
                         exp._walk(visitor);
                     }
                     self.body._walk(visitor);
@@ -5946,9 +5965,10 @@ return this.__repr__();
                         self.alias._walk(visitor);
                     }
                     if (self.argnames) {
-                        var ρσ_Iter17 = ρσ_Iterable(self.argnames);
-                        for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                            arg = ρσ_Iter17[ρσ_Index17];
+                        var ρσ_Iter17 = self.argnames;
+                        ρσ_Iter17 = ((typeof ρσ_Iter17[Symbol.iterator] === "function") ? (ρσ_Iter17 instanceof Map ? ρσ_Iter17.keys() : ρσ_Iter17) : Object.keys(ρσ_Iter17));
+                        for (var ρσ_Index17 of ρσ_Iter17) {
+                            arg = ρσ_Index17;
                             arg._walk(visitor);
                         }
                     }
@@ -5995,9 +6015,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var imp;
-                    var ρσ_Iter18 = ρσ_Iterable(self.imports);
-                    for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                        imp = ρσ_Iter18[ρσ_Index18];
+                    var ρσ_Iter18 = self.imports;
+                    ρσ_Iter18 = ((typeof ρσ_Iter18[Symbol.iterator] === "function") ? (ρσ_Iter18 instanceof Map ? ρσ_Iter18.keys() : ρσ_Iter18) : Object.keys(ρσ_Iter18));
+                    for (var ρσ_Index18 of ρσ_Iter18) {
+                        imp = ρσ_Index18;
                         imp._walk(visitor);
                     }
                 };
@@ -6081,18 +6102,20 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var d, arg;
                     if (self.decorators) {
-                        var ρσ_Iter19 = ρσ_Iterable(self.decorators);
-                        for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                            d = ρσ_Iter19[ρσ_Index19];
+                        var ρσ_Iter19 = self.decorators;
+                        ρσ_Iter19 = ((typeof ρσ_Iter19[Symbol.iterator] === "function") ? (ρσ_Iter19 instanceof Map ? ρσ_Iter19.keys() : ρσ_Iter19) : Object.keys(ρσ_Iter19));
+                        for (var ρσ_Index19 of ρσ_Iter19) {
+                            d = ρσ_Index19;
                             d.walk(visitor);
                         }
                     }
                     if (self.name) {
                         self.name._walk(visitor);
                     }
-                    var ρσ_Iter20 = ρσ_Iterable(self.argnames);
-                    for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                        arg = ρσ_Iter20[ρσ_Index20];
+                    var ρσ_Iter20 = self.argnames;
+                    ρσ_Iter20 = ((typeof ρσ_Iter20[Symbol.iterator] === "function") ? (ρσ_Iter20 instanceof Map ? ρσ_Iter20.keys() : ρσ_Iter20) : Object.keys(ρσ_Iter20));
+                    for (var ρσ_Index20 of ρσ_Iter20) {
+                        arg = ρσ_Index20;
                         arg._walk(visitor);
                     }
                     if (self.argnames.starargs) {
@@ -6166,9 +6189,10 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var d;
                     if (self.decorators) {
-                        var ρσ_Iter21 = ρσ_Iterable(self.decorators);
-                        for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                            d = ρσ_Iter21[ρσ_Index21];
+                        var ρσ_Iter21 = self.decorators;
+                        ρσ_Iter21 = ((typeof ρσ_Iter21[Symbol.iterator] === "function") ? (ρσ_Iter21 instanceof Map ? ρσ_Iter21.keys() : ρσ_Iter21) : Object.keys(ρσ_Iter21));
+                        for (var ρσ_Index21 of ρσ_Iter21) {
+                            d = ρσ_Index21;
                             d.walk(visitor);
                         }
                     }
@@ -6538,9 +6562,10 @@ return this.__repr__();
                         self.argname.walk(visitor);
                     }
                     if (self.errors) {
-                        var ρσ_Iter22 = ρσ_Iterable(self.errors);
-                        for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                            e = ρσ_Iter22[ρσ_Index22];
+                        var ρσ_Iter22 = self.errors;
+                        ρσ_Iter22 = ((typeof ρσ_Iter22[Symbol.iterator] === "function") ? (ρσ_Iter22 instanceof Map ? ρσ_Iter22.keys() : ρσ_Iter22) : Object.keys(ρσ_Iter22));
+                        for (var ρσ_Index22 of ρσ_Iter22) {
+                            e = ρσ_Index22;
                             e.walk(visitor);
                         }
                     }
@@ -6621,9 +6646,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var def_;
-                    var ρσ_Iter23 = ρσ_Iterable(self.definitions);
-                    for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                        def_ = ρσ_Iter23[ρσ_Index23];
+                    var ρσ_Iter23 = self.definitions;
+                    ρσ_Iter23 = ((typeof ρσ_Iter23[Symbol.iterator] === "function") ? (ρσ_Iter23 instanceof Map ? ρσ_Iter23.keys() : ρσ_Iter23) : Object.keys(ρσ_Iter23));
+                    for (var ρσ_Index23 of ρσ_Iter23) {
+                        def_ = ρσ_Index23;
                         def_._walk(visitor);
                     }
                 };
@@ -6750,23 +6776,26 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var arg;
                     self.expression._walk(visitor);
-                    var ρσ_Iter24 = ρσ_Iterable(self.args);
-                    for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
-                        arg = ρσ_Iter24[ρσ_Index24];
+                    var ρσ_Iter24 = self.args;
+                    ρσ_Iter24 = ((typeof ρσ_Iter24[Symbol.iterator] === "function") ? (ρσ_Iter24 instanceof Map ? ρσ_Iter24.keys() : ρσ_Iter24) : Object.keys(ρσ_Iter24));
+                    for (var ρσ_Index24 of ρσ_Iter24) {
+                        arg = ρσ_Index24;
                         arg._walk(visitor);
                     }
                     if (self.args.kwargs) {
-                        var ρσ_Iter25 = ρσ_Iterable(self.args.kwargs);
-                        for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
-                            arg = ρσ_Iter25[ρσ_Index25];
+                        var ρσ_Iter25 = self.args.kwargs;
+                        ρσ_Iter25 = ((typeof ρσ_Iter25[Symbol.iterator] === "function") ? (ρσ_Iter25 instanceof Map ? ρσ_Iter25.keys() : ρσ_Iter25) : Object.keys(ρσ_Iter25));
+                        for (var ρσ_Index25 of ρσ_Iter25) {
+                            arg = ρσ_Index25;
                             arg[0]._walk(visitor);
                             arg[1]._walk(visitor);
                         }
                     }
                     if (self.args.kwarg_items) {
-                        var ρσ_Iter26 = ρσ_Iterable(self.args.kwarg_items);
-                        for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
-                            arg = ρσ_Iter26[ρσ_Index26];
+                        var ρσ_Iter26 = self.args.kwarg_items;
+                        ρσ_Iter26 = ((typeof ρσ_Iter26[Symbol.iterator] === "function") ? (ρσ_Iter26 instanceof Map ? ρσ_Iter26.keys() : ρσ_Iter26) : Object.keys(ρσ_Iter26));
+                        for (var ρσ_Index26 of ρσ_Iter26) {
+                            arg = ρσ_Index26;
                             arg._walk(visitor);
                         }
                     }
@@ -6810,20 +6839,23 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var arg;
                     if (self.expression) self.expression._walk(visitor);
-                    var ρσ_Iter27 = ρσ_Iterable(self.args);
-                    for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
-                        arg = ρσ_Iter27[ρσ_Index27];
+                    var ρσ_Iter27 = self.args;
+                    ρσ_Iter27 = ((typeof ρσ_Iter27[Symbol.iterator] === "function") ? (ρσ_Iter27 instanceof Map ? ρσ_Iter27.keys() : ρσ_Iter27) : Object.keys(ρσ_Iter27));
+                    for (var ρσ_Index27 of ρσ_Iter27) {
+                        arg = ρσ_Index27;
                         arg._walk(visitor);
                     }
-                    var ρσ_Iter28 = ρσ_Iterable(self.args.kwargs);
-                    for (var ρσ_Index28 = 0; ρσ_Index28 < ρσ_Iter28.length; ρσ_Index28++) {
-                        arg = ρσ_Iter28[ρσ_Index28];
+                    var ρσ_Iter28 = self.args.kwargs;
+                    ρσ_Iter28 = ((typeof ρσ_Iter28[Symbol.iterator] === "function") ? (ρσ_Iter28 instanceof Map ? ρσ_Iter28.keys() : ρσ_Iter28) : Object.keys(ρσ_Iter28));
+                    for (var ρσ_Index28 of ρσ_Iter28) {
+                        arg = ρσ_Index28;
                         arg[0]._walk(visitor);
                         arg[1]._walk(visitor);
                     }
-                    var ρσ_Iter29 = ρσ_Iterable(self.args.kwarg_items);
-                    for (var ρσ_Index29 = 0; ρσ_Index29 < ρσ_Iter29.length; ρσ_Index29++) {
-                        arg = ρσ_Iter29[ρσ_Index29];
+                    var ρσ_Iter29 = self.args.kwarg_items;
+                    ρσ_Iter29 = ((typeof ρσ_Iter29[Symbol.iterator] === "function") ? (ρσ_Iter29 instanceof Map ? ρσ_Iter29.keys() : ρσ_Iter29) : Object.keys(ρσ_Iter29));
+                    for (var ρσ_Index29 of ρσ_Iter29) {
+                        arg = ρσ_Index29;
                         arg._walk(visitor);
                     }
                 };
@@ -7446,9 +7478,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var el;
-                    var ρσ_Iter31 = ρσ_Iterable(self.elements);
-                    for (var ρσ_Index31 = 0; ρσ_Index31 < ρσ_Iter31.length; ρσ_Index31++) {
-                        el = ρσ_Iter31[ρσ_Index31];
+                    var ρσ_Iter31 = self.elements;
+                    ρσ_Iter31 = ((typeof ρσ_Iter31[Symbol.iterator] === "function") ? (ρσ_Iter31 instanceof Map ? ρσ_Iter31.keys() : ρσ_Iter31) : Object.keys(ρσ_Iter31));
+                    for (var ρσ_Index31 of ρσ_Iter31) {
+                        el = ρσ_Index31;
                         el._walk(visitor);
                     }
                 };
@@ -7467,9 +7500,10 @@ return this.__repr__();
             function flatten(arr) {
                 var ans, value;
                 ans = ρσ_list_decorate([]);
-                var ρσ_Iter32 = ρσ_Iterable(arr);
-                for (var ρσ_Index32 = 0; ρσ_Index32 < ρσ_Iter32.length; ρσ_Index32++) {
-                    value = ρσ_Iter32[ρσ_Index32];
+                var ρσ_Iter32 = arr;
+                ρσ_Iter32 = ((typeof ρσ_Iter32[Symbol.iterator] === "function") ? (ρσ_Iter32 instanceof Map ? ρσ_Iter32.keys() : ρσ_Iter32) : Object.keys(ρσ_Iter32));
+                for (var ρσ_Index32 of ρσ_Iter32) {
+                    value = ρσ_Index32;
                     if (is_node_type(value, AST_Seq)) {
                         value = value.to_array();
                     } else if (is_node_type(value, AST_Array)) {
@@ -7521,9 +7555,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var prop;
-                    var ρσ_Iter33 = ρσ_Iterable(self.properties);
-                    for (var ρσ_Index33 = 0; ρσ_Index33 < ρσ_Iter33.length; ρσ_Index33++) {
-                        prop = ρσ_Iter33[ρσ_Index33];
+                    var ρσ_Iter33 = self.properties;
+                    ρσ_Iter33 = ((typeof ρσ_Iter33[Symbol.iterator] === "function") ? (ρσ_Iter33 instanceof Map ? ρσ_Iter33.keys() : ρσ_Iter33) : Object.keys(ρσ_Iter33));
+                    for (var ρσ_Index33 of ρσ_Iter33) {
+                        prop = ρσ_Index33;
                         prop._walk(visitor);
                     }
                 };
@@ -7645,9 +7680,10 @@ return this.__repr__();
             return visitor._visit(self, (function() {
                 var ρσ_anonfunc = function () {
                     var prop;
-                    var ρσ_Iter34 = ρσ_Iterable(self.items);
-                    for (var ρσ_Index34 = 0; ρσ_Index34 < ρσ_Iter34.length; ρσ_Index34++) {
-                        prop = ρσ_Iter34[ρσ_Index34];
+                    var ρσ_Iter34 = self.items;
+                    ρσ_Iter34 = ((typeof ρσ_Iter34[Symbol.iterator] === "function") ? (ρσ_Iter34 instanceof Map ? ρσ_Iter34.keys() : ρσ_Iter34) : Object.keys(ρσ_Iter34));
+                    for (var ρσ_Index34 of ρσ_Iter34) {
+                        prop = ρσ_Index34;
                         prop._walk(visitor);
                     }
                 };
@@ -8677,9 +8713,10 @@ return this.__repr__();
         IDENTIFIER_PAT = /^[a-z_$][_a-z0-9$]*$/i;
         function is_string_modifier(val) {
             var ch;
-            var ρσ_Iter36 = ρσ_Iterable(val);
-            for (var ρσ_Index36 = 0; ρσ_Index36 < ρσ_Iter36.length; ρσ_Index36++) {
-                ch = ρσ_Iter36[ρσ_Index36];
+            var ρσ_Iter36 = val;
+            ρσ_Iter36 = ((typeof ρσ_Iter36[Symbol.iterator] === "function") ? (ρσ_Iter36 instanceof Map ? ρσ_Iter36.keys() : ρσ_Iter36) : Object.keys(ρσ_Iter36));
+            for (var ρσ_Index36 of ρσ_Iter36) {
+                ch = ρσ_Index36;
                 if ("vrufVRUF".indexOf(ch) === -1) {
                     return false;
                 }
@@ -9678,7 +9715,7 @@ return this.__repr__();
         var is_token = ρσ_modules.tokenizer.is_token;
         var RESERVED_WORDS = ρσ_modules.tokenizer.RESERVED_WORDS;
 
-        COMPILER_VERSION = "1a475892e6fcac4482afa3ee6eb3aa0d639a6687";
+        COMPILER_VERSION = "cfb10ed4ed55070753dcfc63aa739c417da45c18";
         PYTHON_FLAGS = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["dict_literals"] = true;
@@ -9696,9 +9733,10 @@ return this.__repr__();
 
         function static_predicate(names) {
             return (function() {
-                var ρσ_Iter = ρσ_Iterable(names.split(" ")), ρσ_Result = Object.create(null), k;
-                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                    k = ρσ_Iter[ρσ_Index];
+                var ρσ_Iter = names.split(" "), ρσ_Result = Object.create(null), k;
+                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                for (var ρσ_Index of ρσ_Iter) {
+                    k = ρσ_Index;
                     ρσ_Result[k] = (true);
                 }
                 return ρσ_Result;
@@ -9989,9 +10027,10 @@ return this.__repr__();
                 var ans, opt, x, obj;
                 ans = [];
                 if (Array.isArray(body)) {
-                    var ρσ_Iter40 = ρσ_Iterable(body);
-                    for (var ρσ_Index40 = 0; ρσ_Index40 < ρσ_Iter40.length; ρσ_Index40++) {
-                        obj = ρσ_Iter40[ρσ_Index40];
+                    var ρσ_Iter40 = body;
+                    ρσ_Iter40 = ((typeof ρσ_Iter40[Symbol.iterator] === "function") ? (ρσ_Iter40 instanceof Map ? ρσ_Iter40.keys() : ρσ_Iter40) : Object.keys(ρσ_Iter40));
+                    for (var ρσ_Index40 of ρσ_Iter40) {
+                        obj = ρσ_Index40;
                         if (is_node_type(obj, AST_Function) || is_node_type(obj, AST_Class)) {
                             if (obj.name) {
                                 ans.push(obj.name.name);
@@ -10002,9 +10041,10 @@ return this.__repr__();
                             if (is_node_type(obj, AST_Scope)) {
                                 continue;
                             }
-                            var ρσ_Iter41 = ρσ_Iterable(ρσ_list_decorate([ "body", "alternative" ]));
-                            for (var ρσ_Index41 = 0; ρσ_Index41 < ρσ_Iter41.length; ρσ_Index41++) {
-                                x = ρσ_Iter41[ρσ_Index41];
+                            var ρσ_Iter41 = ρσ_list_decorate([ "body", "alternative" ]);
+                            ρσ_Iter41 = ((typeof ρσ_Iter41[Symbol.iterator] === "function") ? (ρσ_Iter41 instanceof Map ? ρσ_Iter41.keys() : ρσ_Iter41) : Object.keys(ρσ_Iter41));
+                            for (var ρσ_Index41 of ρσ_Iter41) {
+                                x = ρσ_Index41;
                                 opt = obj[(typeof x === "number" && x < 0) ? obj.length + x : x];
                                 if (opt) {
                                     ans = ans.concat(scan_for_top_level_callables(opt));
@@ -10031,9 +10071,10 @@ return this.__repr__();
             function scan_for_classes(body) {
                 var ans, obj;
                 ans = Object.create(null);
-                var ρσ_Iter42 = ρσ_Iterable(body);
-                for (var ρσ_Index42 = 0; ρσ_Index42 < ρσ_Iter42.length; ρσ_Index42++) {
-                    obj = ρσ_Iter42[ρσ_Index42];
+                var ρσ_Iter42 = body;
+                ρσ_Iter42 = ((typeof ρσ_Iter42[Symbol.iterator] === "function") ? (ρσ_Iter42 instanceof Map ? ρσ_Iter42.keys() : ρσ_Iter42) : Object.keys(ρσ_Iter42));
+                for (var ρσ_Index42 of ρσ_Iter42) {
+                    obj = ρσ_Index42;
                     if (is_node_type(obj, AST_Class)) {
                         ans[ρσ_bound_index(obj.name.name, ans)] = obj;
                     }
@@ -10063,9 +10104,10 @@ return this.__repr__();
 
                 function extend(arr) {
                     var x;
-                    var ρσ_Iter43 = ρσ_Iterable(arr);
-                    for (var ρσ_Index43 = 0; ρσ_Index43 < ρσ_Iter43.length; ρσ_Index43++) {
-                        x = ρσ_Iter43[ρσ_Index43];
+                    var ρσ_Iter43 = arr;
+                    ρσ_Iter43 = ((typeof ρσ_Iter43[Symbol.iterator] === "function") ? (ρσ_Iter43 instanceof Map ? ρσ_Iter43.keys() : ρσ_Iter43) : Object.keys(ρσ_Iter43));
+                    for (var ρσ_Index43 of ρσ_Iter43) {
+                        x = ρσ_Index43;
                         push(x);
                     }
                 };
@@ -10076,9 +10118,10 @@ return this.__repr__();
 
                 function scan_in_array(arr) {
                     var x;
-                    var ρσ_Iter44 = ρσ_Iterable(arr);
-                    for (var ρσ_Index44 = 0; ρσ_Index44 < ρσ_Iter44.length; ρσ_Index44++) {
-                        x = ρσ_Iter44[ρσ_Index44];
+                    var ρσ_Iter44 = arr;
+                    ρσ_Iter44 = ((typeof ρσ_Iter44[Symbol.iterator] === "function") ? (ρσ_Iter44 instanceof Map ? ρσ_Iter44.keys() : ρσ_Iter44) : Object.keys(ρσ_Iter44));
+                    for (var ρσ_Index44 of ρσ_Iter44) {
+                        x = ρσ_Index44;
                         if (is_node_type(x, AST_Seq)) {
                             x = x.to_array();
                         } else if (is_node_type(x, AST_Array)) {
@@ -10132,15 +10175,17 @@ return this.__repr__();
                 });
 
                 if (Array.isArray(body)) {
-                    var ρσ_Iter45 = ρσ_Iterable(body);
-                    for (var ρσ_Index45 = 0; ρσ_Index45 < ρσ_Iter45.length; ρσ_Index45++) {
-                        stmt = ρσ_Iter45[ρσ_Index45];
+                    var ρσ_Iter45 = body;
+                    ρσ_Iter45 = ((typeof ρσ_Iter45[Symbol.iterator] === "function") ? (ρσ_Iter45 instanceof Map ? ρσ_Iter45.keys() : ρσ_Iter45) : Object.keys(ρσ_Iter45));
+                    for (var ρσ_Index45 of ρσ_Iter45) {
+                        stmt = ρσ_Index45;
                         if (is_node_type(stmt, AST_Scope)) {
                             continue;
                         }
-                        var ρσ_Iter46 = ρσ_Iterable(ρσ_list_decorate([ "body", "alternative", "bcatch", "condition" ]));
-                        for (var ρσ_Index46 = 0; ρσ_Index46 < ρσ_Iter46.length; ρσ_Index46++) {
-                            option = ρσ_Iter46[ρσ_Index46];
+                        var ρσ_Iter46 = ρσ_list_decorate([ "body", "alternative", "bcatch", "condition" ]);
+                        ρσ_Iter46 = ((typeof ρσ_Iter46[Symbol.iterator] === "function") ? (ρσ_Iter46 instanceof Map ? ρσ_Iter46.keys() : ρσ_Iter46) : Object.keys(ρσ_Iter46));
+                        for (var ρσ_Index46 of ρσ_Iter46) {
+                            option = ρσ_Index46;
                             opt = stmt[(typeof option === "number" && option < 0) ? stmt.length + option : option];
                             if (opt) {
                                 extend(scan_for_local_vars(opt));
@@ -10155,9 +10200,10 @@ return this.__repr__();
                             extend(scan_for_local_vars(stmt));
                         } else if (is_node_type(stmt, AST_With)) {
                             [push("ρσ_with_exception"), push("ρσ_with_suppress")];
-                            var ρσ_Iter47 = ρσ_Iterable(stmt.clauses);
-                            for (var ρσ_Index47 = 0; ρσ_Index47 < ρσ_Iter47.length; ρσ_Index47++) {
-                                clause = ρσ_Iter47[ρσ_Index47];
+                            var ρσ_Iter47 = stmt.clauses;
+                            ρσ_Iter47 = ((typeof ρσ_Iter47[Symbol.iterator] === "function") ? (ρσ_Iter47 instanceof Map ? ρσ_Iter47.keys() : ρσ_Iter47) : Object.keys(ρσ_Iter47));
+                            for (var ρσ_Index47 of ρσ_Iter47) {
+                                clause = ρσ_Index47;
                                 if (clause.alias) {
                                     push(clause.alias.name);
                                 }
@@ -10172,9 +10218,10 @@ return this.__repr__();
                 } else if (is_node_type(body, AST_Assign)) {
                     if (body.is_chained()) {
                         is_compound_assign = false;
-                        var ρσ_Iter48 = ρσ_Iterable(body.traverse_chain()[0]);
-                        for (var ρσ_Index48 = 0; ρσ_Index48 < ρσ_Iter48.length; ρσ_Index48++) {
-                            lhs = ρσ_Iter48[ρσ_Index48];
+                        var ρσ_Iter48 = body.traverse_chain()[0];
+                        ρσ_Iter48 = ((typeof ρσ_Iter48[Symbol.iterator] === "function") ? (ρσ_Iter48 instanceof Map ? ρσ_Iter48.keys() : ρσ_Iter48) : Object.keys(ρσ_Iter48));
+                        for (var ρσ_Index48 of ρσ_Iter48) {
+                            lhs = ρσ_Index48;
                             add_assign_lhs(lhs);
                             if (is_node_type(lhs, AST_Seq) || is_node_type(lhs, AST_Array)) {
                                 is_compound_assign = true;
@@ -10204,22 +10251,25 @@ return this.__repr__();
                 var vardef, opt, option, stmt;
                 vars = [];
                 if (Array.isArray(body)) {
-                    var ρσ_Iter49 = ρσ_Iterable(body);
-                    for (var ρσ_Index49 = 0; ρσ_Index49 < ρσ_Iter49.length; ρσ_Index49++) {
-                        stmt = ρσ_Iter49[ρσ_Index49];
+                    var ρσ_Iter49 = body;
+                    ρσ_Iter49 = ((typeof ρσ_Iter49[Symbol.iterator] === "function") ? (ρσ_Iter49 instanceof Map ? ρσ_Iter49.keys() : ρσ_Iter49) : Object.keys(ρσ_Iter49));
+                    for (var ρσ_Index49 of ρσ_Iter49) {
+                        stmt = ρσ_Index49;
                         if (is_node_type(stmt, AST_Scope)) {
                             continue;
                         }
                         if (is_node_type(stmt, AST_Definitions)) {
-                            var ρσ_Iter50 = ρσ_Iterable(stmt.definitions);
-                            for (var ρσ_Index50 = 0; ρσ_Index50 < ρσ_Iter50.length; ρσ_Index50++) {
-                                vardef = ρσ_Iter50[ρσ_Index50];
+                            var ρσ_Iter50 = stmt.definitions;
+                            ρσ_Iter50 = ((typeof ρσ_Iter50[Symbol.iterator] === "function") ? (ρσ_Iter50 instanceof Map ? ρσ_Iter50.keys() : ρσ_Iter50) : Object.keys(ρσ_Iter50));
+                            for (var ρσ_Index50 of ρσ_Iter50) {
+                                vardef = ρσ_Index50;
                                 vars.push(vardef.name.name);
                             }
                         }
-                        var ρσ_Iter51 = ρσ_Iterable(ρσ_list_decorate([ "body", "alternative" ]));
-                        for (var ρσ_Index51 = 0; ρσ_Index51 < ρσ_Iter51.length; ρσ_Index51++) {
-                            option = ρσ_Iter51[ρσ_Index51];
+                        var ρσ_Iter51 = ρσ_list_decorate([ "body", "alternative" ]);
+                        ρσ_Iter51 = ((typeof ρσ_Iter51[Symbol.iterator] === "function") ? (ρσ_Iter51 instanceof Map ? ρσ_Iter51.keys() : ρσ_Iter51) : Object.keys(ρσ_Iter51));
+                        for (var ρσ_Index51 of ρσ_Iter51) {
+                            option = ρσ_Index51;
                             var vars;
                             opt = stmt[(typeof option === "number" && option < 0) ? stmt.length + option : option];
                             if (opt) {
@@ -10720,9 +10770,10 @@ return this.__repr__();
                 }
                 function safe_read(base_path) {
                     var ρσ_unpack, i, path;
-                    var ρσ_Iter54 = ρσ_Iterable(enumerate(ρσ_list_decorate([ ρσ_operator_add(base_path, ".py"), ρσ_operator_add(base_path, "/__init__.py") ])));
-                    for (var ρσ_Index54 = 0; ρσ_Index54 < ρσ_Iter54.length; ρσ_Index54++) {
-                        ρσ_unpack = ρσ_Iter54[ρσ_Index54];
+                    var ρσ_Iter54 = enumerate(ρσ_list_decorate([ ρσ_operator_add(base_path, ".py"), ρσ_operator_add(base_path, "/__init__.py") ]));
+                    ρσ_Iter54 = ((typeof ρσ_Iter54[Symbol.iterator] === "function") ? (ρσ_Iter54 instanceof Map ? ρσ_Iter54.keys() : ρσ_Iter54) : Object.keys(ρσ_Iter54));
+                    for (var ρσ_Index54 of ρσ_Iter54) {
+                        ρσ_unpack = ρσ_Index54;
                         i = ρσ_unpack[0];
                         path = ρσ_unpack[1];
                         try {
@@ -10750,9 +10801,10 @@ return this.__repr__();
 
                 src_code = filename = null;
                 modpath = key.replace(/\./g, "/");
-                var ρσ_Iter55 = ρσ_Iterable(import_dirs);
-                for (var ρσ_Index55 = 0; ρσ_Index55 < ρσ_Iter55.length; ρσ_Index55++) {
-                    location = ρσ_Iter55[ρσ_Index55];
+                var ρσ_Iter55 = import_dirs;
+                ρσ_Iter55 = ((typeof ρσ_Iter55[Symbol.iterator] === "function") ? (ρσ_Iter55 instanceof Map ? ρσ_Iter55.keys() : ρσ_Iter55) : Object.keys(ρσ_Iter55));
+                for (var ρσ_Index55 of ρσ_Iter55) {
+                    location = ρσ_Index55;
                     if (location) {
                         ρσ_unpack = safe_read(ρσ_operator_add(ρσ_operator_add(location, "/"), modpath));
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -10777,9 +10829,10 @@ return this.__repr__();
                 }
                 srchash = sha1sum(src_code);
                 if (cached && cached.version === COMPILER_VERSION && cached.signature === srchash && cached.discard_asserts === !!options.discard_asserts) {
-                    var ρσ_Iter56 = ρσ_Iterable(cached.imported_module_ids);
-                    for (var ρσ_Index56 = 0; ρσ_Index56 < ρσ_Iter56.length; ρσ_Index56++) {
-                        ikey = ρσ_Iter56[ρσ_Index56];
+                    var ρσ_Iter56 = cached.imported_module_ids;
+                    ρσ_Iter56 = ((typeof ρσ_Iter56[Symbol.iterator] === "function") ? (ρσ_Iter56 instanceof Map ? ρσ_Iter56.keys() : ρσ_Iter56) : Object.keys(ρσ_Iter56));
+                    for (var ρσ_Index56 of ρσ_Iter56) {
+                        ikey = ρσ_Index56;
                         do_import(ikey);
                     }
                     imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key] = (function(){
@@ -10813,9 +10866,10 @@ return this.__repr__();
                     }).call(this));
                 }
                 imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key].srchash = srchash;
-                var ρσ_Iter57 = ρσ_Iterable(Object.keys(imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key].baselib));
-                for (var ρσ_Index57 = 0; ρσ_Index57 < ρσ_Iter57.length; ρσ_Index57++) {
-                    bitem = ρσ_Iter57[ρσ_Index57];
+                var ρσ_Iter57 = Object.keys(imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key].baselib);
+                ρσ_Iter57 = ((typeof ρσ_Iter57[Symbol.iterator] === "function") ? (ρσ_Iter57 instanceof Map ? ρσ_Iter57.keys() : ρσ_Iter57) : Object.keys(ρσ_Iter57));
+                for (var ρσ_Index57 of ρσ_Iter57) {
+                    bitem = ρσ_Index57;
                     baselib_items[(typeof bitem === "number" && bitem < 0) ? baselib_items.length + bitem : bitem] = true;
                 }
             };
@@ -10923,9 +10977,10 @@ return this.__repr__();
                         break;
                     }
                 }
-                var ρσ_Iter58 = ρσ_Iterable(ans["imports"]);
-                for (var ρσ_Index58 = 0; ρσ_Index58 < ρσ_Iter58.length; ρσ_Index58++) {
-                    imp = ρσ_Iter58[ρσ_Index58];
+                var ρσ_Iter58 = ans["imports"];
+                ρσ_Iter58 = ((typeof ρσ_Iter58[Symbol.iterator] === "function") ? (ρσ_Iter58 instanceof Map ? ρσ_Iter58.keys() : ρσ_Iter58) : Object.keys(ρσ_Iter58));
+                for (var ρσ_Index58 of ρσ_Iter58) {
+                    imp = ρσ_Index58;
                     do_import(imp.key);
                     if (imported_module_ids.indexOf(imp.key) === -1) {
                         imported_module_ids.push(imp.key);
@@ -10939,9 +10994,10 @@ return this.__repr__();
                             next();
                         }
                         exports = Object.create(null);
-                        var ρσ_Iter59 = ρσ_Iterable(imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key].exports);
-                        for (var ρσ_Index59 = 0; ρσ_Index59 < ρσ_Iter59.length; ρσ_Index59++) {
-                            symdef = ρσ_Iter59[ρσ_Index59];
+                        var ρσ_Iter59 = imported_modules[(typeof key === "number" && key < 0) ? imported_modules.length + key : key].exports;
+                        ρσ_Iter59 = ((typeof ρσ_Iter59[Symbol.iterator] === "function") ? (ρσ_Iter59 instanceof Map ? ρσ_Iter59.keys() : ρσ_Iter59) : Object.keys(ρσ_Iter59));
+                        for (var ρσ_Index59 of ρσ_Iter59) {
+                            symdef = ρσ_Index59;
                             exports[ρσ_bound_index(symdef.name, exports)] = true;
                         }
                         while (true) {
@@ -10967,9 +11023,10 @@ return this.__repr__();
                                 break;
                             }
                         }
-                        var ρσ_Iter60 = ρσ_Iterable(argnames);
-                        for (var ρσ_Index60 = 0; ρσ_Index60 < ρσ_Iter60.length; ρσ_Index60++) {
-                            argvar = ρσ_Iter60[ρσ_Index60];
+                        var ρσ_Iter60 = argnames;
+                        ρσ_Iter60 = ((typeof ρσ_Iter60[Symbol.iterator] === "function") ? (ρσ_Iter60 instanceof Map ? ρσ_Iter60.keys() : ρσ_Iter60) : Object.keys(ρσ_Iter60));
+                        for (var ρσ_Index60 of ρσ_Iter60) {
+                            argvar = ρσ_Index60;
                             obj = classes[ρσ_bound_index(argvar.name, classes)];
                             if (obj) {
                                 key = (argvar.alias) ? argvar.alias.name : argvar.name;
@@ -10983,9 +11040,10 @@ return this.__repr__();
                             }
                         }
                     } else {
-                        var ρσ_Iter61 = ρσ_Iterable(Object.keys(classes));
-                        for (var ρσ_Index61 = 0; ρσ_Index61 < ρσ_Iter61.length; ρσ_Index61++) {
-                            cname = ρσ_Iter61[ρσ_Index61];
+                        var ρσ_Iter61 = Object.keys(classes);
+                        ρσ_Iter61 = ((typeof ρσ_Iter61[Symbol.iterator] === "function") ? (ρσ_Iter61 instanceof Map ? ρσ_Iter61.keys() : ρσ_Iter61) : Object.keys(ρσ_Iter61));
+                        for (var ρσ_Index61 of ρσ_Iter61) {
+                            cname = ρσ_Index61;
                             obj = classes[(typeof cname === "number" && cname < 0) ? classes.length + cname : cname];
                             key = (imp.alias) ? imp.alias.name : imp.key;
                             (ρσ_expr_temp = (ρσ_expr_temp = S.classes)[ρσ_expr_temp.length-1])[ρσ_bound_index(ρσ_operator_add(ρσ_operator_add(key, "."), obj.name.name), ρσ_expr_temp)] = (function(){
@@ -11062,9 +11120,10 @@ return this.__repr__();
                         var ρσ_anonfunc = function () {
                             var d, decorator;
                             d = ρσ_list_decorate([]);
-                            var ρσ_Iter62 = ρσ_Iterable(S.decorators);
-                            for (var ρσ_Index62 = 0; ρσ_Index62 < ρσ_Iter62.length; ρσ_Index62++) {
-                                decorator = ρσ_Iter62[ρσ_Index62];
+                            var ρσ_Iter62 = S.decorators;
+                            ρσ_Iter62 = ((typeof ρσ_Iter62[Symbol.iterator] === "function") ? (ρσ_Iter62 instanceof Map ? ρσ_Iter62.keys() : ρσ_Iter62) : Object.keys(ρσ_Iter62));
+                            for (var ρσ_Index62 of ρσ_Iter62) {
+                                decorator = ρσ_Index62;
                                 d.push(new AST_Decorator((function(){
                                     var ρσ_d = Object.create(null);
                                     ρσ_d["expression"] = decorator;
@@ -11107,9 +11166,10 @@ return this.__repr__();
                     return ρσ_d;
                 }).call(this));
                 class_details.processing = false;
-                var ρσ_Iter63 = ρσ_Iterable(definition.body);
-                for (var ρσ_Index63 = 0; ρσ_Index63 < ρσ_Iter63.length; ρσ_Index63++) {
-                    stmt = ρσ_Iter63[ρσ_Index63];
+                var ρσ_Iter63 = definition.body;
+                ρσ_Iter63 = ((typeof ρσ_Iter63[Symbol.iterator] === "function") ? (ρσ_Iter63 instanceof Map ? ρσ_Iter63.keys() : ρσ_Iter63) : Object.keys(ρσ_Iter63));
+                for (var ρσ_Index63 of ρσ_Iter63) {
+                    stmt = ρσ_Index63;
                     if (is_node_type(stmt, AST_Method)) {
                         if (stmt.is_getter || stmt.is_setter) {
                             descriptor = (ρσ_expr_temp = definition.dynamic_properties)[ρσ_bound_index(stmt.name.name, ρσ_expr_temp)];
@@ -11163,9 +11223,10 @@ return this.__repr__();
                 });
 
                 visitor = new walker;
-                var ρσ_Iter64 = ρσ_Iterable(definition.body);
-                for (var ρσ_Index64 = 0; ρσ_Index64 < ρσ_Iter64.length; ρσ_Index64++) {
-                    stmt = ρσ_Iter64[ρσ_Index64];
+                var ρσ_Iter64 = definition.body;
+                ρσ_Iter64 = ((typeof ρσ_Iter64[Symbol.iterator] === "function") ? (ρσ_Iter64 instanceof Map ? ρσ_Iter64.keys() : ρσ_Iter64) : Object.keys(ρσ_Iter64));
+                for (var ρσ_Index64 of ρσ_Iter64) {
+                    stmt = ρσ_Index64;
                     if (!is_node_type(stmt, AST_Class)) {
                         stmt.walk(visitor);
                         definition.statements.push(stmt);
@@ -11338,9 +11399,10 @@ return this.__repr__();
                         var ρσ_anonfunc = function () {
                             var d, decorator;
                             d = [];
-                            var ρσ_Iter65 = ρσ_Iterable(S.decorators);
-                            for (var ρσ_Index65 = 0; ρσ_Index65 < ρσ_Iter65.length; ρσ_Index65++) {
-                                decorator = ρσ_Iter65[ρσ_Index65];
+                            var ρσ_Iter65 = S.decorators;
+                            ρσ_Iter65 = ((typeof ρσ_Iter65[Symbol.iterator] === "function") ? (ρσ_Iter65 instanceof Map ? ρσ_Iter65.keys() : ρσ_Iter65) : Object.keys(ρσ_Iter65));
+                            for (var ρσ_Index65 of ρσ_Iter65) {
+                                decorator = ρσ_Index65;
                                 d.push(new AST_Decorator((function(){
                                     var ρσ_d = Object.create(null);
                                     ρσ_d["expression"] = decorator;
@@ -11419,9 +11481,10 @@ return this.__repr__();
                 }
                 nonlocals = scan_for_nonlocal_defs(definition.body);
                 nonlocals = (function() {
-                    var ρσ_Iter = ρσ_Iterable(nonlocals), ρσ_Result = ρσ_set(), name;
-                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                        name = ρσ_Iter[ρσ_Index];
+                    var ρσ_Iter = nonlocals, ρσ_Result = ρσ_set(), name;
+                    ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                    for (var ρσ_Index of ρσ_Iter) {
+                        name = ρσ_Index;
                         ρσ_Result.add(name);
                     }
                     return ρσ_Result;
@@ -11631,9 +11694,10 @@ return this.__repr__();
                 var defs, vardef;
                 defs = vardefs(AST_SymbolNonlocal);
                 if (is_global) {
-                    var ρσ_Iter68 = ρσ_Iterable(defs);
-                    for (var ρσ_Index68 = 0; ρσ_Index68 < ρσ_Iter68.length; ρσ_Index68++) {
-                        vardef = ρσ_Iter68[ρσ_Index68];
+                    var ρσ_Iter68 = defs;
+                    ρσ_Iter68 = ((typeof ρσ_Iter68[Symbol.iterator] === "function") ? (ρσ_Iter68 instanceof Map ? ρσ_Iter68.keys() : ρσ_Iter68) : Object.keys(ρσ_Iter68));
+                    for (var ρσ_Index68 of ρσ_Iter68) {
+                        vardef = ρσ_Index68;
                         S.globals.push(vardef.name.name);
                     }
                 }
@@ -11884,9 +11948,10 @@ return this.__repr__();
                 if (func_call) {
                     tmp = ρσ_list_decorate([]);
                     tmp.kwargs = ρσ_list_decorate([]);
-                    var ρσ_Iter69 = ρσ_Iterable(a);
-                    for (var ρσ_Index69 = 0; ρσ_Index69 < ρσ_Iter69.length; ρσ_Index69++) {
-                        arg = ρσ_Iter69[ρσ_Index69];
+                    var ρσ_Iter69 = a;
+                    ρσ_Iter69 = ((typeof ρσ_Iter69[Symbol.iterator] === "function") ? (ρσ_Iter69 instanceof Map ? ρσ_Iter69.keys() : ρσ_Iter69) : Object.keys(ρσ_Iter69));
+                    for (var ρσ_Index69 of ρσ_Iter69) {
+                        arg = ρσ_Index69;
                         if (is_node_type(arg, AST_Assign)) {
                             tmp.kwargs.push(ρσ_list_decorate([ arg.left, arg.right ]));
                         } else {
@@ -12309,9 +12374,10 @@ return this.__repr__();
                         }).call(this)), allow_calls);
                     } else {
                         slice_bounds = (function() {
-                            var ρσ_Iter = ρσ_Iterable(slice_bounds), ρσ_Result = [], i;
-                            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                                i = ρσ_Iter[ρσ_Index];
+                            var ρσ_Iter = slice_bounds, ρσ_Result = [], i;
+                            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                            for (var ρσ_Index of ρσ_Iter) {
+                                i = ρσ_Index;
                                 ρσ_Result.push((i === null) ? new AST_Number((function(){
                                     var ρσ_d = Object.create(null);
                                     ρσ_d["value"] = 0;
@@ -12694,9 +12760,10 @@ return this.__repr__();
                         c = (ρσ_expr_temp = (ρσ_expr_temp = S.classes)[ρσ_expr_temp.length-2])[(typeof class_name === "number" && class_name < 0) ? ρσ_expr_temp.length + class_name : class_name];
                         if (c) {
                             if (ans.is_chained()) {
-                                var ρσ_Iter70 = ρσ_Iterable(ans.traverse_chain()[0]);
-                                for (var ρσ_Index70 = 0; ρσ_Index70 < ρσ_Iter70.length; ρσ_Index70++) {
-                                    lhs = ρσ_Iter70[ρσ_Index70];
+                                var ρσ_Iter70 = ans.traverse_chain()[0];
+                                ρσ_Iter70 = ((typeof ρσ_Iter70[Symbol.iterator] === "function") ? (ρσ_Iter70 instanceof Map ? ρσ_Iter70.keys() : ρσ_Iter70) : Object.keys(ρσ_Iter70));
+                                for (var ρσ_Index70 of ρσ_Iter70) {
+                                    lhs = ρσ_Index70;
                                     (ρσ_expr_temp = c.provisional_classvars)[ρσ_bound_index(lhs.name, ρσ_expr_temp)] = true;
                                 }
                             } else {
@@ -12885,14 +12952,16 @@ return this.__repr__();
                     __module__ : {value: "parse"}
                 });
 
-                var ρσ_Iter71 = ρσ_Iterable(scan_for_local_vars(toplevel.body));
-                for (var ρσ_Index71 = 0; ρσ_Index71 < ρσ_Iter71.length; ρσ_Index71++) {
-                    item = ρσ_Iter71[ρσ_Index71];
+                var ρσ_Iter71 = scan_for_local_vars(toplevel.body);
+                ρσ_Iter71 = ((typeof ρσ_Iter71[Symbol.iterator] === "function") ? (ρσ_Iter71 instanceof Map ? ρσ_Iter71.keys() : ρσ_Iter71) : Object.keys(ρσ_Iter71));
+                for (var ρσ_Index71 of ρσ_Iter71) {
+                    item = ρσ_Index71;
                     add_item(item, true);
                 }
-                var ρσ_Iter72 = ρσ_Iterable(scan_for_top_level_callables(toplevel.body));
-                for (var ρσ_Index72 = 0; ρσ_Index72 < ρσ_Iter72.length; ρσ_Index72++) {
-                    item = ρσ_Iter72[ρσ_Index72];
+                var ρσ_Iter72 = scan_for_top_level_callables(toplevel.body);
+                ρσ_Iter72 = ((typeof ρσ_Iter72[Symbol.iterator] === "function") ? (ρσ_Iter72 instanceof Map ? ρσ_Iter72.keys() : ρσ_Iter72) : Object.keys(ρσ_Iter72));
+                for (var ρσ_Index72 of ρσ_Iter72) {
+                    item = ρσ_Index72;
                     add_item(item, false);
                 }
                 toplevel.filename = options.filename;
@@ -12935,17 +13004,19 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             import_dirs = (function() {
-                var ρσ_Iter = ρσ_Iterable(options.import_dirs), ρσ_Result = [], x;
-                for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                    x = ρσ_Iter[ρσ_Index];
+                var ρσ_Iter = options.import_dirs, ρσ_Result = [], x;
+                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                for (var ρσ_Index of ρσ_Iter) {
+                    x = ρσ_Index;
                     ρσ_Result.push(x);
                 }
                 ρσ_Result = ρσ_list_constructor(ρσ_Result);
                 return ρσ_Result;
             })();
-            var ρσ_Iter73 = ρσ_Iterable([options.libdir, options.basedir]);
-            for (var ρσ_Index73 = 0; ρσ_Index73 < ρσ_Iter73.length; ρσ_Index73++) {
-                location = ρσ_Iter73[ρσ_Index73];
+            var ρσ_Iter73 = [options.libdir, options.basedir];
+            ρσ_Iter73 = ((typeof ρσ_Iter73[Symbol.iterator] === "function") ? (ρσ_Iter73 instanceof Map ? ρσ_Iter73.keys() : ρσ_Iter73) : Object.keys(ρσ_Iter73));
+            for (var ρσ_Index73 of ρσ_Iter73) {
+                location = ρσ_Index73;
                 if (location) {
                     import_dirs.push(location);
                 }
@@ -13029,9 +13100,10 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
             if (options.classes) {
-                var ρσ_Iter74 = ρσ_Iterable(options.classes);
-                for (var ρσ_Index74 = 0; ρσ_Index74 < ρσ_Iter74.length; ρσ_Index74++) {
-                    cname = ρσ_Iter74[ρσ_Index74];
+                var ρσ_Iter74 = options.classes;
+                ρσ_Iter74 = ((typeof ρσ_Iter74[Symbol.iterator] === "function") ? (ρσ_Iter74 instanceof Map ? ρσ_Iter74.keys() : ρσ_Iter74) : Object.keys(ρσ_Iter74));
+                for (var ρσ_Index74 of ρσ_Iter74) {
+                    cname = ρσ_Index74;
                     obj = (ρσ_expr_temp = options.classes)[(typeof cname === "number" && cname < 0) ? ρσ_expr_temp.length + cname : cname];
                     (ρσ_expr_temp = S.classes[0])[(typeof cname === "number" && cname < 0) ? ρσ_expr_temp.length + cname : cname] = (function(){
                         var ρσ_d = Object.create(null);
@@ -13160,7 +13232,6 @@ return this.__repr__();
             ρσ_d["keep_docstrings"] = false;
             ρσ_d["discard_asserts"] = false;
             ρσ_d["module_cache_dir"] = "";
-            ρσ_d["js_version"] = 5;
             ρσ_d["write_name"] = true;
             return ρσ_d;
         }).call(this);
@@ -13494,9 +13565,10 @@ return this.__repr__();
                 code = code.replace(/\/\/.*$/gm, "\n").replace(/^\s*$/gm, "");
                 ci = self.make_indent(0);
                 code = (function() {
-                    var ρσ_Iter = ρσ_Iterable(code.split("\n")), ρσ_Result = [], x;
-                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                        x = ρσ_Iter[ρσ_Index];
+                    var ρσ_Iter = code.split("\n"), ρσ_Result = [], x;
+                    ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                    for (var ρσ_Index of ρσ_Iter) {
+                        x = ρσ_Index;
                         ρσ_Result.push(ρσ_operator_add(ci, x));
                     }
                     ρσ_Result = ρσ_list_constructor(ρσ_Result);
@@ -13708,9 +13780,10 @@ return this.__repr__();
                 output.indent();
                 output.print("var");
                 output.space();
-                var ρσ_Iter75 = ρσ_Iterable(enumerate(vars));
-                for (var ρσ_Index75 = 0; ρσ_Index75 < ρσ_Iter75.length; ρσ_Index75++) {
-                    ρσ_unpack = ρσ_Iter75[ρσ_Index75];
+                var ρσ_Iter75 = enumerate(vars);
+                ρσ_Iter75 = ((typeof ρσ_Iter75[Symbol.iterator] === "function") ? (ρσ_Iter75 instanceof Map ? ρσ_Iter75.keys() : ρσ_Iter75) : Object.keys(ρσ_Iter75));
+                for (var ρσ_Index75 of ρσ_Iter75) {
+                    ρσ_unpack = ρσ_Index75;
                     i = ρσ_unpack[0];
                     arg = ρσ_unpack[1];
                     if (i) {
@@ -13730,9 +13803,10 @@ return this.__repr__();
         function display_body(body, is_toplevel, output) {
             var last, ρσ_unpack, i, stmt;
             last = ρσ_operator_sub(body.length, 1);
-            var ρσ_Iter76 = ρσ_Iterable(enumerate(body));
-            for (var ρσ_Index76 = 0; ρσ_Index76 < ρσ_Iter76.length; ρσ_Index76++) {
-                ρσ_unpack = ρσ_Iter76[ρσ_Index76];
+            var ρσ_Iter76 = enumerate(body);
+            ρσ_Iter76 = ((typeof ρσ_Iter76[Symbol.iterator] === "function") ? (ρσ_Iter76 instanceof Map ? ρσ_Iter76.keys() : ρσ_Iter76) : Object.keys(ρσ_Iter76));
+            for (var ρσ_Index76 of ρσ_Iter76) {
+                ρσ_unpack = ρσ_Index76;
                 i = ρσ_unpack[0];
                 stmt = ρσ_unpack[1];
                 if (!(is_node_type(stmt, AST_EmptyStatement)) && !(is_node_type(stmt, AST_Definitions))) {
@@ -13834,9 +13908,10 @@ return this.__repr__();
             var exits, clause_name, clause;
             exits = [];
             [output.assign("ρσ_with_exception"), output.print("undefined"), output.end_statement()];
-            var ρσ_Iter77 = ρσ_Iterable(self.clauses);
-            for (var ρσ_Index77 = 0; ρσ_Index77 < ρσ_Iter77.length; ρσ_Index77++) {
-                clause = ρσ_Iter77[ρσ_Index77];
+            var ρσ_Iter77 = self.clauses;
+            ρσ_Iter77 = ((typeof ρσ_Iter77[Symbol.iterator] === "function") ? (ρσ_Iter77 instanceof Map ? ρσ_Iter77.keys() : ρσ_Iter77) : Object.keys(ρσ_Iter77));
+            for (var ρσ_Index77 of ρσ_Iter77) {
+                clause = ρσ_Index77;
                 output.with_counter += 1;
                 clause_name = ρσ_operator_add("ρσ_with_clause_", output.with_counter);
                 exits.push(clause_name);
@@ -13876,9 +13951,10 @@ return this.__repr__();
             output.with_block((function() {
                 var ρσ_anonfunc = function () {
                     var clause;
-                    var ρσ_Iter78 = ρσ_Iterable(exits);
-                    for (var ρσ_Index78 = 0; ρσ_Index78 < ρσ_Iter78.length; ρσ_Index78++) {
-                        clause = ρσ_Iter78[ρσ_Index78];
+                    var ρσ_Iter78 = exits;
+                    ρσ_Iter78 = ((typeof ρσ_Iter78[Symbol.iterator] === "function") ? (ρσ_Iter78 instanceof Map ? ρσ_Iter78.keys() : ρσ_Iter78) : Object.keys(ρσ_Iter78));
+                    for (var ρσ_Index78 of ρσ_Iter78) {
+                        clause = ρσ_Index78;
                         [output.indent(), output.print(ρσ_operator_add(clause, ".__exit__()")), output.end_statement()];
                     }
                 };
@@ -13892,9 +13968,10 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var clause;
                     [output.indent(), output.assign("ρσ_with_suppress"), output.print("false"), output.end_statement()];
-                    var ρσ_Iter79 = ρσ_Iterable(exits);
-                    for (var ρσ_Index79 = 0; ρσ_Index79 < ρσ_Iter79.length; ρσ_Index79++) {
-                        clause = ρσ_Iter79[ρσ_Index79];
+                    var ρσ_Iter79 = exits;
+                    ρσ_Iter79 = ((typeof ρσ_Iter79[Symbol.iterator] === "function") ? (ρσ_Iter79 instanceof Map ? ρσ_Iter79.keys() : ρσ_Iter79) : Object.keys(ρσ_Iter79));
+                    for (var ρσ_Index79 of ρσ_Iter79) {
+                        clause = ρσ_Index79;
                         output.indent();
                         output.spaced("ρσ_with_suppress", "|=", ρσ_operator_add(ρσ_operator_add("ρσ_bool(", clause), ".__exit__(ρσ_with_exception.constructor,"), "ρσ_with_exception,", "ρσ_with_exception.stack))");
                         output.end_statement();
@@ -14000,9 +14077,10 @@ return this.__repr__();
                     [output.spaced("ρσ_last_exception", "=", "ρσ_Exception"), output.end_statement()];
                     output.indent();
                     no_default = true;
-                    var ρσ_Iter80 = ρσ_Iterable(enumerate(self.body));
-                    for (var ρσ_Index80 = 0; ρσ_Index80 < ρσ_Iter80.length; ρσ_Index80++) {
-                        ρσ_unpack = ρσ_Iter80[ρσ_Index80];
+                    var ρσ_Iter80 = enumerate(self.body);
+                    ρσ_Iter80 = ((typeof ρσ_Iter80[Symbol.iterator] === "function") ? (ρσ_Iter80 instanceof Map ? ρσ_Iter80.keys() : ρσ_Iter80) : Object.keys(ρσ_Iter80));
+                    for (var ρσ_Index80 of ρσ_Iter80) {
+                        ρσ_unpack = ρσ_Index80;
                         i = ρσ_unpack[0];
                         exception = ρσ_unpack[1];
                         if (i) {
@@ -14014,9 +14092,10 @@ return this.__repr__();
                             output.with_parens((function() {
                                 var ρσ_anonfunc = function () {
                                     var ρσ_unpack, i, err;
-                                    var ρσ_Iter81 = ρσ_Iterable(enumerate(exception.errors));
-                                    for (var ρσ_Index81 = 0; ρσ_Index81 < ρσ_Iter81.length; ρσ_Index81++) {
-                                        ρσ_unpack = ρσ_Iter81[ρσ_Index81];
+                                    var ρσ_Iter81 = enumerate(exception.errors);
+                                    ρσ_Iter81 = ((typeof ρσ_Iter81[Symbol.iterator] === "function") ? (ρσ_Iter81 instanceof Map ? ρσ_Iter81.keys() : ρσ_Iter81) : Object.keys(ρσ_Iter81));
+                                    for (var ρσ_Index81 of ρσ_Iter81) {
+                                        ρσ_unpack = ρσ_Index81;
                                         i = ρσ_unpack[0];
                                         err = ρσ_unpack[1];
                                         if (i) {
@@ -14200,15 +14279,17 @@ return this.__repr__();
         function create_doctring(docstrings) {
             var ans, ds, lines, min_leading_whitespace, r, leading_whitespace, line, lw, ρσ_unpack, l;
             ans = [];
-            var ρσ_Iter83 = ρσ_Iterable(docstrings);
-            for (var ρσ_Index83 = 0; ρσ_Index83 < ρσ_Iter83.length; ρσ_Index83++) {
-                ds = ρσ_Iter83[ρσ_Index83];
+            var ρσ_Iter83 = docstrings;
+            ρσ_Iter83 = ((typeof ρσ_Iter83[Symbol.iterator] === "function") ? (ρσ_Iter83 instanceof Map ? ρσ_Iter83.keys() : ρσ_Iter83) : Object.keys(ρσ_Iter83));
+            for (var ρσ_Index83 of ρσ_Iter83) {
+                ds = ρσ_Index83;
                 ds = str.rstrip(ds.value);
                 lines = [];
                 min_leading_whitespace = "";
-                var ρσ_Iter84 = ρσ_Iterable(ds.split(/$/gm));
-                for (var ρσ_Index84 = 0; ρσ_Index84 < ρσ_Iter84.length; ρσ_Index84++) {
-                    line = ρσ_Iter84[ρσ_Index84];
+                var ρσ_Iter84 = ds.split(/$/gm);
+                ρσ_Iter84 = ((typeof ρσ_Iter84[Symbol.iterator] === "function") ? (ρσ_Iter84 instanceof Map ? ρσ_Iter84.keys() : ρσ_Iter84) : Object.keys(ρσ_Iter84));
+                for (var ρσ_Index84 of ρσ_Iter84) {
+                    line = ρσ_Index84;
                     r = /^\s+/.exec(line);
                     leading_whitespace = "";
                     if (r) {
@@ -14225,9 +14306,10 @@ return this.__repr__();
                         lines.push([leading_whitespace, line]);
                     }
                 }
-                var ρσ_Iter85 = ρσ_Iterable(lines);
-                for (var ρσ_Index85 = 0; ρσ_Index85 < ρσ_Iter85.length; ρσ_Index85++) {
-                    ρσ_unpack = ρσ_Iter85[ρσ_Index85];
+                var ρσ_Iter85 = lines;
+                ρσ_Iter85 = ((typeof ρσ_Iter85[Symbol.iterator] === "function") ? (ρσ_Iter85 instanceof Map ? ρσ_Iter85.keys() : ρσ_Iter85) : Object.keys(ρσ_Iter85));
+                for (var ρσ_Index85 of ρσ_Iter85) {
+                    ρσ_unpack = ρσ_Index85;
                     lw = ρσ_unpack[0];
                     l = ρσ_unpack[1];
                     if (min_leading_whitespace) {
@@ -14266,9 +14348,10 @@ return this.__repr__();
 
         function unpack_tuple(elems, output, in_statement) {
             var ρσ_unpack, i, elem;
-            var ρσ_Iter86 = ρσ_Iterable(enumerate(elems));
-            for (var ρσ_Index86 = 0; ρσ_Index86 < ρσ_Iter86.length; ρσ_Index86++) {
-                ρσ_unpack = ρσ_Iter86[ρσ_Index86];
+            var ρσ_Iter86 = enumerate(elems);
+            ρσ_Iter86 = ((typeof ρσ_Iter86[Symbol.iterator] === "function") ? (ρσ_Iter86 instanceof Map ? ρσ_Iter86.keys() : ρσ_Iter86) : Object.keys(ρσ_Iter86));
+            for (var ρσ_Index86 of ρσ_Iter86) {
+                ρσ_unpack = ρσ_Index86;
                 i = ρσ_unpack[0];
                 elem = ρσ_unpack[1];
                 output.indent();
@@ -14374,11 +14457,7 @@ return this.__repr__();
                     var itervar, flat, stmt;
                     if (!((self.simple_for_index || is_simple_for_in(self)))) {
                         output.indent();
-                        if (output.options.js_version === 5) {
-                            itervar = ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add("ρσ_Iter", output.index_counter), "[ρσ_Index"), output.index_counter), "]");
-                        } else {
-                            itervar = ρσ_operator_add("ρσ_Index", output.index_counter);
-                        }
+                        itervar = ρσ_operator_add("ρσ_Index", output.index_counter);
                         if (is_node_type(self.init, AST_Array)) {
                             flat = self.init.flatten();
                             output.assign("ρσ_unpack");
@@ -14402,9 +14481,10 @@ return this.__repr__();
                         output.print(self.simple_for_index);
                         output.end_statement();
                     }
-                    var ρσ_Iter87 = ρσ_Iterable(self.body.body);
-                    for (var ρσ_Index87 = 0; ρσ_Index87 < ρσ_Iter87.length; ρσ_Index87++) {
-                        stmt = ρσ_Iter87[ρσ_Index87];
+                    var ρσ_Iter87 = self.body.body;
+                    ρσ_Iter87 = ((typeof ρσ_Iter87[Symbol.iterator] === "function") ? (ρσ_Iter87 instanceof Map ? ρσ_Iter87.keys() : ρσ_Iter87) : Object.keys(ρσ_Iter87));
+                    for (var ρσ_Index87 of ρσ_Iter87) {
+                        stmt = ρσ_Index87;
                         output.indent();
                         stmt.print(output);
                         output.newline();
@@ -14519,46 +14599,13 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })());
             } else {
-                if (output.options.js_version === 5) {
-                    output.assign(ρσ_operator_add("var ρσ_Iter", output.index_counter));
-                    output.print("ρσ_Iterable");
-                    output.with_parens(write_object);
-                    output.semicolon();
-                    output.newline();
-                    output.indent();
-                    output.print("for");
-                    output.space();
-                    output.with_parens((function() {
-                        var ρσ_anonfunc = function () {
-                            output.print("var");
-                            output.space();
-                            output.assign(ρσ_operator_add("ρσ_Index", output.index_counter));
-                            output.print("0");
-                            output.semicolon();
-                            output.space();
-                            output.print(ρσ_operator_add("ρσ_Index", output.index_counter));
-                            output.space();
-                            output.print("<");
-                            output.space();
-                            output.print(ρσ_operator_add(ρσ_operator_add("ρσ_Iter", output.index_counter), ".length"));
-                            output.semicolon();
-                            output.space();
-                            output.print(ρσ_operator_add(ρσ_operator_add("ρσ_Index", output.index_counter), "++"));
-                        };
-                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                            __module__ : {value: "output.loops"}
-                        });
-                        return ρσ_anonfunc;
-                    })());
-                } else {
-                    itervar = ρσ_operator_add("ρσ_Iter", output.index_counter);
-                    output.assign(ρσ_operator_add("var ", itervar));
-                    write_object();
-                    output.end_statement();
-                    init_es6_itervar(output, itervar);
-                    output.indent();
-                    output.spaced("for", "(var", ρσ_operator_add("ρσ_Index", output.index_counter), "of", ρσ_operator_add(itervar, ")"));
-                }
+                itervar = ρσ_operator_add("ρσ_Iter", output.index_counter);
+                output.assign(ρσ_operator_add("var ", itervar));
+                write_object();
+                output.end_statement();
+                init_es6_itervar(output, itervar);
+                output.indent();
+                output.spaced("for", "(var", ρσ_operator_add("ρσ_Index", output.index_counter), "of", ρσ_operator_add(itervar, ")"));
             }
             output.space();
             self._do_print_body(output);
@@ -14569,7 +14616,7 @@ return this.__repr__();
         });
 
         function print_list_comprehension(self, output) {
-            var tname, result_obj, is_generator, es5, add_to_result, push_func;
+            var tname, result_obj, is_generator, add_to_result, push_func;
             tname = self.constructor.name.slice(4);
             result_obj = (ρσ_expr_temp = (function(){
                 var ρσ_d = Object.create(null);
@@ -14579,7 +14626,6 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this))[(typeof tname === "number" && tname < 0) ? ρσ_expr_temp.length + tname : tname];
             is_generator = tname === "GeneratorComprehension";
-            es5 = output.options.js_version === 5;
             if (tname === "DictComprehension") {
                 if (self.is_pydict) {
                     result_obj = "ρσ_dict()";
@@ -14717,16 +14763,9 @@ return this.__repr__();
                     output.space();
                     output.with_block((function() {
                         var ρσ_anonfunc = function () {
-                            var body_out, previous_indentation, i, transpiled, ci;
+                            var body_out, previous_indentation, i;
                             body_out = output;
                             if (is_generator) {
-                                if (es5) {
-                                    body_out = new OutputStream((function(){
-                                        var ρσ_d = Object.create(null);
-                                        ρσ_d["beautify"] = true;
-                                        return ρσ_d;
-                                    }).call(this));
-                                }
                                 body_out.indent();
                                 [body_out.print("function* js_generator()"), body_out.space(), body_out.print("{")];
                                 body_out.newline();
@@ -14735,29 +14774,17 @@ return this.__repr__();
                             }
                             body_out.indent();
                             body_out.assign("var ρσ_Iter");
-                            if (es5) {
-                                body_out.print("ρσ_Iterable");
-                                body_out.with_parens((function() {
-                                    var ρσ_anonfunc = function () {
-                                        self.object.print(body_out);
-                                    };
-                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                                        __module__ : {value: "output.loops"}
-                                    });
-                                    return ρσ_anonfunc;
-                                })());
-                            } else {
-                                self.object.print(body_out);
-                            }
+                            self.object.print(body_out);
                             if (result_obj) {
                                 body_out.comma();
                                 body_out.assign("ρσ_Result");
                                 body_out.print(result_obj);
                             }
                             if (is_node_type(self.init, AST_Array)) {
-                                var ρσ_Iter88 = ρσ_Iterable(self.init.elements);
-                                for (var ρσ_Index88 = 0; ρσ_Index88 < ρσ_Iter88.length; ρσ_Index88++) {
-                                    i = ρσ_Iter88[ρσ_Index88];
+                                var ρσ_Iter88 = self.init.elements;
+                                ρσ_Iter88 = ((typeof ρσ_Iter88[Symbol.iterator] === "function") ? (ρσ_Iter88 instanceof Map ? ρσ_Iter88.keys() : ρσ_Iter88) : Object.keys(ρσ_Iter88));
+                                for (var ρσ_Index88 of ρσ_Iter88) {
+                                    i = ρσ_Index88;
                                     body_out.comma();
                                     i.print(body_out);
                                 }
@@ -14766,32 +14793,13 @@ return this.__repr__();
                                 self.init.print(body_out);
                             }
                             body_out.end_statement();
-                            if (!es5) {
-                                init_es6_itervar(body_out, "ρσ_Iter");
-                            }
+                            init_es6_itervar(body_out, "ρσ_Iter");
                             body_out.indent();
                             body_out.print("for");
                             body_out.space();
                             body_out.with_parens((function() {
                                 var ρσ_anonfunc = function () {
-                                    if (es5) {
-                                        body_out.print("var");
-                                        body_out.space();
-                                        body_out.assign("ρσ_Index");
-                                        body_out.print("0");
-                                        body_out.semicolon();
-                                        body_out.space();
-                                        body_out.print("ρσ_Index");
-                                        body_out.space();
-                                        body_out.print("<");
-                                        body_out.space();
-                                        body_out.print("ρσ_Iter.length");
-                                        body_out.semicolon();
-                                        body_out.space();
-                                        body_out.print("ρσ_Index++");
-                                    } else {
-                                        body_out.spaced("var", "ρσ_Index", "of", "ρσ_Iter");
-                                    }
+                                    body_out.spaced("var", "ρσ_Index", "of", "ρσ_Iter");
                                 };
                                 if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
                                     __module__ : {value: "output.loops"}
@@ -14803,7 +14811,7 @@ return this.__repr__();
                                 var ρσ_anonfunc = function () {
                                     var itervar, flat;
                                     body_out.indent();
-                                    itervar = (es5) ? "ρσ_Iter[ρσ_Index]" : "ρσ_Index";
+                                    itervar = "ρσ_Index";
                                     if (is_node_type(self.init, AST_Array)) {
                                         flat = self.init.flatten();
                                         body_out.assign("ρσ_unpack");
@@ -14866,22 +14874,6 @@ return this.__repr__();
                             if (is_generator) {
                                 output.set_indentation(previous_indentation);
                                 [body_out.newline(), body_out.indent(), body_out.print("}")];
-                                if (es5) {
-                                    transpiled = regenerate(body_out.get(), output.options.beautify).replace(/regeneratorRuntime.(wrap|mark)/g, "ρσ_regenerator.regeneratorRuntime.$1");
-                                    if (output.options.beautify) {
-                                        ci = output.make_indent(0);
-                                        transpiled = (function() {
-                                            var ρσ_Iter = ρσ_Iterable(transpiled.split("\n")), ρσ_Result = [], x;
-                                            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                                                x = ρσ_Iter[ρσ_Index];
-                                                ρσ_Result.push(ρσ_operator_add(ci, x));
-                                            }
-                                            ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                                            return ρσ_Result;
-                                        })().join("\n");
-                                    }
-                                    output.print(transpiled);
-                                }
                                 [output.newline(), output.indent()];
                                 output.spaced("var", "result", "=", "js_generator.call(this)");
                                 output.end_statement();
@@ -15231,13 +15223,8 @@ return this.__repr__();
                     left = self.left.expression;
                     output.print(self.left.operator);
                 }
-                if (output.options.js_version > 6) {
-                    [output.print("(("), left.print(output), output.spaced(")", "**", "("), self.right.print(output), 
-                    output.print("))")];
-                } else {
-                    [output.print("Math.pow("), left.print(output), output.comma(), self.right.print(output), 
-                    output.print(")")];
-                }
+                [output.print("(("), left.print(output), output.spaced(")", "**", "("), self.right.print(output), 
+                output.print("))")];
             } else if (self.operator === "==" || self.operator === "!=") {
                 write_smart_equality(self, output);
             } else if (self.operator === "instanceof") {
@@ -15398,9 +15385,10 @@ return this.__repr__();
                 left_hand_sides = ρσ_unpack[0];
                 rhs = ρσ_unpack[1];
                 is_compound_assign = false;
-                var ρσ_Iter89 = ρσ_Iterable(left_hand_sides);
-                for (var ρσ_Index89 = 0; ρσ_Index89 < ρσ_Iter89.length; ρσ_Index89++) {
-                    lhs = ρσ_Iter89[ρσ_Index89];
+                var ρσ_Iter89 = left_hand_sides;
+                ρσ_Iter89 = ((typeof ρσ_Iter89[Symbol.iterator] === "function") ? (ρσ_Iter89 instanceof Map ? ρσ_Iter89.keys() : ρσ_Iter89) : Object.keys(ρσ_Iter89));
+                for (var ρσ_Index89 of ρσ_Iter89) {
+                    lhs = ρσ_Index89;
                     if (is_node_type(lhs, AST_Seq) || is_node_type(lhs, AST_Array)) {
                         is_compound_assign = true;
                         break;
@@ -15419,9 +15407,10 @@ return this.__repr__();
                         ρσ_d["right"] = rhs;
                         return ρσ_d;
                     }).call(this)), output);
-                    var ρσ_Iter90 = ρσ_Iterable(left_hand_sides);
-                    for (var ρσ_Index90 = 0; ρσ_Index90 < ρσ_Iter90.length; ρσ_Index90++) {
-                        lhs = ρσ_Iter90[ρσ_Index90];
+                    var ρσ_Iter90 = left_hand_sides;
+                    ρσ_Iter90 = ((typeof ρσ_Iter90[Symbol.iterator] === "function") ? (ρσ_Iter90 instanceof Map ? ρσ_Iter90.keys() : ρσ_Iter90) : Object.keys(ρσ_Iter90));
+                    for (var ρσ_Index90 of ρσ_Iter90) {
+                        lhs = ρσ_Index90;
                         [output.end_statement(), output.indent()];
                         print_assignment(new AST_Assign((function(){
                             var ρσ_d = Object.create(null);
@@ -15432,9 +15421,10 @@ return this.__repr__();
                         }).call(this)), output);
                     }
                 } else {
-                    var ρσ_Iter91 = ρσ_Iterable(left_hand_sides);
-                    for (var ρσ_Index91 = 0; ρσ_Index91 < ρσ_Iter91.length; ρσ_Index91++) {
-                        lhs = ρσ_Iter91[ρσ_Index91];
+                    var ρσ_Iter91 = left_hand_sides;
+                    ρσ_Iter91 = ((typeof ρσ_Iter91[Symbol.iterator] === "function") ? (ρσ_Iter91 instanceof Map ? ρσ_Iter91.keys() : ρσ_Iter91) : Object.keys(ρσ_Iter91));
+                    for (var ρσ_Index91 of ρσ_Iter91) {
+                        lhs = ρσ_Index91;
                         output.spaced(lhs, "=", "");
                     }
                     rhs.print(output);
@@ -15591,9 +15581,10 @@ return this.__repr__();
                 var ρσ_anonfunc = function () {
                     var ρσ_unpack, i, arg;
                     if (argnames && argnames.length && (argnames.is_simple_func === true || argnames.is_simple_func === undefined)) {
-                        var ρσ_Iter92 = ρσ_Iterable(enumerate((strip_first) ? argnames.slice(1) : argnames));
-                        for (var ρσ_Index92 = 0; ρσ_Index92 < ρσ_Iter92.length; ρσ_Index92++) {
-                            ρσ_unpack = ρσ_Iter92[ρσ_Index92];
+                        var ρσ_Iter92 = enumerate((strip_first) ? argnames.slice(1) : argnames);
+                        ρσ_Iter92 = ((typeof ρσ_Iter92[Symbol.iterator] === "function") ? (ρσ_Iter92 instanceof Map ? ρσ_Iter92.keys() : ρσ_Iter92) : Object.keys(ρσ_Iter92));
+                        for (var ρσ_Index92 of ρσ_Iter92) {
+                            ρσ_unpack = ρσ_Index92;
                             i = ρσ_unpack[0];
                             arg = ρσ_unpack[1];
                             if (i) {
@@ -15623,9 +15614,10 @@ return this.__repr__();
             }
             fname = (node.name) ? node.name.name : anonfunc;
             kw = "arguments[arguments.length-1]";
-            var ρσ_Iter93 = ρσ_Iterable(enumerate(a));
-            for (var ρσ_Index93 = 0; ρσ_Index93 < ρσ_Iter93.length; ρσ_Index93++) {
-                ρσ_unpack = ρσ_Iter93[ρσ_Index93];
+            var ρσ_Iter93 = enumerate(a);
+            ρσ_Iter93 = ((typeof ρσ_Iter93[Symbol.iterator] === "function") ? (ρσ_Iter93 instanceof Map ? ρσ_Iter93.keys() : ρσ_Iter93) : Object.keys(ρσ_Iter93));
+            for (var ρσ_Index93 of ρσ_Iter93) {
+                ρσ_unpack = ρσ_Index93;
                 c = ρσ_unpack[0];
                 arg = ρσ_unpack[1];
                 i = ρσ_operator_sub(c, offset);
@@ -15654,9 +15646,10 @@ return this.__repr__();
                 output.spaced("if", ρσ_operator_add("(", kw), "===", "null", "||", "typeof", kw, "!==", "\"object\"", "||", kw, "[ρσ_kwargs_symbol]", "!==", "true)", kw, "=", "{}");
                 output.end_statement();
                 if (a.has_defaults) {
-                    var ρσ_Iter94 = ρσ_Iterable(Object.keys(a.defaults));
-                    for (var ρσ_Index94 = 0; ρσ_Index94 < ρσ_Iter94.length; ρσ_Index94++) {
-                        dname = ρσ_Iter94[ρσ_Index94];
+                    var ρσ_Iter94 = Object.keys(a.defaults);
+                    ρσ_Iter94 = ((typeof ρσ_Iter94[Symbol.iterator] === "function") ? (ρσ_Iter94 instanceof Map ? ρσ_Iter94.keys() : ρσ_Iter94) : Object.keys(ρσ_Iter94));
+                    for (var ρσ_Index94 of ρσ_Iter94) {
+                        dname = ρσ_Index94;
                         output.indent();
                         output.spaced("if", ρσ_operator_add(ρσ_operator_add("(Object.prototype.hasOwnProperty.call(", kw), ","), ρσ_operator_add(ρσ_operator_add("\"", dname), "\"))"));
                         output.with_block((function() {
@@ -15700,9 +15693,10 @@ return this.__repr__();
             if (self.return_annotation) {
                 return true;
             }
-            var ρσ_Iter95 = ρσ_Iterable(self.argnames);
-            for (var ρσ_Index95 = 0; ρσ_Index95 < ρσ_Iter95.length; ρσ_Index95++) {
-                arg = ρσ_Iter95[ρσ_Index95];
+            var ρσ_Iter95 = self.argnames;
+            ρσ_Iter95 = ((typeof ρσ_Iter95[Symbol.iterator] === "function") ? (ρσ_Iter95 instanceof Map ? ρσ_Iter95.keys() : ρσ_Iter95) : Object.keys(ρσ_Iter95));
+            for (var ρσ_Index95 of ρσ_Iter95) {
+                arg = ρσ_Index95;
                 if (arg.annotation) {
                     return true;
                 }
@@ -15724,9 +15718,10 @@ return this.__repr__();
                         var ρσ_unpack, i, arg;
                         output.print("{");
                         if (self.argnames && self.argnames.length) {
-                            var ρσ_Iter96 = ρσ_Iterable(enumerate(self.argnames));
-                            for (var ρσ_Index96 = 0; ρσ_Index96 < ρσ_Iter96.length; ρσ_Index96++) {
-                                ρσ_unpack = ρσ_Iter96[ρσ_Index96];
+                            var ρσ_Iter96 = enumerate(self.argnames);
+                            ρσ_Iter96 = ((typeof ρσ_Iter96[Symbol.iterator] === "function") ? (ρσ_Iter96 instanceof Map ? ρσ_Iter96.keys() : ρσ_Iter96) : Object.keys(ρσ_Iter96));
+                            for (var ρσ_Index96 of ρσ_Iter96) {
+                                ρσ_unpack = ρσ_Index96;
                                 i = ρσ_unpack[0];
                                 arg = ρσ_unpack[1];
                                 if (arg.annotation) {
@@ -15758,9 +15753,10 @@ return this.__repr__();
                     var ρσ_anonfunc = function () {
                         var ρσ_unpack, i, k;
                         output.print("{");
-                        var ρσ_Iter97 = ρσ_Iterable(enumerate(dkeys));
-                        for (var ρσ_Index97 = 0; ρσ_Index97 < ρσ_Iter97.length; ρσ_Index97++) {
-                            ρσ_unpack = ρσ_Iter97[ρσ_Index97];
+                        var ρσ_Iter97 = enumerate(dkeys);
+                        ρσ_Iter97 = ((typeof ρσ_Iter97[Symbol.iterator] === "function") ? (ρσ_Iter97 instanceof Map ? ρσ_Iter97.keys() : ρσ_Iter97) : Object.keys(ρσ_Iter97));
+                        for (var ρσ_Index97 of ρσ_Iter97) {
+                            ρσ_unpack = ρσ_Index97;
                             i = ρσ_unpack[0];
                             k = ρσ_unpack[1];
                             [output.print(ρσ_operator_add(k, ":")), defaults[(typeof k === "number" && k < 0) ? defaults.length + k : k].print(output)];
@@ -15792,9 +15788,10 @@ return this.__repr__();
                     var ρσ_anonfunc = function () {
                         var ρσ_unpack, i, arg;
                         output.print("[");
-                        var ρσ_Iter98 = ρσ_Iterable(enumerate(self.argnames));
-                        for (var ρσ_Index98 = 0; ρσ_Index98 < ρσ_Iter98.length; ρσ_Index98++) {
-                            ρσ_unpack = ρσ_Iter98[ρσ_Index98];
+                        var ρσ_Iter98 = enumerate(self.argnames);
+                        ρσ_Iter98 = ((typeof ρσ_Iter98[Symbol.iterator] === "function") ? (ρσ_Iter98 instanceof Map ? ρσ_Iter98.keys() : ρσ_Iter98) : Object.keys(ρσ_Iter98));
+                        for (var ρσ_Index98 of ρσ_Iter98) {
+                            ρσ_unpack = ρσ_Index98;
                             i = ρσ_unpack[0];
                             arg = ρσ_unpack[1];
                             if (strip_first && i === 0) {
@@ -15879,36 +15876,10 @@ return this.__repr__();
                 [output.print("()"), output.space()];
                 output.with_block((function() {
                     var ρσ_anonfunc = function () {
-                        var temp, transpiled, ci;
-                        if (output.options.js_version >= 6) {
-                            output.indent();
-                            output.print("function* js_generator");
-                            function_args(self.argnames, output, strip_first);
-                            print_bracketed(self, output, true, function_preamble);
-                        } else {
-                            temp = new OutputStream((function(){
-                                var ρσ_d = Object.create(null);
-                                ρσ_d["beautify"] = true;
-                                return ρσ_d;
-                            }).call(this));
-                            temp.print("function* js_generator");
-                            function_args(self.argnames, temp, strip_first);
-                            print_bracketed(self, temp, true, function_preamble);
-                            transpiled = regenerate(temp.get(), output.options.beautify).replace(/regeneratorRuntime.(wrap|mark)/g, "ρσ_regenerator.regeneratorRuntime.$1");
-                            if (output.options.beautify) {
-                                ci = output.make_indent(0);
-                                transpiled = (function() {
-                                    var ρσ_Iter = ρσ_Iterable(transpiled.split("\n")), ρσ_Result = [], x;
-                                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                                        x = ρσ_Iter[ρσ_Index];
-                                        ρσ_Result.push(ρσ_operator_add(ci, x));
-                                    }
-                                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                                    return ρσ_Result;
-                                })().join("\n");
-                            }
-                            output.print(transpiled);
-                        }
+                        output.indent();
+                        output.print("function* js_generator");
+                        function_args(self.argnames, output, strip_first);
+                        print_bracketed(self, output, true, function_preamble);
                         output.newline();
                         output.indent();
                         output.spaced("var", "result", "=", "js_generator.apply(this,", "arguments)");
@@ -16037,9 +16008,10 @@ return this.__repr__();
                 var ρσ_unpack, i, kwname, pair;
                 output.print("ρσ_desugar_kwargs(");
                 if (has_kwarg_items) {
-                    var ρσ_Iter99 = ρσ_Iterable(enumerate(self.args.kwarg_items));
-                    for (var ρσ_Index99 = 0; ρσ_Index99 < ρσ_Iter99.length; ρσ_Index99++) {
-                        ρσ_unpack = ρσ_Iter99[ρσ_Index99];
+                    var ρσ_Iter99 = enumerate(self.args.kwarg_items);
+                    ρσ_Iter99 = ((typeof ρσ_Iter99[Symbol.iterator] === "function") ? (ρσ_Iter99 instanceof Map ? ρσ_Iter99.keys() : ρσ_Iter99) : Object.keys(ρσ_Iter99));
+                    for (var ρσ_Index99 of ρσ_Iter99) {
+                        ρσ_unpack = ρσ_Index99;
                         i = ρσ_unpack[0];
                         kwname = ρσ_unpack[1];
                         if (i > 0) {
@@ -16055,9 +16027,10 @@ return this.__repr__();
                 }
                 if (has_kwarg_formals) {
                     output.print("{");
-                    var ρσ_Iter100 = ρσ_Iterable(enumerate(self.args.kwargs));
-                    for (var ρσ_Index100 = 0; ρσ_Index100 < ρσ_Iter100.length; ρσ_Index100++) {
-                        ρσ_unpack = ρσ_Iter100[ρσ_Index100];
+                    var ρσ_Iter100 = enumerate(self.args.kwargs);
+                    ρσ_Iter100 = ((typeof ρσ_Iter100[Symbol.iterator] === "function") ? (ρσ_Iter100 instanceof Map ? ρσ_Iter100.keys() : ρσ_Iter100) : Object.keys(ρσ_Iter100));
+                    for (var ρσ_Index100 of ρσ_Iter100) {
+                        ρσ_unpack = ρσ_Index100;
                         i = ρσ_unpack[0];
                         pair = ρσ_unpack[1];
                         if (i) {
@@ -16151,9 +16124,10 @@ return this.__repr__();
                 output.with_parens((function() {
                     var ρσ_anonfunc = function () {
                         var ρσ_unpack, i, a;
-                        var ρσ_Iter101 = ρσ_Iterable(enumerate(self.args));
-                        for (var ρσ_Index101 = 0; ρσ_Index101 < ρσ_Iter101.length; ρσ_Index101++) {
-                            ρσ_unpack = ρσ_Iter101[ρσ_Index101];
+                        var ρσ_Iter101 = enumerate(self.args);
+                        ρσ_Iter101 = ((typeof ρσ_Iter101[Symbol.iterator] === "function") ? (ρσ_Iter101 instanceof Map ? ρσ_Iter101.keys() : ρσ_Iter101) : Object.keys(ρσ_Iter101));
+                        for (var ρσ_Index101 of ρσ_Iter101) {
+                            ρσ_unpack = ρσ_Index101;
                             i = ρσ_unpack[0];
                             a = ρσ_unpack[1];
                             if (i) {
@@ -16420,9 +16394,10 @@ return this.__repr__();
                                         output.end_statement();
                                     }
                                 }
-                                var ρσ_Iter103 = ρσ_Iterable(self.bound);
-                                for (var ρσ_Index103 = 0; ρσ_Index103 < ρσ_Iter103.length; ρσ_Index103++) {
-                                    bname = ρσ_Iter103[ρσ_Index103];
+                                var ρσ_Iter103 = self.bound;
+                                ρσ_Iter103 = ((typeof ρσ_Iter103[Symbol.iterator] === "function") ? (ρσ_Iter103 instanceof Map ? ρσ_Iter103.keys() : ρσ_Iter103) : Object.keys(ρσ_Iter103));
+                                for (var ρσ_Index103 of ρσ_Iter103) {
+                                    bname = ρσ_Index103;
                                     if (seen_methods[(typeof bname === "number" && bname < 0) ? seen_methods.length + bname : bname] || (ρσ_expr_temp = self.dynamic_properties)[(typeof bname === "number" && bname < 0) ? ρσ_expr_temp.length + bname : bname]) {
                                         continue;
                                     }
@@ -16454,9 +16429,10 @@ return this.__repr__();
                         output.with_block((function() {
                             var ρσ_anonfunc = function () {
                                 var prop, name;
-                                var ρσ_Iter104 = ρσ_Iterable(property_names);
-                                for (var ρσ_Index104 = 0; ρσ_Index104 < ρσ_Iter104.length; ρσ_Index104++) {
-                                    name = ρσ_Iter104[ρσ_Index104];
+                                var ρσ_Iter104 = property_names;
+                                ρσ_Iter104 = ((typeof ρσ_Iter104[Symbol.iterator] === "function") ? (ρσ_Iter104 instanceof Map ? ρσ_Iter104.keys() : ρσ_Iter104) : Object.keys(ρσ_Iter104));
+                                for (var ρσ_Index104 of ρσ_Iter104) {
+                                    name = ρσ_Index104;
                                     prop = (ρσ_expr_temp = self.dynamic_properties)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
                                     [output.indent(), output.print(ρσ_operator_add(JSON.stringify(name), ":")), output.space()];
                                     output.with_block((function() {
@@ -16525,9 +16501,10 @@ return this.__repr__();
                 })());
             }
             defined_methods = Object.create(null);
-            var ρσ_Iter105 = ρσ_Iterable(self.body);
-            for (var ρσ_Index105 = 0; ρσ_Index105 < ρσ_Iter105.length; ρσ_Index105++) {
-                stmt = ρσ_Iter105[ρσ_Index105];
+            var ρσ_Iter105 = self.body;
+            ρσ_Iter105 = ((typeof ρσ_Iter105[Symbol.iterator] === "function") ? (ρσ_Iter105 instanceof Map ? ρσ_Iter105.keys() : ρσ_Iter105) : Object.keys(ρσ_Iter105));
+            for (var ρσ_Index105 of ρσ_Iter105) {
+                stmt = ρσ_Index105;
                 if (is_node_type(stmt, AST_Method)) {
                     if (stmt.is_getter || stmt.is_setter) {
                         continue;
@@ -16536,9 +16513,10 @@ return this.__repr__();
                     defined_methods[ρσ_bound_index(stmt.name.name, defined_methods)] = true;
                     sname = stmt.name.name;
                     if (sname === "__init__") {
-                        var ρσ_Iter106 = ρσ_Iterable(ρσ_list_decorate([ ".__argnames__", ".__handles_kwarg_interpolation__" ]));
-                        for (var ρσ_Index106 = 0; ρσ_Index106 < ρσ_Iter106.length; ρσ_Index106++) {
-                            attr = ρσ_Iter106[ρσ_Index106];
+                        var ρσ_Iter106 = ρσ_list_decorate([ ".__argnames__", ".__handles_kwarg_interpolation__" ]);
+                        ρσ_Iter106 = ((typeof ρσ_Iter106[Symbol.iterator] === "function") ? (ρσ_Iter106 instanceof Map ? ρσ_Iter106.keys() : ρσ_Iter106) : Object.keys(ρσ_Iter106));
+                        for (var ρσ_Index106 of ρσ_Iter106) {
+                            attr = ρσ_Index106;
                             [output.indent(), self.name.print(output), output.assign(attr)];
                             [self.name.print(output), output.print(ρσ_operator_add(".prototype.__init__", attr)), 
                             output.end_statement()];
@@ -16624,9 +16602,10 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })());
             }
-            var ρσ_Iter107 = ρσ_Iterable(self.statements);
-            for (var ρσ_Index107 = 0; ρσ_Index107 < ρσ_Iter107.length; ρσ_Index107++) {
-                stmt = ρσ_Iter107[ρσ_Index107];
+            var ρσ_Iter107 = self.statements;
+            ρσ_Iter107 = ((typeof ρσ_Iter107[Symbol.iterator] === "function") ? (ρσ_Iter107 instanceof Map ? ρσ_Iter107.keys() : ρσ_Iter107) : Object.keys(ρσ_Iter107));
+            for (var ρσ_Index107 of ρσ_Iter107) {
+                stmt = ρσ_Index107;
                 if (!is_node_type(stmt, AST_Method)) {
                     output.indent();
                     stmt.print(output);
@@ -16678,9 +16657,10 @@ return this.__repr__();
                             if (len_ > 0) {
                                 output.space();
                             }
-                            var ρσ_Iter109 = ρσ_Iterable(enumerate(a));
-                            for (var ρσ_Index109 = 0; ρσ_Index109 < ρσ_Iter109.length; ρσ_Index109++) {
-                                ρσ_unpack = ρσ_Iter109[ρσ_Index109];
+                            var ρσ_Iter109 = enumerate(a);
+                            ρσ_Iter109 = ((typeof ρσ_Iter109[Symbol.iterator] === "function") ? (ρσ_Iter109 instanceof Map ? ρσ_Iter109.keys() : ρσ_Iter109) : Object.keys(ρσ_Iter109));
+                            for (var ρσ_Index109 of ρσ_Iter109) {
+                                ρσ_unpack = ρσ_Index109;
                                 i = ρσ_unpack[0];
                                 exp = ρσ_unpack[1];
                                 if (i) {
@@ -16723,9 +16703,10 @@ return this.__repr__();
                                 output.spaced("var", "ρσ_d", "=", (self.is_jshash) ? "Object.create(null)" : "{}");
                             }
                             output.end_statement();
-                            var ρσ_Iter110 = ρσ_Iterable(enumerate(self.properties));
-                            for (var ρσ_Index110 = 0; ρσ_Index110 < ρσ_Iter110.length; ρσ_Index110++) {
-                                ρσ_unpack = ρσ_Iter110[ρσ_Index110];
+                            var ρσ_Iter110 = enumerate(self.properties);
+                            ρσ_Iter110 = ((typeof ρσ_Iter110[Symbol.iterator] === "function") ? (ρσ_Iter110 instanceof Map ? ρσ_Iter110.keys() : ρσ_Iter110) : Object.keys(ρσ_Iter110));
+                            for (var ρσ_Index110 of ρσ_Iter110) {
+                                ρσ_unpack = ρσ_Index110;
                                 i = ρσ_unpack[0];
                                 prop = ρσ_unpack[1];
                                 output.indent();
@@ -16814,9 +16795,10 @@ return this.__repr__();
                             output.indent();
                             output.spaced.apply(output, "var s = ρσ_set()".split(" "));
                             output.end_statement();
-                            var ρσ_Iter111 = ρσ_Iterable(self.items);
-                            for (var ρσ_Index111 = 0; ρσ_Index111 < ρσ_Iter111.length; ρσ_Index111++) {
-                                item = ρσ_Iter111[ρσ_Index111];
+                            var ρσ_Iter111 = self.items;
+                            ρσ_Iter111 = ((typeof ρσ_Iter111[Symbol.iterator] === "function") ? (ρσ_Iter111 instanceof Map ? ρσ_Iter111.keys() : ρσ_Iter111) : Object.keys(ρσ_Iter111));
+                            for (var ρσ_Index111 of ρσ_Iter111) {
+                                item = ρσ_Index111;
                                 output.indent();
                                 output.print("s.jsset.add");
                                 output.with_parens((function() {
@@ -16883,9 +16865,10 @@ return this.__repr__();
 
         function output_comments(comments, output, nlb) {
             var comm;
-            var ρσ_Iter112 = ρσ_Iterable(comments);
-            for (var ρσ_Index112 = 0; ρσ_Index112 < ρσ_Iter112.length; ρσ_Index112++) {
-                comm = ρσ_Iter112[ρσ_Index112];
+            var ρσ_Iter112 = comments;
+            ρσ_Iter112 = ((typeof ρσ_Iter112[Symbol.iterator] === "function") ? (ρσ_Iter112 instanceof Map ? ρσ_Iter112.keys() : ρσ_Iter112) : Object.keys(ρσ_Iter112));
+            for (var ρσ_Index112 of ρσ_Iter112) {
+                comm = ρσ_Index112;
                 if (comm.type === "comment1") {
                     output.print(ρσ_operator_add(ρσ_operator_add("//", comm.value), "\n"));
                     output.indent();
@@ -16974,9 +16957,10 @@ return this.__repr__();
         function write_imports(module, output) {
             var imports, import_id, nonlocalvars, name, module_, module_id;
             imports = ρσ_list_decorate([]);
-            var ρσ_Iter113 = ρσ_Iterable(Object.keys(module.imports));
-            for (var ρσ_Index113 = 0; ρσ_Index113 < ρσ_Iter113.length; ρσ_Index113++) {
-                import_id = ρσ_Iter113[ρσ_Index113];
+            var ρσ_Iter113 = Object.keys(module.imports);
+            ρσ_Iter113 = ((typeof ρσ_Iter113[Symbol.iterator] === "function") ? (ρσ_Iter113 instanceof Map ? ρσ_Iter113.keys() : ρσ_Iter113) : Object.keys(ρσ_Iter113));
+            for (var ρσ_Index113 of ρσ_Iter113) {
+                import_id = ρσ_Index113;
                 imports.push((ρσ_expr_temp = module.imports)[(typeof import_id === "number" && import_id < 0) ? ρσ_expr_temp.length + import_id : import_id]);
             }
             imports.sort((function() {
@@ -16999,12 +16983,14 @@ return this.__repr__();
                 output.newline();
             }
             nonlocalvars = Object.create(null);
-            var ρσ_Iter114 = ρσ_Iterable(imports);
-            for (var ρσ_Index114 = 0; ρσ_Index114 < ρσ_Iter114.length; ρσ_Index114++) {
-                module_ = ρσ_Iter114[ρσ_Index114];
-                var ρσ_Iter115 = ρσ_Iterable(module_.nonlocalvars);
-                for (var ρσ_Index115 = 0; ρσ_Index115 < ρσ_Iter115.length; ρσ_Index115++) {
-                    name = ρσ_Iter115[ρσ_Index115];
+            var ρσ_Iter114 = imports;
+            ρσ_Iter114 = ((typeof ρσ_Iter114[Symbol.iterator] === "function") ? (ρσ_Iter114 instanceof Map ? ρσ_Iter114.keys() : ρσ_Iter114) : Object.keys(ρσ_Iter114));
+            for (var ρσ_Index114 of ρσ_Iter114) {
+                module_ = ρσ_Index114;
+                var ρσ_Iter115 = module_.nonlocalvars;
+                ρσ_Iter115 = ((typeof ρσ_Iter115[Symbol.iterator] === "function") ? (ρσ_Iter115 instanceof Map ? ρσ_Iter115.keys() : ρσ_Iter115) : Object.keys(ρσ_Iter115));
+                for (var ρσ_Index115 of ρσ_Iter115) {
+                    name = ρσ_Index115;
                     nonlocalvars[(typeof name === "number" && name < 0) ? nonlocalvars.length + name : name] = true;
                 }
             }
@@ -17015,9 +17001,10 @@ return this.__repr__();
                 output.semicolon();
                 output.newline();
             }
-            var ρσ_Iter116 = ρσ_Iterable(imports);
-            for (var ρσ_Index116 = 0; ρσ_Index116 < ρσ_Iter116.length; ρσ_Index116++) {
-                module_ = ρσ_Iter116[ρσ_Index116];
+            var ρσ_Iter116 = imports;
+            ρσ_Iter116 = ((typeof ρσ_Iter116[Symbol.iterator] === "function") ? (ρσ_Iter116 instanceof Map ? ρσ_Iter116.keys() : ρσ_Iter116) : Object.keys(ρσ_Iter116));
+            for (var ρσ_Index116 of ρσ_Iter116) {
+                module_ = ρσ_Index116;
                 module_id = module_.module_id;
                 if (module_id !== "__main__") {
                     output.indent();
@@ -17030,9 +17017,10 @@ return this.__repr__();
                     output.end_statement();
                 }
             }
-            var ρσ_Iter117 = ρσ_Iterable(imports);
-            for (var ρσ_Index117 = 0; ρσ_Index117 < ρσ_Iter117.length; ρσ_Index117++) {
-                module_ = ρσ_Iter117[ρσ_Index117];
+            var ρσ_Iter117 = imports;
+            ρσ_Iter117 = ((typeof ρσ_Iter117[Symbol.iterator] === "function") ? (ρσ_Iter117 instanceof Map ? ρσ_Iter117.keys() : ρσ_Iter117) : Object.keys(ρσ_Iter117));
+            for (var ρσ_Index117 of ρσ_Iter117) {
+                module_ = ρσ_Index117;
                 if (module_.module_id !== "__main__") {
                     print_module(module_, output);
                 }
@@ -17058,14 +17046,6 @@ return this.__repr__();
             __module__ : {value: "output.modules"}
         });
 
-        function const_decl(js_version) {
-            return "var";
-        };
-        if (!const_decl.__argnames__) Object.defineProperties(const_decl, {
-            __argnames__ : {value: ["js_version"]},
-            __module__ : {value: "output.modules"}
-        });
-
         function declare_exports(module_id, exports, output, docstrings) {
             var seen, v, symbol;
             seen = Object.create(null);
@@ -17077,14 +17057,15 @@ return this.__repr__();
                     return ρσ_d;
                 }).call(this));
                 [output.newline(), output.indent()];
-                v = const_decl(output.options.js_version);
+                v = "var";
                 [output.assign(ρσ_operator_add(v, " ρσ_module_doc__")), output.print(JSON.stringify(create_doctring(docstrings)))];
                 output.end_statement();
             }
             output.newline();
-            var ρσ_Iter118 = ρσ_Iterable(exports);
-            for (var ρσ_Index118 = 0; ρσ_Index118 < ρσ_Iter118.length; ρσ_Index118++) {
-                symbol = ρσ_Iter118[ρσ_Index118];
+            var ρσ_Iter118 = exports;
+            ρσ_Iter118 = ((typeof ρσ_Iter118[Symbol.iterator] === "function") ? (ρσ_Iter118 instanceof Map ? ρσ_Iter118.keys() : ρσ_Iter118) : Object.keys(ρσ_Iter118));
+            for (var ρσ_Index118 of ρσ_Iter118) {
+                symbol = ρσ_Index118;
                 if (!Object.prototype.hasOwnProperty.call(seen, symbol.name)) {
                     output.indent();
                     if (module_id.indexOf(".") === -1) {
@@ -17104,12 +17085,12 @@ return this.__repr__();
         });
 
         function prologue(module, output) {
-            var v, needs_yield;
+            var v;
             if (output.options.omit_baselib) {
                 return;
             }
             output.indent();
-            v = const_decl(output.options.js_version);
+            v = "var";
             [output.print(v), output.space()];
             output.spaced.apply(output, "ρσ_iterator_symbol = (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") ? Symbol.iterator : \"iterator-Symbol-5d0927e5554349048cf0e3762a228256\"".split(" "));
             output.end_statement();
@@ -17119,14 +17100,8 @@ return this.__repr__();
             [output.indent(), output.spaced("var", "ρσ_cond_temp,", "ρσ_expr_temp,", "ρσ_last_exception"), 
             output.end_statement()];
             [output.indent(), output.spaced("var", "ρσ_object_counter", "=", "0"), output.end_statement()];
-            if (output.options.js_version > 5) {
-                [output.indent(), output.spaced("if(", "typeof", "HTMLCollection", "!==", "\"undefined\"", "&&", "typeof", "Symbol", "===", "\"function\")", "NodeList.prototype[Symbol.iterator]", "=", "HTMLCollection.prototype[Symbol.iterator]", "=", "NamedNodeMap.prototype[Symbol.iterator]", "=", "Array.prototype[Symbol.iterator]")];
-                output.end_statement();
-            }
-            needs_yield = output.options.js_version < 6 && module.baselib["yield"];
-            if (needs_yield) {
-                output.dump_yield();
-            }
+            [output.indent(), output.spaced("if(", "typeof", "HTMLCollection", "!==", "\"undefined\"", "&&", "typeof", "Symbol", "===", "\"function\")", "NodeList.prototype[Symbol.iterator]", "=", "HTMLCollection.prototype[Symbol.iterator]", "=", "NamedNodeMap.prototype[Symbol.iterator]", "=", "Array.prototype[Symbol.iterator]")];
+            output.end_statement();
             if (!output.options.baselib_plain) {
                 throw new ValueError("The baselib is missing! Remember to set the baselib_plain field on the options for OutputStream");
             }
@@ -17146,7 +17121,7 @@ return this.__repr__();
                 var v;
                 if (is_main && output.options.keep_docstrings && self.docstrings && self.docstrings.length) {
                     [output.newline(), output.indent()];
-                    v = const_decl(output.options.js_version);
+                    v = "var";
                     [output.assign(ρσ_operator_add(v, " ρσ_module_doc__")), output.print(JSON.stringify(create_doctring(self.docstrings)))];
                     output.end_statement();
                 }
@@ -17250,7 +17225,7 @@ return this.__repr__();
                     output.print("function()");
                     output.with_block((function() {
                         var ρσ_anonfunc = function () {
-                            var okey, cached, cobj, cname, symdef, co, raw, js_version, keep_docstrings, beautify, cached_name;
+                            var okey, cached, cobj, cname, symdef, co, raw, keep_docstrings, beautify, cached_name;
                             print_comments(self, output);
                             if (output.options.write_name) {
                                 output.indent();
@@ -17260,15 +17235,15 @@ return this.__repr__();
                                 output.semicolon();
                                 output.newline();
                             }
-                            function output_key(beautify, keep_docstrings, js_version) {
-                                return ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add(ρσ_operator_add("beautify:", beautify), " keep_docstrings:"), keep_docstrings), " js_version:"), js_version);
+                            function output_key(beautify, keep_docstrings) {
+                                return ρσ_operator_add(ρσ_operator_add(ρσ_operator_add("beautify:", beautify), " keep_docstrings:"), keep_docstrings);
                             };
                             if (!output_key.__argnames__) Object.defineProperties(output_key, {
-                                __argnames__ : {value: ["beautify", "keep_docstrings", "js_version"]},
+                                __argnames__ : {value: ["beautify", "keep_docstrings"]},
                                 __module__ : {value: "output.modules"}
                             });
 
-                            okey = output_key(output.options.beautify, output.options.keep_docstrings, output.options.js_version);
+                            okey = output_key(output.options.beautify, output.options.keep_docstrings);
                             if (self.is_cached && ρσ_in(okey, self.outputs)) {
                                 output.print((ρσ_expr_temp = self.outputs)[(typeof okey === "number" && okey < 0) ? ρσ_expr_temp.length + okey : okey]);
                             } else {
@@ -17287,9 +17262,10 @@ return this.__repr__();
                                         ρσ_d["discard_asserts"] = !!output.options.discard_asserts;
                                         return ρσ_d;
                                     }).call(this);
-                                    var ρσ_Iter119 = ρσ_Iterable(Object.keys(self.classes));
-                                    for (var ρσ_Index119 = 0; ρσ_Index119 < ρσ_Iter119.length; ρσ_Index119++) {
-                                        cname = ρσ_Iter119[ρσ_Index119];
+                                    var ρσ_Iter119 = Object.keys(self.classes);
+                                    ρσ_Iter119 = ((typeof ρσ_Iter119[Symbol.iterator] === "function") ? (ρσ_Iter119 instanceof Map ? ρσ_Iter119.keys() : ρσ_Iter119) : Object.keys(ρσ_Iter119));
+                                    for (var ρσ_Index119 of ρσ_Iter119) {
+                                        cname = ρσ_Index119;
                                         cobj = (ρσ_expr_temp = self.classes)[(typeof cname === "number" && cname < 0) ? ρσ_expr_temp.length + cname : cname];
                                         (ρσ_expr_temp = cached.classes)[(typeof cname === "number" && cname < 0) ? ρσ_expr_temp.length + cname : cname] = (function(){
                                             var ρσ_d = Object.create(null);
@@ -17304,46 +17280,43 @@ return this.__repr__();
                                             return ρσ_d;
                                         }).call(this);
                                     }
-                                    var ρσ_Iter120 = ρσ_Iterable(self.exports);
-                                    for (var ρσ_Index120 = 0; ρσ_Index120 < ρσ_Iter120.length; ρσ_Index120++) {
-                                        symdef = ρσ_Iter120[ρσ_Index120];
+                                    var ρσ_Iter120 = self.exports;
+                                    ρσ_Iter120 = ((typeof ρσ_Iter120[Symbol.iterator] === "function") ? (ρσ_Iter120 instanceof Map ? ρσ_Iter120.keys() : ρσ_Iter120) : Object.keys(ρσ_Iter120));
+                                    for (var ρσ_Index120 of ρσ_Iter120) {
+                                        symdef = ρσ_Index120;
                                         cached.exports.push((function(){
                                             var ρσ_d = Object.create(null);
                                             ρσ_d["name"] = symdef.name;
                                             return ρσ_d;
                                         }).call(this));
                                     }
-                                    var ρσ_Iter121 = ρσ_Iterable(ρσ_list_decorate([ true, false ]));
-                                    for (var ρσ_Index121 = 0; ρσ_Index121 < ρσ_Iter121.length; ρσ_Index121++) {
-                                        beautify = ρσ_Iter121[ρσ_Index121];
-                                        var ρσ_Iter122 = ρσ_Iterable(ρσ_list_decorate([ true, false ]));
-                                        for (var ρσ_Index122 = 0; ρσ_Index122 < ρσ_Iter122.length; ρσ_Index122++) {
-                                            keep_docstrings = ρσ_Iter122[ρσ_Index122];
-                                            var ρσ_Iter123 = ρσ_Iterable(ρσ_list_decorate([ 5, 6 ]));
-                                            for (var ρσ_Index123 = 0; ρσ_Index123 < ρσ_Iter123.length; ρσ_Index123++) {
-                                                js_version = ρσ_Iter123[ρσ_Index123];
-                                                co = new OutputStream((function(){
-                                                    var ρσ_d = Object.create(null);
-                                                    ρσ_d["beautify"] = beautify;
-                                                    ρσ_d["keep_docstrings"] = keep_docstrings;
-                                                    ρσ_d["js_version"] = js_version;
-                                                    ρσ_d["private_scope"] = false;
-                                                    ρσ_d["write_name"] = false;
-                                                    ρσ_d["discard_asserts"] = output.options.discard_asserts;
-                                                    return ρσ_d;
-                                                }).call(this));
-                                                co.with_indent(output.indentation(), (function() {
-                                                    var ρσ_anonfunc = function () {
-                                                        output_module(co);
-                                                    };
-                                                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                                                        __module__ : {value: "output.modules"}
-                                                    });
-                                                    return ρσ_anonfunc;
-                                                })());
-                                                raw = co.get();
-                                                (ρσ_expr_temp = cached.outputs)[ρσ_bound_index(output_key(beautify, keep_docstrings, js_version), ρσ_expr_temp)] = raw;
-                                            }
+                                    var ρσ_Iter121 = ρσ_list_decorate([ true, false ]);
+                                    ρσ_Iter121 = ((typeof ρσ_Iter121[Symbol.iterator] === "function") ? (ρσ_Iter121 instanceof Map ? ρσ_Iter121.keys() : ρσ_Iter121) : Object.keys(ρσ_Iter121));
+                                    for (var ρσ_Index121 of ρσ_Iter121) {
+                                        beautify = ρσ_Index121;
+                                        var ρσ_Iter122 = ρσ_list_decorate([ true, false ]);
+                                        ρσ_Iter122 = ((typeof ρσ_Iter122[Symbol.iterator] === "function") ? (ρσ_Iter122 instanceof Map ? ρσ_Iter122.keys() : ρσ_Iter122) : Object.keys(ρσ_Iter122));
+                                        for (var ρσ_Index122 of ρσ_Iter122) {
+                                            keep_docstrings = ρσ_Index122;
+                                            co = new OutputStream((function(){
+                                                var ρσ_d = Object.create(null);
+                                                ρσ_d["beautify"] = beautify;
+                                                ρσ_d["keep_docstrings"] = keep_docstrings;
+                                                ρσ_d["write_name"] = false;
+                                                ρσ_d["discard_asserts"] = output.options.discard_asserts;
+                                                return ρσ_d;
+                                            }).call(this));
+                                            co.with_indent(output.indentation(), (function() {
+                                                var ρσ_anonfunc = function () {
+                                                    output_module(co);
+                                                };
+                                                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                                                    __module__ : {value: "output.modules"}
+                                                });
+                                                return ρσ_anonfunc;
+                                            })());
+                                            raw = co.get();
+                                            (ρσ_expr_temp = cached.outputs)[ρσ_bound_index(output_key(beautify, keep_docstrings), ρσ_expr_temp)] = raw;
                                         }
                                     }
                                     cached_name = cache_file_name(self.filename, output.options.module_cache_dir);
@@ -17411,13 +17384,15 @@ return this.__repr__();
                 __module__ : {value: "output.modules"}
             });
 
-            var ρσ_Iter124 = ρσ_Iterable(container.imports);
-            for (var ρσ_Index124 = 0; ρσ_Index124 < ρσ_Iter124.length; ρσ_Index124++) {
-                self = ρσ_Iter124[ρσ_Index124];
+            var ρσ_Iter123 = container.imports;
+            ρσ_Iter123 = ((typeof ρσ_Iter123[Symbol.iterator] === "function") ? (ρσ_Iter123 instanceof Map ? ρσ_Iter123.keys() : ρσ_Iter123) : Object.keys(ρσ_Iter123));
+            for (var ρσ_Index123 of ρσ_Iter123) {
+                self = ρσ_Index123;
                 if (self.argnames) {
-                    var ρσ_Iter125 = ρσ_Iterable(self.argnames);
-                    for (var ρσ_Index125 = 0; ρσ_Index125 < ρσ_Iter125.length; ρσ_Index125++) {
-                        argname = ρσ_Iter125[ρσ_Index125];
+                    var ρσ_Iter124 = self.argnames;
+                    ρσ_Iter124 = ((typeof ρσ_Iter124[Symbol.iterator] === "function") ? (ρσ_Iter124 instanceof Map ? ρσ_Iter124.keys() : ρσ_Iter124) : Object.keys(ρσ_Iter124));
+                    for (var ρσ_Index124 of ρσ_Iter124) {
+                        argname = ρσ_Index124;
                         akey = (argname.alias) ? argname.alias.name : argname.name;
                         add_aname(akey, self.key, argname.name);
                     }
@@ -17426,9 +17401,10 @@ return this.__repr__();
                         add_aname(self.alias.name, self.key, false);
                     } else {
                         parts = self.key.split(".");
-                        var ρσ_Iter126 = ρσ_Iterable(enumerate(parts));
-                        for (var ρσ_Index126 = 0; ρσ_Index126 < ρσ_Iter126.length; ρσ_Index126++) {
-                            ρσ_unpack = ρσ_Iter126[ρσ_Index126];
+                        var ρσ_Iter125 = enumerate(parts);
+                        ρσ_Iter125 = ((typeof ρσ_Iter125[Symbol.iterator] === "function") ? (ρσ_Iter125 instanceof Map ? ρσ_Iter125.keys() : ρσ_Iter125) : Object.keys(ρσ_Iter125));
+                        for (var ρσ_Index125 of ρσ_Iter125) {
+                            ρσ_unpack = ρσ_Index125;
                             i = ρσ_unpack[0];
                             part = ρσ_unpack[1];
                             if (i === 0) {
@@ -17451,7 +17427,6 @@ return this.__repr__();
 
         ρσ_modules["output.modules"].write_imports = write_imports;
         ρσ_modules["output.modules"].write_main_name = write_main_name;
-        ρσ_modules["output.modules"].const_decl = const_decl;
         ρσ_modules["output.modules"].declare_exports = declare_exports;
         ρσ_modules["output.modules"].prologue = prologue;
         ρσ_modules["output.modules"].print_top_level = print_top_level;
@@ -17919,9 +17894,10 @@ return this.__repr__();
                     output.with_block((function() {
                         var ρσ_anonfunc = function () {
                             var stmt;
-                            var ρσ_Iter127 = ρσ_Iterable(self.body.body);
-                            for (var ρσ_Index127 = 0; ρσ_Index127 < ρσ_Iter127.length; ρσ_Index127++) {
-                                stmt = ρσ_Iter127[ρσ_Index127];
+                            var ρσ_Iter126 = self.body.body;
+                            ρσ_Iter126 = ((typeof ρσ_Iter126[Symbol.iterator] === "function") ? (ρσ_Iter126 instanceof Map ? ρσ_Iter126.keys() : ρσ_Iter126) : Object.keys(ρσ_Iter126));
+                            for (var ρσ_Index126 of ρσ_Iter126) {
+                                stmt = ρσ_Index126;
                                 output.indent();
                                 stmt.print(output);
                                 output.newline();
@@ -18138,9 +18114,10 @@ return this.__repr__();
                     var ρσ_unpack, i, def_, p, in_for, avoid_semicolon;
                     output.print(kind);
                     output.space();
-                    var ρσ_Iter128 = ρσ_Iterable(enumerate(this.definitions));
-                    for (var ρσ_Index128 = 0; ρσ_Index128 < ρσ_Iter128.length; ρσ_Index128++) {
-                        ρσ_unpack = ρσ_Iter128[ρσ_Index128];
+                    var ρσ_Iter127 = enumerate(this.definitions);
+                    ρσ_Iter127 = ((typeof ρσ_Iter127[Symbol.iterator] === "function") ? (ρσ_Iter127 instanceof Map ? ρσ_Iter127.keys() : ρσ_Iter127) : Object.keys(ρσ_Iter127));
+                    for (var ρσ_Index127 of ρσ_Iter127) {
+                        ρσ_unpack = ρσ_Index127;
                         i = ρσ_unpack[0];
                         def_ = ρσ_unpack[1];
                         if (i) {
@@ -18409,9 +18386,10 @@ return this.__repr__();
             exports.SyntaxError = SyntaxError;
             exports.tokenizer = tokenizer;
             ast = ρσ_modules["ast"];
-            var ρσ_Iter129 = ρσ_Iterable(ast);
-            for (var ρσ_Index129 = 0; ρσ_Index129 < ρσ_Iter129.length; ρσ_Index129++) {
-                ast_node = ρσ_Iter129[ρσ_Index129];
+            var ρσ_Iter128 = ast;
+            ρσ_Iter128 = ((typeof ρσ_Iter128[Symbol.iterator] === "function") ? (ρσ_Iter128 instanceof Map ? ρσ_Iter128.keys() : ρσ_Iter128) : Object.keys(ρσ_Iter128));
+            for (var ρσ_Index128 of ρσ_Iter128) {
+                ast_node = ρσ_Index128;
                 if (ast_node.substr(0, 4) === "AST_") {
                     exports[(typeof ast_node === "number" && ast_node < 0) ? exports.length + ast_node : ast_node] = ast[(typeof ast_node === "number" && ast_node < 0) ? ast.length + ast_node : ast_node];
                 }

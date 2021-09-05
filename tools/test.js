@@ -87,7 +87,6 @@ module.exports = function (argv, base_path, src_path, lib_path) {
     var output = new JPython.OutputStream({
       baselib_plain: baselib,
       beautify: true,
-      js_version: 6,
       keep_docstrings: true,
     });
     ast.print(output);

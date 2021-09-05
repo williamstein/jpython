@@ -239,7 +239,6 @@ function compile(code, filename, options) {
     beautify: options.beautify === undefined ? true : options.beautify,
     private_scope: !options.bare,
     omit_baselib: !!options.omit_baselib,
-    js_version: options.js_version || 5,
   };
   if (!out_ops.omit_baselib) {
     out_ops.baselib_plain = data["baselib-plain-pretty.js"];

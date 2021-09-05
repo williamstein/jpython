@@ -204,21 +204,11 @@ def function_definition(self, output, strip_first, as_expression):
     if self.is_generator:
         output.print('()'), output.space()
         output.with_block(def():
-            if output.options.js_version >= 6:
-                output.indent()
-                output.print('function* js_generator')
-                function_args(self.argnames, output, strip_first)
-                print_bracketed(self, output, True, function_preamble)
-            else:
-                temp = OutputStream({'beautify':True})
-                temp.print('function* js_generator')
-                function_args(self.argnames, temp, strip_first)
-                print_bracketed(self, temp, True, function_preamble)
-                transpiled = regenerate(temp.get(), output.options.beautify).replace(/regeneratorRuntime.(wrap|mark)/g, 'ρσ_regenerator.regeneratorRuntime.$1')
-                if output.options.beautify:
-                    ci = output.make_indent(0)
-                    transpiled = [ci + x for x in transpiled.split('\n')].join('\n')
-                output.print(transpiled)
+            output.indent()
+            output.print('function* js_generator')
+            function_args(self.argnames, output, strip_first)
+            print_bracketed(self, output, True, function_preamble)
+
             output.newline()
             output.indent()
             output.spaced('var', 'result', '=', 'js_generator.apply(this,', 'arguments)')

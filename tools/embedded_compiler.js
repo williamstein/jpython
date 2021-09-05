@@ -20,7 +20,6 @@ module.exports = function (compiler, baselib, runjs, name) {
     ast,
     keep_baselib,
     keep_docstrings,
-    js_version,
     private_scope,
     write_name
   ) {
@@ -29,7 +28,6 @@ module.exports = function (compiler, baselib, runjs, name) {
       write_name: !!write_name,
       private_scope: !!private_scope,
       beautify: true,
-      js_version: js_version || 6,
       keep_docstrings: keep_docstrings,
     };
     if (keep_baselib) output_options.baselib_plain = baselib;
@@ -56,7 +54,6 @@ module.exports = function (compiler, baselib, runjs, name) {
         this.toplevel,
         opts.keep_baselib,
         opts.keep_docstrings,
-        opts.js_version,
         opts.private_scope,
         opts.write_name
       );

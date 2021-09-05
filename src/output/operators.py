@@ -193,10 +193,7 @@ def print_binary_op(self, output):
         if is_node_type(self.left, AST_Unary) and not self.left.parenthesized:
             left = self.left.expression
             output.print(self.left.operator)
-        if output.options.js_version > 6:
-            output.print('(('), left.print(output), output.spaced(')', '**', '('), self.right.print(output), output.print('))')
-        else:
-            output.print('Math.pow('), left.print(output), output.comma(), self.right.print(output), output.print(')')
+        output.print('(('), left.print(output), output.spaced(')', '**', '('), self.right.print(output), output.print('))')
     elif self.operator is '==' or self.operator is '!=':
         write_smart_equality(self, output)
     elif self.operator is 'instanceof':

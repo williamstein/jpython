@@ -623,9 +623,10 @@ function ρσ_max() {
     }
     if (kwargs.key) {
         args = (function() {
-            var ρσ_Iter = ρσ_Iterable(args), ρσ_Result = [], x;
-            for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
-                x = ρσ_Iter[ρσ_Index];
+            var ρσ_Iter = args, ρσ_Result = [], x;
+            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+            for (var ρσ_Index of ρσ_Iter) {
+                x = ρσ_Index;
                 ρσ_Result.push(kwargs.key(x));
             }
             ρσ_Result = ρσ_list_constructor(ρσ_Result);
@@ -3090,9 +3091,10 @@ if (!zip.__module__) Object.defineProperties(zip, {
 
 function any(iterable) {
     var i;
-    var ρσ_Iter0 = ρσ_Iterable(iterable);
-    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-        i = ρσ_Iter0[ρσ_Index0];
+    var ρσ_Iter0 = iterable;
+    ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+    for (var ρσ_Index0 of ρσ_Iter0) {
+        i = ρσ_Index0;
         if (i) {
             return true;
         }
@@ -3106,9 +3108,10 @@ if (!any.__argnames__) Object.defineProperties(any, {
 
 function all(iterable) {
     var i;
-    var ρσ_Iter1 = ρσ_Iterable(iterable);
-    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-        i = ρσ_Iter1[ρσ_Index1];
+    var ρσ_Iter1 = iterable;
+    ρσ_Iter1 = ((typeof ρσ_Iter1[Symbol.iterator] === "function") ? (ρσ_Iter1 instanceof Map ? ρσ_Iter1.keys() : ρσ_Iter1) : Object.keys(ρσ_Iter1));
+    for (var ρσ_Index1 of ρσ_Iter1) {
+        i = ρσ_Index1;
         if (!i) {
             return false;
         }
@@ -3147,9 +3150,10 @@ if (!ρσ_repr_js_builtin.__argnames__) Object.defineProperties(ρσ_repr_js_bui
 function ρσ_html_element_to_string(elem) {
     var attrs, val, attr, ans;
     attrs = [];
-    var ρσ_Iter0 = ρσ_Iterable(elem.attributes);
-    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-        attr = ρσ_Iter0[ρσ_Index0];
+    var ρσ_Iter0 = elem.attributes;
+    ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+    for (var ρσ_Index0 of ρσ_Iter0) {
+        attr = ρσ_Index0;
         if (attr.specified) {
             val = attr.value;
             if (val.length > 10) {

@@ -337,24 +337,6 @@ into the global namespace.
 */
 });
 
-opt(
-  "js_version",
-  "js,j",
-  "string",
-  "6",
-  function () {
-    /*
-The JavaScript version to output. By default, ES 5
-compatible JavaScript is output. You can specify 6
-to output ES 6 compatible JavaScript instead. The ES 6
-version of the code will be smaller and faster by making
-use of some ES 6 only features, such as iterators and
-generators.
-*/
-  },
-  ["5", "6"]
-);
-
 opt("import_path", "p", "string", "", function () {
   /*
 A list of paths in which to look for imported modules.
@@ -376,19 +358,13 @@ add directories to the import path.
 */
 });
 
-opt(
-  "cache_dir",
-  "C",
-  "string",
-  "",
-  function () {
-    /*
+opt("cache_dir", "C", "string", "", function () {
+  /*
 directory to use to store the cached files generated
 by the compiler. If set to '' (the default) then no
 cached files are stored at all.
 */
-  }
-);
+});
 
 opt("comments", undefined, "string", "", function () {
   /*
@@ -656,13 +632,6 @@ Use fuzzy translations, they are ignored by default.
 });
 
 var argv = (module.exports.argv = parse_args());
-if (typeof argv.js_version === "string") {
-  argv.js_version = parseInt(argv.js_version);
-  if (isNaN(argv.js_version)) {
-    console.log("--js-version must be a number");
-    process.exit(1);
-  }
-}
 
 if (argv.help) {
   print_usage(!argv.auto_mode ? groups[argv.mode] : undefined);

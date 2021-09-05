@@ -63,18 +63,12 @@ def write_main_name(output):
         output.newline()
         output.newline()
 
-def const_decl(js_version):
-    # return 'const' if js_version > 5 else 'var'
-    # Workaround for bug in Chrome eval(). eval() barfs if it sees const before a function.
-    # See https://github.com/kovidgoyal/rapydscript-ng/issues/29
-    return 'var'
-
 def declare_exports(module_id, exports, output, docstrings):
     seen = {}
     if output.options.keep_docstrings and docstrings and docstrings.length:
         exports.push({'name':'__doc__', 'refname': 'ρσ_module_doc__'})
         output.newline(), output.indent()
-        v = const_decl(output.options.js_version)
+        v = 'var'
         output.assign(v + ' ρσ_module_doc__'), output.print(JSON.stringify(create_doctring(docstrings)))
         output.end_statement()
     output.newline()
@@ -94,7 +88,7 @@ def prologue(module, output):
     if output.options.omit_baselib:
         return
     output.indent()
-    v = const_decl(output.options.js_version)
+    v = 'var'
     output.print(v), output.space()
     output.spaced.apply(output, (('ρσ_iterator_symbol = (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") ? Symbol.iterator : "iterator-Symbol-5d0927e5554349048cf0e3762a228256"'.split(' '))))
     output.end_statement()
@@ -103,14 +97,10 @@ def prologue(module, output):
     output.end_statement()
     output.indent(), output.spaced('var', 'ρσ_cond_temp,', 'ρσ_expr_temp,', 'ρσ_last_exception'), output.end_statement()
     output.indent(), output.spaced('var', 'ρσ_object_counter', '=', '0'), output.end_statement()
-    if output.options.js_version > 5:
-        # Needed for Chrome < 51 and Edge as of August 2016
-        output.indent(), output.spaced('if(', 'typeof', 'HTMLCollection', '!==', '"undefined"', '&&', 'typeof', 'Symbol', '===', '"function")',
-            'NodeList.prototype[Symbol.iterator]', '=', 'HTMLCollection.prototype[Symbol.iterator]', '=', 'NamedNodeMap.prototype[Symbol.iterator]', '=', 'Array.prototype[Symbol.iterator]')
-        output.end_statement()
-    needs_yield = output.options.js_version < 6 and module.baselib['yield']
-    if needs_yield:
-        output.dump_yield()
+    # Needed for Chrome < 51 and Edge as of August 2016
+    output.indent(), output.spaced('if(', 'typeof', 'HTMLCollection', '!==', '"undefined"', '&&', 'typeof', 'Symbol', '===', '"function")',
+        'NodeList.prototype[Symbol.iterator]', '=', 'HTMLCollection.prototype[Symbol.iterator]', '=', 'NamedNodeMap.prototype[Symbol.iterator]', '=', 'Array.prototype[Symbol.iterator]')
+    output.end_statement()
     # output the baselib
     if not output.options.baselib_plain:
         raise ValueError('The baselib is missing! Remember to set the baselib_plain field on the options for OutputStream')
@@ -125,7 +115,7 @@ def print_top_level(self, output):
     def write_docstrings():
         if is_main and output.options.keep_docstrings and self.docstrings and self.docstrings.length:
             output.newline(), output.indent()
-            v = const_decl(output.options.js_version)
+            v = 'var'
             output.assign(v + ' ρσ_module_doc__'), output.print(JSON.stringify(create_doctring(self.docstrings)))
             output.end_statement()
 
@@ -198,9 +188,9 @@ def print_module(self, output):
                 output.print('"' + self.module_id + '"')
                 output.semicolon()
                 output.newline()
-            def output_key(beautify, keep_docstrings, js_version):
-                return 'beautify:' + beautify + ' keep_docstrings:' + keep_docstrings + ' js_version:' + js_version
-            okey = output_key(output.options.beautify, output.options.keep_docstrings, output.options.js_version)
+            def output_key(beautify, keep_docstrings):
+                return 'beautify:' + beautify + ' keep_docstrings:' + keep_docstrings
+            okey = output_key(output.options.beautify, output.options.keep_docstrings)
             if self.is_cached and okey in self.outputs:
                 output.print(self.outputs[okey])
             else:
@@ -218,17 +208,15 @@ def print_module(self, output):
                         cached.exports.push({'name':symdef.name})
                     for beautify in [True, False]:
                         for keep_docstrings in [True, False]:
-                            for js_version in [5, 6]:
-                                co = OutputStream({
-                                    'beautify':beautify, 'keep_docstrings':keep_docstrings,
-                                    'js_version':js_version, 'private_scope':False,
-                                    'write_name':False, 'discard_asserts':output.options.discard_asserts
-                                })
-                                co.with_indent(output.indentation(), def():
-                                    output_module(co)
-                                )
-                                raw = co.get()
-                                cached.outputs[output_key(beautify, keep_docstrings, js_version)] = raw
+                            co = OutputStream({
+                                'beautify':beautify, 'keep_docstrings':keep_docstrings,
+                                'write_name':False, 'discard_asserts':output.options.discard_asserts
+                            })
+                            co.with_indent(output.indentation(), def():
+                                output_module(co)
+                            )
+                            raw = co.get()
+                            cached.outputs[output_key(beautify, keep_docstrings)] = raw
                     cached_name = cache_file_name(self.filename, output.options.module_cache_dir)
                     try:
                         if cached_name:

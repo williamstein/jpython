@@ -53,7 +53,6 @@ output_stream_defaults = {
     'keep_docstrings': False,
     'discard_asserts': False,
     'module_cache_dir': '',
-    'js_version':5,
     'write_name': True,
 }
 

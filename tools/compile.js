@@ -55,7 +55,6 @@ module.exports = function (start_time, argv, base_path, src_path, lib_path) {
     beautify: true,
     private_scope: !argv.bare,
     omit_baselib: argv.omit_baselib,
-    js_version: parseInt(argv.js_version),
     keep_docstrings: argv.keep_docstrings,
     discard_asserts: argv.discard_asserts,
     module_cache_dir: cache_dir,
