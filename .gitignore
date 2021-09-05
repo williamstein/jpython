@@ -3,7 +3,6 @@
 *.swp
 *.tmp
 *.orig
-*.pyj-cached
 *.py-cached
 node_modules
 dev

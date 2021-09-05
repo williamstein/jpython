@@ -730,14 +730,14 @@ def create_parser_ctx(S, import_dirs, module_id, baselib_items, imported_module_
 
         def safe_read(base_path):
             # Attention: the length of this list is hardcoded in two ifs below!
-            for i, path in enumerate([base_path + '.pyj', base_path + '/__init__.pyj', base_path + '.py', base_path + '/__init__.py']):
+            for i, path in enumerate([base_path + '.py', base_path + '/__init__.py']):
                 try:
                     return [readfile(path, "utf-8"), path]  # noqa:undef
                 except as e:
                     if e.code is 'ENOENT' or e.code is 'EPERM' or e.code is 'EACCESS':
-                        if i is 3:
+                        if i is 1:
                             return None, None
-                    if i is 3:
+                    if i is 1:
                         raise
 
         src_code = filename = None

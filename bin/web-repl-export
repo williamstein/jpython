@@ -41,7 +41,7 @@ function process_dir(relpath) {
         var q = path.join(fullpath, x);
         var s = fs.statSync(q);
         if (s.isDirectory()) return process_dir(relpath + '/' + x);
-        if (!x.endsWith('.pyj')) return;
+        if (!x.endsWith('.py')) return;
         var iname = path.normalize('__stdlib__' + '/' + relpath + '/' + x);
         var raw = fs.readFileSync(q, {'encoding':'utf-8'});
         manifest[iname] = raw;

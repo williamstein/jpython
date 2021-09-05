@@ -14,10 +14,7 @@ var zlib = require("zlib");
 
 function compile_baselib(RapydScript, src_path) {
   var items = fs.readdirSync(src_path).filter(function (name) {
-    return (
-      name.slice(0, "baselib-".length) === "baselib-" &&
-      name.slice(-4) == ".pyj"
-    );
+    return name.startsWith("baselib-") && name.endsWith(".py");
   });
   var ans = { pretty: "" };
 
@@ -64,9 +61,11 @@ function check_for_changes(base_path, src_path, signatures) {
   function process_dir(p) {
     fs.readdirSync(p).forEach(function (name) {
       var fp = path.join(p, name);
-      if (name.substr(-4) === ".pyj")
+      if (name.endsWith(".py")) {
         src_file_names.push(path.relative(src_path, fp));
-      else if (name != "lib" && fs.statSync(fp).isDirectory()) process_dir(fp);
+      } else if (name != "lib" && fs.statSync(fp).isDirectory()) {
+        process_dir(fp);
+      }
     });
   }
   process_dir(src_path);
@@ -106,7 +105,7 @@ function check_for_changes(base_path, src_path, signatures) {
 }
 
 function compile(src_path, lib_path, sources, source_hash, profile) {
-  var file = path.join(src_path, "compiler.pyj");
+  var file = path.join(src_path, "compiler.py");
   var t1 = new Date().getTime();
   var RapydScript = require("./compiler").create_compiler();
   var output_options, profiler, cpu_profile;

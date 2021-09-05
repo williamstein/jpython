@@ -291,7 +291,7 @@ function parse_args() {
   return ans;
 } // }}}
 
-create_group("compile", "[input1.pyj input2.pyj ...]", function () {
+create_group("compile", "[input1.py input2.py ...]", function () {
   /*
 Compile RapydScript source code into JavaScript
 output. You can also pipe the source code into
@@ -442,11 +442,11 @@ it.
 
 create_group(
   "lint",
-  "[input1.pyj input2.pyj ...]",
+  "[input1.py input2.py ...]",
   function () {
     /*
 Run the RapydScript linter. This will find various
-possible problems in the .pyj files you specify and
+possible problems in the .py files you specify and
 write messages about them to stdout. Use - to read from STDIN.
 The main check it performs is for unused/undefined
 symbols, like pyflakes does for python.
@@ -586,7 +586,7 @@ node-inspector.
 
 create_group(
   "gettext",
-  "[input1.pyj input_dir ...]",
+  "[input1.py input_dir ...]",
   function () {
     /*
 Extract strings marked for translation from the specified
@@ -595,7 +595,7 @@ source files and directories.
   },
   function () {
     /*
-Directories are scanned recursively for .pyj files. If no
+Directories are scanned recursively for .py files. If no
 arguments are specified, the source code is read from stdin.
 
 Translatable string are output on stdout in the .po format.

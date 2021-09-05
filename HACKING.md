@@ -14,12 +14,12 @@ This will generate a build of the compiler in the `dev` directory. Now, the`jpyt
 
 The way the compiler works, given some JPython source code:
 
-- The source code is lexed into a stream of tokens (`src/tokenzier.pyj`)
-- The tokens are parsed into a Abstract Syntax Tree (`src/parse.pyj and src/ast.pyj`)
+- The source code is lexed into a stream of tokens (`src/tokenzier.py`)
+- The tokens are parsed into a Abstract Syntax Tree (`src/parse.py and src/ast.py`)
 - During parsing any import statement are resolved (this is different frompython, where imports happen at runtime, not compile time).
-- The Abstract Syntax Tree is transformed into the output JavaScript (`src/output/*.pyj`)
+- The Abstract Syntax Tree is transformed into the output JavaScript (`src/output/*.py`)
 - Various bits of functionality in JPython depend upon the _Base Library_
-  (`src/baselib*.pyj`). This includes things like the basic container types
+  (`src/baselib*.py`). This includes things like the basic container types
   (list/set/dict) string functions such as `str.format()`, etc. The baselib
   is automatically inserted into the start of the output JavaScript.
 
@@ -80,7 +80,7 @@ If you want to test longer sections of code, you can use the `-f` switch to
 pass in the path to a JPython file to compile, like this:
 
 ```sh
-~/jpython$ ./try.py -f myfile.pyj
+~/jpython$ ./try.py -f myfile.py
 ```
 
 Once you are happy with your changes, you can build the compiler and run the

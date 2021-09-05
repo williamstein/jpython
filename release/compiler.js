@@ -9678,7 +9678,7 @@ return this.__repr__();
         var is_token = ρσ_modules.tokenizer.is_token;
         var RESERVED_WORDS = ρσ_modules.tokenizer.RESERVED_WORDS;
 
-        COMPILER_VERSION = "3473f3f9f44f4e081e94a66087f70416414607ce";
+        COMPILER_VERSION = "1a475892e6fcac4482afa3ee6eb3aa0d639a6687";
         PYTHON_FLAGS = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["dict_literals"] = true;
@@ -10720,7 +10720,7 @@ return this.__repr__();
                 }
                 function safe_read(base_path) {
                     var ρσ_unpack, i, path;
-                    var ρσ_Iter54 = ρσ_Iterable(enumerate(ρσ_list_decorate([ ρσ_operator_add(base_path, ".pyj"), ρσ_operator_add(base_path, "/__init__.pyj"), ρσ_operator_add(base_path, ".py"), ρσ_operator_add(base_path, "/__init__.py") ])));
+                    var ρσ_Iter54 = ρσ_Iterable(enumerate(ρσ_list_decorate([ ρσ_operator_add(base_path, ".py"), ρσ_operator_add(base_path, "/__init__.py") ])));
                     for (var ρσ_Index54 = 0; ρσ_Index54 < ρσ_Iter54.length; ρσ_Index54++) {
                         ρσ_unpack = ρσ_Iter54[ρσ_Index54];
                         i = ρσ_unpack[0];
@@ -10732,11 +10732,11 @@ return this.__repr__();
                             {
                                 var e = ρσ_Exception;
                                 if (e.code === "ENOENT" || e.code === "EPERM" || e.code === "EACCESS") {
-                                    if (i === 3) {
+                                    if (i === 1) {
                                         return [null, null];
                                     }
                                 }
-                                if (i === 3) {
+                                if (i === 1) {
                                     throw ρσ_Exception;
                                 }
                             } 
