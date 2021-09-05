@@ -14,9 +14,9 @@ module.exports = function (compiler, options) {
     options.enum_global =
       "var global = Function('return this')(); Object.getOwnPropertyNames(global);";
 
-  function global_names(ctx) {
+  function global_names() {
     try {
-      var ans = vm.runInContext(options.enum_global, ctx);
+      var ans = vm.runInThisContext(options.enum_global);
       ans = ans.concat(all_keywords);
       ans.sort();
       var seen = {};
@@ -91,7 +91,7 @@ module.exports = function (compiler, options) {
     return ans;
   }
 
-  function find_completions(line, ctx) {
+  function find_completions(line) {
     var t;
     try {
       t = compiler.tokenizer(line, "<repl>");
@@ -113,7 +113,7 @@ module.exports = function (compiler, options) {
     }
     if (!tokens.length) {
       // New line or trailing space
-      return [global_names(ctx), ""];
+      return [global_names(), ""];
     }
     var last_tok = tokens[tokens.length - 1];
     if (
@@ -134,14 +134,14 @@ module.exports = function (compiler, options) {
         });
         if (prefix) {
           try {
-            result = vm.runInContext(prefix, ctx, { displayErrors: false });
+            result = vm.runInThisContext(prefix);
           } catch (e) {
             return [];
           }
           return [object_names(result, last_tok), last_tok];
         }
       } else {
-        return [prefix_matches(last_tok, global_names(ctx)), last_tok];
+        return [prefix_matches(last_tok, global_names()), last_tok];
       }
     }
     return [];

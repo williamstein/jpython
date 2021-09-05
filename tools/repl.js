@@ -13,25 +13,13 @@ var util = require("util");
 var utils = require("./utils");
 var completelib = require("./completer");
 var colored = utils.safe_colored;
-var RapydScript =
+var JPython =
   typeof create_rapydscript_compiler === "function"
     ? create_rapydscript_compiler()
     : require("./compiler").create_compiler();
 var has_prop = Object.prototype.hasOwnProperty.call.bind(
   Object.prototype.hasOwnProperty
 );
-
-function create_ctx(baselib, show_js, console) {
-  var ctx = vm.createContext({
-    console: console,
-    show_js: !!show_js,
-    RapydScript: RapydScript,
-    require: require,
-  });
-  vm.runInContext(baselib, ctx, { filename: "baselib-plain-pretty.js" });
-  vm.runInContext('var __name__ = "__repl__";', ctx);
-  return ctx;
-}
 
 var homedir = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
 var cachedir = expanduser(process.env.XDG_CACHE_HOME || "~/.cache");
@@ -90,21 +78,19 @@ module.exports = function (options) {
   var rl = options.readline.createInterface(options);
   var ps1 = options.colored(options.ps1, "green");
   var ps2 = options.colored(options.ps2, "yellow");
-  var ctx = create_ctx(
-    print_ast(RapydScript.parse("(def ():\n yield 1\n)"), true),
-    options.show_js,
-    options.console
-  );
+
+  initContext();
+
   var buffer = [];
   var more = false;
   var LINE_CONTINUATION_CHARS = ":\\";
   var toplevel;
   var import_dirs = utils.get_import_dirs();
-  var find_completions = completelib(RapydScript, options);
+  var find_completions = completelib(JPython, options);
 
   options.console.log(
     options.colored(
-      "Welcome to the RapydScript REPL! Press Ctrl+C then Ctrl+D to quit.",
+      "Welcome to the JPython REPL! Press Ctrl+C then Ctrl+D to quit.",
       "green",
       true
     )
@@ -140,9 +126,16 @@ module.exports = function (options) {
         path.join(options.lib_path, "baselib-plain-pretty.js"),
         "utf-8"
       );
-    var output = new RapydScript.OutputStream(output_options);
+    var output = new JPython.OutputStream(output_options);
     ast.print(output);
     return output.get();
+  }
+
+  function initContext() {
+    vm.runInThisContext(
+      print_ast(JPython.parse("(def ():\n yield 1\n)"), true)
+    );
+    vm.runInThisContext('var __name__ = "__repl__"; show_js=false;');
   }
 
   function resetbuffer() {
@@ -150,7 +143,7 @@ module.exports = function (options) {
   }
 
   function completer(line) {
-    return find_completions(line, ctx);
+    return find_completions(line);
   }
 
   function prompt() {
@@ -171,8 +164,8 @@ module.exports = function (options) {
   }
 
   function runjs(js) {
-    var result;
-    if (vm.runInContext("show_js", ctx)) {
+    let result;
+    if (vm.runInThisContext("show_js")) {
       options.console.log(
         options.colored(
           "---------- Compiled JavaScript ---------",
@@ -192,10 +185,7 @@ module.exports = function (options) {
     try {
       // Despite what the docs say node does not actually output any errors by itself
       // so, in case this bug is fixed later, we turn it off explicitly.
-      result = vm.runInContext(js, ctx, {
-        filename: "<repl>",
-        displayErrors: false,
-      });
+      result = vm.runInThisContext(js);
     } catch (e) {
       if (e.stack) options.console.error(e.stack);
       else options.console.error(e.toString());
@@ -210,7 +200,7 @@ module.exports = function (options) {
     var classes = toplevel ? toplevel.classes : undefined;
     var scoped_flags = toplevel ? toplevel.scoped_flags : undefined;
     try {
-      toplevel = RapydScript.parse(source, {
+      toplevel = JPython.parse(source, {
         filename: "<repl>",
         basedir: process.cwd(),
         libdir: options.imp_path,
