@@ -19,6 +19,10 @@ def ρσ_operator_div(a, b):
 def ρσ_bool(val):
     return v'!!val'
 
+def ρσ_round(val):
+    # no attempt at Python semantics yet
+    return v"Math.round(val)"
+
 def ρσ_print():
     if v'typeof console' is 'object':
         parts = v'[]'
@@ -282,7 +286,7 @@ def ρσ_max(*args, **kwargs):
     raise TypeError('expected at least one argument')
 
 
-v'var abs = Math.abs, max = ρσ_max.bind(Math.max), min = ρσ_max.bind(Math.min), bool = ρσ_bool, type = ρσ_type'
+v'var round = ρσ_round; var abs = Math.abs, max = ρσ_max.bind(Math.max), min = ρσ_max.bind(Math.min), bool = ρσ_bool, type = ρσ_type'
 v'var float = ρσ_float, int = ρσ_int, arraylike = ρσ_arraylike_creator(), ρσ_arraylike = arraylike'
 v'var print = ρσ_print, id = ρσ_id, get_module = ρσ_get_module, pow = ρσ_pow, divmod = ρσ_divmod'
 v'var dir = ρσ_dir, ord = ρσ_ord, chr = ρσ_chr, bin = ρσ_bin, hex = ρσ_hex, callable = ρσ_callable'
