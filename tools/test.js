@@ -7,7 +7,7 @@
 "use strict"; /*jshint node:true */
 var path = require("path");
 var fs = require("fs");
-var RapydScript = require("./compiler").create_compiler();
+var JPython = require("./compiler").create_compiler();
 var utils = require("./utils");
 var colored = utils.safe_colored;
 
@@ -20,7 +20,7 @@ module.exports = function (argv, base_path, src_path, lib_path) {
   var compiler_dir = path.join(base_path, "dev");
   if (!utils.path_exists(path.join(compiler_dir, "compiler.js")))
     compiler_dir = path.join(base_path, "release");
-  var test_dir = path.join(base_path, "test");
+  var test_path = path.join(base_path, "test");
   var baselib = fs.readFileSync(
     path.join(lib_path, "baselib-plain-pretty.js"),
     "utf-8"
@@ -57,22 +57,23 @@ module.exports = function (argv, base_path, src_path, lib_path) {
   if (argv.files.length) {
     files = [];
     argv.files.forEach(function (fname) {
-      files.push(fname + ".pyj");
+      files.push(fname + ".py");
     });
   } else {
-    files = fs.readdirSync(test_dir).filter(function (name) {
-      return /^[^_].*\.pyj$/.test(name);
+    files = fs.readdirSync(test_path).filter(function (name) {
+      return /^[^_].*\.py$/.test(name);
     });
   }
   files.forEach(function (file) {
+    const t0 = new Date();
     var ast;
-    var filepath = path.join(test_dir, file);
+    var filepath = path.join(test_path, file);
     var failed = false;
     try {
-      ast = RapydScript.parse(fs.readFileSync(filepath, "utf-8"), {
+      ast = JPython.parse(fs.readFileSync(filepath, "utf-8"), {
         filename: file,
         toplevel: ast,
-        basedir: test_dir,
+        basedir: test_path,
         libdir: path.join(src_path, "lib"),
       });
     } catch (e) {
@@ -82,54 +83,51 @@ module.exports = function (argv, base_path, src_path, lib_path) {
       return;
     }
 
-    var js_version = 5;
-    while (js_version < 7) {
-      // generate output
-      var output = new RapydScript.OutputStream({
-        baselib_plain: baselib,
-        beautify: true,
-        js_version: js_version,
-        keep_docstrings: true,
-      });
-      ast.print(output);
+    // generate output
+    var output = new JPython.OutputStream({
+      baselib_plain: baselib,
+      beautify: true,
+      js_version: 6,
+      keep_docstrings: true,
+    });
+    ast.print(output);
 
-      // test that output performs correct JS operations
-      var jsfile = path.join(os.tmpdir(), file + "-es" + js_version + ".js");
-      var code = output.toString();
-      try {
-        vm.runInNewContext(
-          code,
-          {
-            assrt: assert,
-            __name__: jsfile,
-            require: require,
-            fs: fs,
-            RapydScript: RapydScript,
-            console: console,
-            compiler_dir: compiler_dir,
-            test_path: test_dir,
-            Buffer: Buffer,
-          },
-          { filename: jsfile }
-        );
-      } catch (e) {
-        failures.push(file);
-        failed = true;
-        fs.writeFileSync(jsfile, code);
-        console.error("Failed running: " + colored(jsfile, "red"));
-        if (e.stack)
-          console.error(colored(file, "red") + ":\n" + e.stack + "\n\n");
-        else console.error(colored(file, "red") + ": " + e + "\n\n");
-        js_version = 1000;
-      }
-      js_version++;
+    // test that output performs correct JS operations
+    var jsfile = path.join(os.tmpdir(), file + ".js");
+    var code = output.toString();
+    try {
+      vm.runInNewContext(
+        code,
+        {
+          assrt: assert,
+          __name__: jsfile,
+          require: require,
+          fs: fs,
+          RapydScript: JPython, // todo...
+          JPython,
+          console,
+          compiler_dir,
+          test_path,
+          Buffer: Buffer,
+        },
+        { filename: jsfile }
+      );
+    } catch (e) {
+      failures.push(file);
+      failed = true;
+      fs.writeFileSync(jsfile, code);
+      console.error("Failed running: " + colored(jsfile, "red"));
+      if (e.stack)
+        console.error(colored(file, "red") + ":\n" + e.stack + "\n\n");
+      else console.error(colored(file, "red") + ": " + e + "\n\n");
     }
-    if (!failed)
-      console.log(colored(file, "green") + ": test completed successfully\n");
-    else {
-      console.log(colored(file, "red") + ":\ttest failed\n");
-    }
+    console.log(
+      `${colored(file, "green")}: test ${
+        failed ? "FAILED" : "completed successfully"
+      } (${new Date().valueOf() - t0}ms)`
+    );
   });
+
   if (failures.length) {
     console.log(
       colored("There were " + failures.length + " test failure(s):", "red")
