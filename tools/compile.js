@@ -87,11 +87,8 @@ module.exports = function (start_time, argv, base_path, src_path, lib_path) {
       console.log(output);
     }
     if (argv.execute) {
-      vm.runInNewContext(
-        output,
-        { console: console, require: require },
-        { filename: files[0] }
-      );
+      //vm.runInNewContext(output, { console, require }, { filename: files[0] });
+      eval(output);
     }
   }
 

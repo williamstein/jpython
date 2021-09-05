@@ -68,7 +68,7 @@ function print_usage(group) {
   var COL_WIDTH = 79;
   var OPT_WIDTH = 23;
 
-  var usage = group ? group.usage : "[sub-command] ...";
+  var usage = group ? group.usage : "[subcommand] ...";
   console.log(
     colored("Usage:", COL1),
     colored(path.basename(process.argv[1]), COL2),
@@ -78,13 +78,13 @@ function print_usage(group) {
   if (!group) {
     // Overall usage
     help =
-      "RapydScript can perform many actions, depending on which" +
-      "\nsub-command is invoked. With no arguments, it will start a REPL," +
+      "JPython can perform many actions, depending on which" +
+      "\nsubcommand is invoked. With no arguments, it will start a REPL," +
       "\nunless STDIN is a pipe, in which case it will compile whatever" +
       "\nyou pass on STDIN and write the output to STDOUT. See the full" +
-      "\nlist of sub-commands below.";
+      "\nlist of subcommands below.";
     console.log(help, "\n");
-    console.log(colored("Sub-commands:", COL1));
+    console.log(colored("Subcommands:", COL1));
     Object.keys(groups).forEach(function (name) {
       console.log();
       var dt = utils.wrap(
@@ -248,12 +248,17 @@ function parse_args() {
         return a[0] !== "-";
       }).length > 0;
     ans.mode = !has_files && process.stdin.isTTY ? "repl" : "compile";
+    if (has_files) {
+      ans.execute = true;
+    }
     ans.auto_mode = true;
   }
   options = groups[ans.mode].options;
 
   Object.getOwnPropertyNames(options.default).forEach(function (name) {
-    ans[name] = options["default"][name];
+    if (ans[name] == null) {
+      ans[name] = options["default"][name];
+    }
   });
 
   Object.getOwnPropertyNames(options.alias).forEach(function (name) {
@@ -293,7 +298,7 @@ function parse_args() {
 
 create_group("compile", "[input1.py input2.py ...]", function () {
   /*
-Compile RapydScript source code into JavaScript
+Compile JPython source code into JavaScript
 output. You can also pipe the source code into
 stdin.
 */
@@ -307,7 +312,7 @@ Output file (default STDOUT)
 
 opt("bare", "b", "bool", false, function () {
   /*
-Remove the module wrapper that prevents RapydScript
+Remove the module wrapper that prevents JPython
 scope from bleeding into other JavaScript logic
 */
 });
@@ -391,8 +396,8 @@ Display operations run time on STDERR.
 
 opt("execute", "x,exec", "bool", false, function () {
   /*
-Compile and execute the RapydScript code, all in
-one invocation. Useful if you wish to use RapydScript for
+Compile and execute the JPython code, all in
+one invocation. Useful if you wish to use JPython for
 scripting. Note that you can also use the -o option to
 have the compiled JavaScript written out to a file
 before being executed. If you specify this option you
@@ -404,12 +409,12 @@ execution will fail.
 create_group("repl", "", function () {
   /*
 Run a Read-Eval-Print-Loop (REPL). This allows
-you to type and run RapydScript at a live
+you to type and run JPython at a live
 command prompt.
 */
 });
 
-opt("no_js", "", "bool", false, function () {
+opt("no_js", "", "bool", true, function () {
   /*
 Do not display the compiled JavaScript before executing
 it.
@@ -421,7 +426,7 @@ create_group(
   "[input1.py input2.py ...]",
   function () {
     /*
-Run the RapydScript linter. This will find various
+Run the JPython linter. This will find various
 possible problems in the .py files you specify and
 write messages about them to stdout. Use - to read from STDIN.
 The main check it performs is for unused/undefined
@@ -522,7 +527,7 @@ STDIN is used.
 
 create_group("test", "[test1 test2...]", function () {
   /*
-Run RapydScript tests. You can specify the name of
+Run JPython tests. You can specify the name of
 individual test files to only run tests from those
 files. For example:
 test baselib functions
