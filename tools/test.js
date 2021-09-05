@@ -64,6 +64,7 @@ module.exports = function (argv, base_path, src_path, lib_path) {
       return /^[^_].*\.py$/.test(name);
     });
   }
+  const t_start = new Date();
   files.forEach(function (file) {
     const t0 = new Date();
     var ast;
@@ -116,9 +117,11 @@ module.exports = function (argv, base_path, src_path, lib_path) {
       failed = true;
       fs.writeFileSync(jsfile, code);
       console.error("Failed running: " + colored(jsfile, "red"));
-      if (e.stack)
+      if (e.stack) {
         console.error(colored(file, "red") + ":\n" + e.stack + "\n\n");
-      else console.error(colored(file, "red") + ": " + e + "\n\n");
+      } else {
+        console.error(colored(file, "red") + ": " + e + "\n\n");
+      }
     }
     console.log(
       `${colored(file, "green")}: test ${
@@ -132,6 +135,13 @@ module.exports = function (argv, base_path, src_path, lib_path) {
       colored("There were " + failures.length + " test failure(s):", "red")
     );
     console.log.apply(console, failures);
-  } else console.log(colored("All tests passed!", "green"));
+  } else {
+    console.log(
+      colored(
+        `All tests passed! (${new Date().valueOf() - t_start}ms)`,
+        "green"
+      )
+    );
+  }
   process.exit(failures.length ? 1 : 0);
 };
