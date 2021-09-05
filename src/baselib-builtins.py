@@ -13,8 +13,11 @@ def ρσ_operator_sub(a, b):
 def ρσ_operator_mul(a, b):
     return v"(typeof a == 'object'  && a.__mul__ != null) ? a.__mul__(b) : a * b"
 
-def ρσ_operator_div(a, b):
-    return v"(typeof a == 'object'  && a.__div__ != null) ? a.__div__(b) : a / b"
+def ρσ_operator_truediv(a, b):
+    return v"(typeof a == 'object'  && a.__truediv__ != null) ? a.__truediv__(b) : a / b"
+
+def ρσ_operator_floordiv(a, b):
+    return v"(typeof a == 'object'  && a.__floordiv__ != null) ? a.__floordiv__(b) : Math.floor(a / b)"
 
 def ρσ_bool(val):
     return v'!!val'

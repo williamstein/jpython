@@ -30,10 +30,18 @@ if (!ρσ_operator_mul.__argnames__) Object.defineProperties(ρσ_operator_mul, 
     __module__ : {value: "__main__"}
 });
 
-function ρσ_operator_div(a, b) {
-    return (typeof a == 'object'  && a.__div__ != null) ? a.__div__(b) : a / b;
+function ρσ_operator_truediv(a, b) {
+    return (typeof a == 'object'  && a.__truediv__ != null) ? a.__truediv__(b) : a / b;
 };
-if (!ρσ_operator_div.__argnames__) Object.defineProperties(ρσ_operator_div, {
+if (!ρσ_operator_truediv.__argnames__) Object.defineProperties(ρσ_operator_truediv, {
+    __argnames__ : {value: ["a", "b"]},
+    __module__ : {value: "__main__"}
+});
+
+function ρσ_operator_floordiv(a, b) {
+    return (typeof a == 'object'  && a.__floordiv__ != null) ? a.__floordiv__(b) : Math.floor(a / b);
+};
+if (!ρσ_operator_floordiv.__argnames__) Object.defineProperties(ρσ_operator_floordiv, {
     __argnames__ : {value: ["a", "b"]},
     __module__ : {value: "__main__"}
 });
@@ -42,6 +50,14 @@ function ρσ_bool(val) {
     return !!val;
 };
 if (!ρσ_bool.__argnames__) Object.defineProperties(ρσ_bool, {
+    __argnames__ : {value: ["val"]},
+    __module__ : {value: "__main__"}
+});
+
+function ρσ_round(val) {
+    return Math.round(val);
+};
+if (!ρσ_round.__argnames__) Object.defineProperties(ρσ_round, {
     __argnames__ : {value: ["val"]},
     __module__ : {value: "__main__"}
 });
@@ -383,7 +399,7 @@ function ρσ_range(start, stop, step) {
         start = 0;
     }
     step = arguments[2] || 1;
-    length = Math.max(Math.ceil(ρσ_operator_div((ρσ_operator_sub(stop, start)), step)), 0);
+    length = Math.max(Math.ceil(ρσ_operator_truediv((ρσ_operator_sub(stop, start)), step)), 0);
     ans = {start:start, step:step, stop:stop};
     ans[ρσ_iterator_symbol] = (function() {
         var ρσ_anonfunc = function () {
@@ -605,7 +621,7 @@ function ρσ_divmod(x, y) {
     if (y === 0) {
         throw new ZeroDivisionError("integer division or modulo by zero");
     }
-    d = Math.floor(ρσ_operator_div(x, y));
+    d = Math.floor(ρσ_operator_truediv(x, y));
     return [d, ρσ_operator_sub(x, ρσ_operator_mul(d, y))];
 };
 if (!ρσ_divmod.__argnames__) Object.defineProperties(ρσ_divmod, {
@@ -656,7 +672,7 @@ if (!ρσ_max.__handles_kwarg_interpolation__) Object.defineProperties(ρσ_max,
     __module__ : {value: "__main__"}
 });
 
-var abs = Math.abs, max = ρσ_max.bind(Math.max), min = ρσ_max.bind(Math.min), bool = ρσ_bool, type = ρσ_type;
+var round = ρσ_round; var abs = Math.abs, max = ρσ_max.bind(Math.max), min = ρσ_max.bind(Math.min), bool = ρσ_bool, type = ρσ_type;
 var float = ρσ_float, int = ρσ_int, arraylike = ρσ_arraylike_creator(), ρσ_arraylike = arraylike;
 var print = ρσ_print, id = ρσ_id, get_module = ρσ_get_module, pow = ρσ_pow, divmod = ρσ_divmod;
 var dir = ρσ_dir, ord = ρσ_ord, chr = ρσ_chr, bin = ρσ_bin, hex = ρσ_hex, callable = ρσ_callable;
@@ -3574,7 +3590,7 @@ define_str_func("format", (function() {
                 } else if (align === ">") {
                     value = ρσ_operator_add(repeat(fill, ρσ_operator_sub(width, value.length)), value);
                 } else if (align === "^") {
-                    left = Math.floor((ρσ_operator_sub(width, value.length)) / 2);
+                    left = ρσ_operator_floordiv((ρσ_operator_sub(width, value.length)), 2);
                     right = ρσ_operator_sub(ρσ_operator_sub(width, left), value.length);
                     value = ρσ_operator_add(ρσ_operator_add(repeat(fill, left), value), repeat(fill, right));
                 } else if (align === "=") {
@@ -3749,7 +3765,7 @@ define_str_func("capitalize", (function() {
 define_str_func("center", (function() {
     var ρσ_anonfunc = function (width, fill) {
         var left, right;
-        left = Math.floor((ρσ_operator_sub(width, this.length)) / 2);
+        left = ρσ_operator_floordiv((ρσ_operator_sub(width, this.length)), 2);
         right = ρσ_operator_sub(ρσ_operator_sub(width, left), this.length);
         fill = fill || " ";
         return ρσ_operator_add(ρσ_operator_add(new Array(left+1).join(fill), this), new Array(right+1).join(fill));
@@ -4784,7 +4800,7 @@ return this.__repr__();
                 if (a.length <= 1) {
                     return a;
                 }
-                m = Math.floor(ρσ_operator_div(a.length, 2));
+                m = Math.floor(ρσ_operator_truediv(a.length, 2));
                 left = a.slice(0, m);
                 right = a.slice(m);
                 left = _ms(left);
@@ -9715,7 +9731,7 @@ return this.__repr__();
         var is_token = ρσ_modules.tokenizer.is_token;
         var RESERVED_WORDS = ρσ_modules.tokenizer.RESERVED_WORDS;
 
-        COMPILER_VERSION = "cfb10ed4ed55070753dcfc63aa739c417da45c18";
+        COMPILER_VERSION = "fd715f0a7a371462ccbf1f3a0889960eae8d76b4";
         PYTHON_FLAGS = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["dict_literals"] = true;
@@ -15202,21 +15218,6 @@ return this.__repr__();
                 output.print(self.operator);
                 output.space();
                 self.right.print(output);
-            } else if (self.operator === "//") {
-                output.print("Math.floor");
-                output.with_parens((function() {
-                    var ρσ_anonfunc = function () {
-                        self.left.print(output);
-                        output.space();
-                        output.print("/");
-                        output.space();
-                        self.right.print(output);
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "output.operators"}
-                    });
-                    return ρσ_anonfunc;
-                })());
             } else if (self.operator === "**") {
                 left = self.left;
                 if (is_node_type(self.left, AST_Unary) && !self.left.parenthesized) {
@@ -15254,8 +15255,11 @@ return this.__repr__();
                 [output.print("ρσ_operator_mul("), self.left.print(output), output.comma(), self.right.print(output), 
                 output.print(")")];
             } else if (self.operator === "/") {
-                [output.print("ρσ_operator_div("), self.left.print(output), output.comma(), self.right.print(output), 
-                output.print(")")];
+                [output.print("ρσ_operator_truediv("), self.left.print(output), output.comma(), 
+                self.right.print(output), output.print(")")];
+            } else if (self.operator === "//") {
+                [output.print("ρσ_operator_floordiv("), self.left.print(output), output.comma(), 
+                self.right.print(output), output.print(")")];
             } else {
                 output.spaced(self.left, self.operator, self.right);
             }

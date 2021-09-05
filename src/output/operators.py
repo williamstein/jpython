@@ -179,15 +179,6 @@ def print_binary_op(self, output):
         output.print(self.operator)
         output.space()
         self.right.print(output)
-    elif self.operator is '//':
-        output.print('Math.floor')
-        output.with_parens(def():
-            self.left.print(output)
-            output.space()
-            output.print('/')
-            output.space()
-            self.right.print(output)
-        )
     elif self.operator is '**':
         left = self.left
         if is_node_type(self.left, AST_Unary) and not self.left.parenthesized:
@@ -219,7 +210,9 @@ def print_binary_op(self, output):
     elif self.operator is '*':
         output.print('ρσ_operator_mul('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
     elif self.operator is '/':
-        output.print('ρσ_operator_div('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
+        output.print('ρσ_operator_truediv('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
+    elif self.operator is '//':
+        output.print('ρσ_operator_floordiv('),  self.left.print(output), output.comma(), self.right.print(output), output.print(')')
     else:
         output.spaced(self.left, self.operator, self.right)
 

@@ -199,7 +199,7 @@ module.exports = function (options) {
     // TODO: very dumb heuristic involving "="!
     // We don't want to print anything when the result is
     // from an assignment.  Easy to fool this of course with input "'='".
-    if (result !== undefined && !js.includes('=')) {
+    if (result != null && !js.includes('=')) {
       // We just print out the last result using normal Python printing.
       ρσ_print(result);
     }
