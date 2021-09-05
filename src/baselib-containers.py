@@ -21,16 +21,16 @@ def ρσ_equals(a, b):
     if jstype(a) is 'object' and jstype(b) is 'object' and a is not None and b is not None and (
         (a.constructor is Object and b.constructor is Object) or (Object.getPrototypeOf(a) is None and Object.getPrototypeOf(b) is None)
     ):
-            # Do a dict like comparison as this is most likely either a JS has
-            # (Object.create(null) or a JS object used as a hash (v"{}"))
-            akeys, bkeys = Object.keys(a), Object.keys(b)
-            if akeys.length is not bkeys.length:
+        # Do a dict like comparison as this is most likely either a JS has
+        # (Object.create(null) or a JS object used as a hash (v"{}"))
+        akeys, bkeys = Object.keys(a), Object.keys(b)
+        if akeys.length is not bkeys.length:
+            return False
+        for v'var j=0; j < akeys.length; j++':
+            key = akeys[j]
+            if not (a[key] == b[key]):
                 return False
-            for v'var j=0; j < akeys.length; j++':
-                key = akeys[j]
-                if not (a[key] == b[key]):
-                    return False
-            return True
+        return True
     return False
 
 def ρσ_not_equals(a, b):

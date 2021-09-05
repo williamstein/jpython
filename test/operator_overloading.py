@@ -24,8 +24,18 @@ def inverse_mod(a, N):
 
 class Mod:
     def __init__(self, x, n):
-        self.x = x % n
-        self.n = n
+        self.n = int(n)
+        self.x = int(x) % self.n
+        if self.x < 0:
+            self.x += self.n
+
+    def __eq__(self, right):
+        if not isinstance(right, Mod):
+            try:
+                right = Mod(right, self.n)
+            except:
+                return False
+        return self.x == right.x and self.n == right.n
 
     def __pow__(self, right, n): # not implemented yet
         """Dumb algorithm, of course."""
@@ -59,6 +69,7 @@ class Mod:
         print(f"Mod({self.x}, {self.n})")
 
 def test1():
+    #print('test1')
     a = Mod(3, 10)
     b = Mod(5, 10)
     c = a*b
@@ -66,6 +77,25 @@ def test1():
     assert((a * (b / a)).x == b.x)
     assert((b//a).x == 1)
 
+def test_arith():
+    #print("test_arith")
+    a = Mod(17, 35)
+    b = Mod(2, 35)
+    assert(a+b == Mod(19,35))
+    assert(b - a == 20)
+
+def test_equality():
+    #print("test_equality")
+    a = Mod(3, 10)
+    b = Mod(5, 10)
+    assert(not (a==b))
+    assert(a==a)
+    assert(b==b)
+    assert(a != b)
+    assert(a == 13)
+    assert(a != 'fred')
 
 if __name__ == "__main__":
     test1()
+    test_arith()
+    test_equality()

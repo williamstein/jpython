@@ -114,7 +114,7 @@ def write_smart_equality(self, output):
         return not (
             is_node_type(x, AST_Array) or is_node_type(x, AST_Set) or is_node_type(x, AST_Object) or
             is_node_type(x, AST_Statement) or is_node_type(x, AST_Binary) or is_node_type(x, AST_Conditional)
-            or is_node_type(x, AST_BaseCall)
+            or is_node_type(x, AST_BaseCall) or is_node_type(x, AST_SymbolRef)
         )
     if is_ok(self.left) and is_ok(self.right):
         if self.operator is '==':
