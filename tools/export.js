@@ -163,40 +163,8 @@ function vrequire(name, base) {
   return load(modpath);
 }
 
-var regenerator = null;
 var crypto = null,
   fs = require("fs");
-
-function regenerate(code, beautify) {
-  var orig = fs.readFileSync;
-  fs.readFileSync = function (name) {
-    if (!has(data, name)) {
-      throw { message: "Failed to readfile from data: " + name };
-    }
-    return data[name];
-  };
-  if (!regenerator) regenerator = vrequire("regenerator");
-  var ans;
-  if (code) {
-    try {
-      ans = regenerator.compile(code).code;
-    } catch (e) {
-      console.error(
-        "regenerator failed for code: " + code + "with error stack:\n" + e.stack
-      );
-      throw e;
-    }
-  } else {
-    // Return the runtime
-    ans = regenerator.compile("", { includeRuntime: true }).code;
-    start = ans.indexOf("=") + 1;
-    end = ans.lastIndexOf("typeof");
-    end = ans.lastIndexOf("}(", end);
-    ans = ans.slice(start + 1, end);
-  }
-  fs.readFileSync = orig;
-  return ans;
-}
 
 if (typeof this != "object" || typeof this.sha1sum !== "function") {
   var sha1sum = function (data) {
@@ -211,7 +179,7 @@ function create_compiler() {
   var compilerjs = data["compiler.js"];
   var module = { id: "compiler", exports: {} };
   var wrapped =
-    "(function(module, exports, readfile, writefile, sha1sum, regenerate) {" +
+    "(function(module, exports, readfile, writefile, sha1sum) {" +
     data["compiler.js"] +
     ";\n})";
   vm.runInThisContext(wrapped, { filename: "compiler.js" })(
@@ -219,8 +187,7 @@ function create_compiler() {
     module.exports,
     fs.readFileSync,
     fs.writeFileSync,
-    sha1sum,
-    regenerate
+    sha1sum
   );
   return module.exports;
 }

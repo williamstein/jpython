@@ -781,7 +781,7 @@ function ρσ_list_index(val, start, stop) {
         stop = ρσ_operator_add(this.length, stop);
     }
     for (var i = start; i < stop; i++) {
-        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === val || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val))) {
+        if (ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val)) {
             return i;
         }
     }
@@ -1020,7 +1020,7 @@ if (!ρσ_list_len.__module__) Object.defineProperties(ρσ_list_len, {
 
 function ρσ_list_contains(val) {
     for (var i = 0; i < this.length; i++) {
-        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === val || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val))) {
+        if (ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val)) {
             return true;
         }
     }
@@ -9099,7 +9099,7 @@ return this.__repr__();
                             if (has_x) {
                                 return true;
                             }
-                            if (has_e || (i === 0 || typeof i === "object" && ρσ_equals(i, 0))) {
+                            if (has_e || ρσ_equals(i, 0)) {
                                 return false;
                             }
                             has_e = true;
@@ -9731,7 +9731,7 @@ return this.__repr__();
         var is_token = ρσ_modules.tokenizer.is_token;
         var RESERVED_WORDS = ρσ_modules.tokenizer.RESERVED_WORDS;
 
-        COMPILER_VERSION = "fd715f0a7a371462ccbf1f3a0889960eae8d76b4";
+        COMPILER_VERSION = "2e10d36e1a211b256c5bccf5b3a9715ec0d052eb";
         PYTHON_FLAGS = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["dict_literals"] = true;
@@ -13570,33 +13570,6 @@ return this.__repr__();
         if (!OutputStream.prototype.colon.__module__) Object.defineProperties(OutputStream.prototype.colon, {
             __module__ : {value: "output.stream"}
         });
-        OutputStream.prototype.dump_yield = function dump_yield() {
-            var self = this;
-            var code, ci;
-            self.indent();
-            self.spaced("var", "ρσ_regenerator", "=", "{}");
-            self.end_statement();
-            code = ρσ_operator_add("ρσ_regenerator.regeneratorRuntime = ", regenerate(false, self.options.beautify));
-            if (self.options.beautify) {
-                code = code.replace(/\/\/.*$/gm, "\n").replace(/^\s*$/gm, "");
-                ci = self.make_indent(0);
-                code = (function() {
-                    var ρσ_Iter = code.split("\n"), ρσ_Result = [], x;
-                    ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                    for (var ρσ_Index of ρσ_Iter) {
-                        x = ρσ_Index;
-                        ρσ_Result.push(ρσ_operator_add(ci, x));
-                    }
-                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                    return ρσ_Result;
-                })().join("\n");
-            }
-            self.print(ρσ_operator_add(code, "})(ρσ_regenerator)"));
-            self.end_statement();
-        };
-        if (!OutputStream.prototype.dump_yield.__module__) Object.defineProperties(OutputStream.prototype.dump_yield, {
-            __module__ : {value: "output.stream"}
-        });
         OutputStream.prototype.get = function get() {
             var self = this;
             return self.OUTPUT;
@@ -15130,7 +15103,7 @@ return this.__repr__();
 
         function write_smart_equality(self, output) {
             function is_ok(x) {
-                return !((is_node_type(x, AST_Array) || is_node_type(x, AST_Set) || is_node_type(x, AST_Object) || is_node_type(x, AST_Statement) || is_node_type(x, AST_Binary) || is_node_type(x, AST_Conditional) || is_node_type(x, AST_BaseCall)));
+                return !((is_node_type(x, AST_Array) || is_node_type(x, AST_Set) || is_node_type(x, AST_Object) || is_node_type(x, AST_Statement) || is_node_type(x, AST_Binary) || is_node_type(x, AST_Conditional) || is_node_type(x, AST_BaseCall) || is_node_type(x, AST_SymbolRef)));
             };
             if (!is_ok.__argnames__) Object.defineProperties(is_ok, {
                 __argnames__ : {value: ["x"]},

@@ -1,6 +1,5 @@
 # vim:fileencoding=utf-8
 # License: BSD Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
-# globals:regenerate
 from __python__ import hash_literals
 
 from ast import AST_ClassCall, AST_New, has_calls, AST_Dot, AST_SymbolRef, is_node_type

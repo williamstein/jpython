@@ -774,7 +774,7 @@ function ρσ_list_index(val, start, stop) {
         stop = ρσ_operator_add(this.length, stop);
     }
     for (var i = start; i < stop; i++) {
-        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === val || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val))) {
+        if (ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val)) {
             return i;
         }
     }
@@ -1013,7 +1013,7 @@ if (!ρσ_list_len.__module__) Object.defineProperties(ρσ_list_len, {
 
 function ρσ_list_contains(val) {
     for (var i = 0; i < this.length; i++) {
-        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === val || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val))) {
+        if (ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], val)) {
             return true;
         }
     }

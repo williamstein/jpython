@@ -2,7 +2,12 @@
   "name": "@sagemath/jpython",
   "description": "A Javascript/Python friendly language for use by Sagejs",
   "homepage": "https://github.com/williamstein/jpython",
-  "keywords": ["javascript", "python", "language", "compiler"],
+  "keywords": [
+    "javascript",
+    "python",
+    "language",
+    "compiler"
+  ],
   "main": "tools/compiler.js",
   "scripts": {
     "test": "node bin/jpython self --complete --test",
@@ -28,11 +33,7 @@
     "url": "https://github.com/williamstein/jpython"
   },
   "dependencies": {
-    "prettier": "^2.3.2",
-    "regenerator": ">= 0.12.1"
-  },
-  "optionalDependencies": {
-    "v8-profiler": ">= 5.2.9"
+    "prettier": "^2.3.2"
   },
   "bin": {
     "jpython": "bin/jpython"

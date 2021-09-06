@@ -13,7 +13,6 @@ var path = require("path");
 var fs = require("fs");
 var crypto = require("crypto");
 var vm = require("vm");
-var regenerator = require("regenerator");
 
 function sha1sum(data) {
   var h = crypto.createHash("sha1");
@@ -30,21 +29,6 @@ function path_exists(path) {
   }
 }
 
-function regenerate(code, beautify) {
-  var ans, start, end;
-  if (code) {
-    ans = regenerator.compile(code).code;
-  } else {
-    // Return the runtime
-    ans = regenerator.compile("", { includeRuntime: true }).code;
-    start = ans.indexOf("=") + 1;
-    end = ans.lastIndexOf("typeof");
-    end = ans.lastIndexOf("}(", end);
-    ans = ans.slice(start + 1, end);
-  }
-  return ans;
-}
-
 function create_compiler() {
   var compiler_exports = {};
   var compiler_context = vm.createContext({
@@ -53,7 +37,6 @@ function create_compiler() {
     writefile: fs.writeFileSync,
     sha1sum: sha1sum,
     require: require,
-    regenerate: regenerate,
     exports: compiler_exports,
   });
 
