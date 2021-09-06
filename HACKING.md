@@ -43,17 +43,15 @@ rapydscript test classes
 
 ## Modifying the compiler
 
-Edit the files in the `src` directory to make your changes, then use the`./try.py` script to test them. This script will compile an updated version ofthe compiler with your changes, if any, and use it to run the snippet of codeyou pass to it.
-
-For example:
+Edit the files in the `src` directory to make your changes, then do `npm run test` to test them. This will compile an updated version of the compiler with your changes, if any, and use it to run the test suite.  You can also use `try.py` to test specific things.  For example:
 
 ```sh
 ~/jpython$ ./try.py 'print("Hello world")'
 ```
 
-will compile `print ("Hello world")` and show you the output on stdout. You can
-tell it to omit the baselib, so you can focus on the output, with the `-m`
-switch, like this:
+will compile `print ("Hello world")` and show you the compilation output on
+stdout. You can tell it to omit the baselib, so you can focus on the output,
+with the `-m` switch, like this:
 
 ```sh
 ~/jpython$ ./try.py -m 'print("Hello world")'
