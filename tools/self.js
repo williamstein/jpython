@@ -13,17 +13,22 @@ var vm = require("vm");
 var zlib = require("zlib");
 
 function compile_baselib(RapydScript, src_path) {
-  var items = fs.readdirSync(src_path).filter(function (name) {
-    return name.startsWith("baselib-") && name.endsWith(".py");
-  });
+  var items = fs
+    .readdirSync(path.join(src_path, "baselib"))
+    .filter(function (name) {
+      return name.endsWith(".py");
+    });
   var ans = { pretty: "" };
 
   items.sort().forEach(function (fname) {
-    var name = fname.slice("baselib-".length, -4),
+    var name = fname.slice(0, -3),
       ast;
-    var raw = fs.readFileSync(path.join(src_path, fname), "utf-8");
+    var raw = fs.readFileSync(path.join(src_path, "baselib", fname), "utf-8");
     try {
-      ast = RapydScript.parse(raw, { filename: fname, basedir: src_path });
+      ast = RapydScript.parse(raw, {
+        filename: fname,
+        basedir: path.join(src_path, "baselib"),
+      });
     } catch (e) {
       if (!(e instanceof RapydScript.SyntaxError)) throw e;
       console.error(e.toString());
