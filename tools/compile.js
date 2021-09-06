@@ -71,7 +71,7 @@ module.exports = function (start_time, argv, base_path, src_path, lib_path) {
       toplevel: toplevel,
       basedir: file !== "<stdin>" ? path.dirname(file) : undefined,
       libdir: path.join(src_path, "lib"),
-      import_dirs: utils.get_import_dirs(argv.import_path),
+      import_dirs: utils.getImportDirs(argv.import_path),
       discard_asserts: argv.discard_asserts,
       module_cache_dir: cache_dir,
     });

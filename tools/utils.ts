@@ -128,7 +128,7 @@ export function merge(): any {
   return ans;
 }
 
-export function get_import_dirs(paths_string: string, ignore_env?: boolean) {
+export function getImportDirs(paths_string?: string, ignore_env?: boolean) {
   const paths: string[] = [];
   function merge(new_path: string) {
     if (!paths.includes(new_path)) {
