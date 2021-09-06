@@ -12,7 +12,7 @@ var vm = require("vm");
 var util = require("util");
 var utils = require("./utils");
 var completelib = require("./completer");
-var colored = utils.safe_colored;
+var colored = utils.colored;
 var JPython =
   typeof create_rapydscript_compiler === "function"
     ? create_rapydscript_compiler()

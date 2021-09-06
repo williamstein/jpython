@@ -9,7 +9,7 @@ var path = require("path");
 var fs = require("fs");
 var JPython = require("./compiler").create_compiler();
 var utils = require("./utils");
-var colored = utils.safe_colored;
+var colored = utils.colored;
 
 module.exports = function (argv, base_path, src_path, lib_path) {
   // run all tests and exit
@@ -18,7 +18,7 @@ module.exports = function (argv, base_path, src_path, lib_path) {
   var failures = [];
   var vm = require("vm");
   var compiler_dir = path.join(base_path, "dev");
-  if (!utils.path_exists(path.join(compiler_dir, "compiler.js")))
+  if (!utils.pathExists(path.join(compiler_dir, "compiler.js")))
     compiler_dir = path.join(base_path, "release");
   var test_path = path.join(base_path, "test");
   var baselib = fs.readFileSync(

@@ -13,6 +13,7 @@ var path = require("path");
 var fs = require("fs");
 var crypto = require("crypto");
 var vm = require("vm");
+const util = require("./utils");
 
 function sha1sum(data) {
   var h = crypto.createHash("sha1");
@@ -40,10 +41,11 @@ function create_compiler() {
     exports: compiler_exports,
   });
 
-  var base = path.dirname(path.dirname(module.filename));
+  var base = path.dirname(path.dirname(path.join(module.filename, "..")));
   var compiler_dir = path.join(base, "dev");
-  if (!path_exists(path.join(compiler_dir, "compiler.js")))
+  if (!util.pathExists(path.join(compiler_dir, "compiler.js"))) {
     compiler_dir = path.join(base, "release");
+  }
   var compiler_file = path.join(compiler_dir, "compiler.js");
   var compilerjs = fs.readFileSync(compiler_file, "utf-8");
   vm.runInContext(

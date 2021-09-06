@@ -262,7 +262,6 @@ def create_parser_ctx(S, import_dirs, module_id, baselib_items, imported_module_
             if body.alternative:
                 ans = ans.concat(scan_for_top_level_callables(body.alternative))
 
-
         return ans
 
     def scan_for_classes(body):

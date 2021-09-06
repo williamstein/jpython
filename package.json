@@ -2,17 +2,13 @@
   "name": "@sagemath/jpython",
   "description": "A Javascript/Python friendly language for use by Sagejs",
   "homepage": "https://github.com/williamstein/jpython",
-  "keywords": [
-    "javascript",
-    "python",
-    "language",
-    "compiler"
-  ],
+  "keywords": ["javascript", "python", "language", "compiler"],
   "main": "tools/compiler.js",
   "scripts": {
-    "test": "node bin/jpython self --complete --test",
+    "test": "npx tsc && node bin/jpython self --complete --test",
     "start": "node bin/jpython",
-    "build": "node bin/jpython self --complete",
+    "build": "npx tsc && node bin/jpython self --complete",
+    "tsc": "npx tsc -w",
     "clean": "rm -rf dev",
     "prettier": "prettier --write .",
     "yapf": "yapf --write ."

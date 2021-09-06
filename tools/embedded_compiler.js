@@ -39,7 +39,7 @@ module.exports = function (compiler, baselib, runjs, name) {
   return {
     toplevel: null,
 
-    compile: function streaming_compile(code, opts) {
+    compile: (code, opts) => {
       opts = opts || {};
       var classes = this.toplevel ? this.toplevel.classes : undefined;
       var scoped_flags = this.toplevel ? this.toplevel.scoped_flags : undefined;
@@ -58,14 +58,14 @@ module.exports = function (compiler, baselib, runjs, name) {
         opts.write_name
       );
       if (classes) {
-        var exports = {};
+        var class_exports = {};
         var self = this;
         this.toplevel.exports.forEach(function (name) {
-          exports[name] = true;
+          class_exports[name] = true;
         });
         Object.getOwnPropertyNames(classes).forEach(function (name) {
           if (
-            !has_prop(exports, name) &&
+            !has_prop(class_exports, name) &&
             !has_prop(self.toplevel.classes, name)
           )
             self.toplevel.classes[name] = classes[name];

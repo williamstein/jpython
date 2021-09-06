@@ -24,7 +24,7 @@ module.exports = function (compiler, baselib) {
   return {
     in_block_mode: false,
 
-    replace_print: function replace_print(write_line_func) {
+    replace_print: (write_line_func) => {
       ctx.print = function () {
         var parts = [];
         for (var i = 0; i < arguments.length; i++)
@@ -33,7 +33,7 @@ module.exports = function (compiler, baselib) {
       };
     },
 
-    is_input_complete: function is_input_complete(source) {
+    is_input_complete: (source) => {
       if (!source || !source.trim()) return false;
       var lines = source.split("\n");
       var last_line = lines[lines.length - 1].trimRight();
@@ -69,14 +69,14 @@ module.exports = function (compiler, baselib) {
       return true;
     },
 
-    compile: function web_repl_compile(code, opts) {
+    compile: (code, opts) => {
       opts = opts || {};
       opts.keep_docstrings = true;
       opts.filename = "<input>";
       return streaming_compiler.compile(code, opts);
     },
 
-    runjs: function runjs(code) {
+    runjs: (code) => {
       var ans = vm.runInContext(code, ctx);
       if (ans !== undefined || ans === null) {
         ctx.ρσ_repl_val = ans;
@@ -86,11 +86,11 @@ module.exports = function (compiler, baselib) {
       return ans;
     },
 
-    init_completions: function init_completions(completelib) {
+    init_completions: (completelib) => {
       find_completions = completelib(compiler);
     },
 
-    find_completions: function find_completions_(line) {
+    find_completions: (line) => {
       return find_completions(line, ctx);
     },
   };

@@ -8,7 +8,7 @@
 
 var path = require("path");
 var utils = require("./utils");
-var colored = utils.safe_colored;
+var colored = utils.colored;
 var has_prop = Object.prototype.hasOwnProperty.call.bind(
   Object.prototype.hasOwnProperty
 );
@@ -347,7 +347,7 @@ opt("import_path", "p", "string", "", function () {
 A list of paths in which to look for imported modules.
 Multiple paths must be separated by the path separator
 (: on Unix and ; on Windows). You can also use the
-environment variable RAPYDSCRIPT_IMPORT_PATH for this,
+environment variable JPYTHONPATH for this,
 with identical syntax. Note that these directories
 are searched before the builtin paths, which means you
 can use them to replace builtin modules.

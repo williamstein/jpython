@@ -4,7 +4,7 @@
 "use strict";
 
 function load(mod) {
-    return require('../tools/' + mod);
+    return require('../dist/tools/' + mod);
 }
 
 var utils = load('utils');
@@ -29,7 +29,7 @@ if (!utils.generators_available()) {
     var base_path = path.normalize(path.join(path.dirname(module.filename), ".."));
     var src_path = path.join(base_path, 'src');
     var lib_path = path.join(base_path, 'dev');
-    if (!utils.path_exists(path.join(lib_path, 'compiler.js'))) lib_path = path.join(base_path, 'release');
+    if (!utils.pathExists(path.join(lib_path, 'compiler.js'))) lib_path = path.join(base_path, 'release');
 
     if (argv.mode === 'self') {
         if (argv.files.length > 0) {

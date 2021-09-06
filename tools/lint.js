@@ -10,7 +10,7 @@ var fs = require("fs");
 var RapydScript = require("./compiler").create_compiler();
 var path = require("path");
 var utils = require("./utils");
-var colored = utils.safe_colored;
+var colored = utils.colored;
 
 var WARN = 1,
   ERROR = 2;
