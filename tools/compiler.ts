@@ -9,7 +9,7 @@
 // export the compiler's symbols safely.
 
 import { join, relative } from "path";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync as readfile, writeFileSync as writefile } from "fs";
 import { createContext, runInContext } from "vm";
 import { pathExists, sha1sum } from "./utils";
 
@@ -18,11 +18,11 @@ type Compiler = any; // for now
 export default function createCompiler(): Compiler {
   const compiler_exports: Compiler = {};
   const compiler_context = createContext({
-    console: console,
-    readfile: readFileSync,
-    writefile: writeFileSync,
-    sha1sum: sha1sum,
-    require: require,
+    console,
+    readfile,
+    writefile,
+    sha1sum,
+    require,
     exports: compiler_exports,
   });
 
@@ -32,7 +32,7 @@ export default function createCompiler(): Compiler {
     compiler_dir = join(base, "release");
   }
   const compiler_file = join(compiler_dir, "compiler.js");
-  const compilerjs = readFileSync(compiler_file, "utf-8");
+  const compilerjs = readfile(compiler_file, "utf-8");
   runInContext(compilerjs, compiler_context, relative(base, compiler_file));
   return compiler_exports;
 }
