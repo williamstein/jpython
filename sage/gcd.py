@@ -14,3 +14,6 @@ def gcd(a, b):
         a = b
         b = c
     return a
+
+if __name__ == "__main__":
+    print("gcd(18,15) = ", gcd(18,15))

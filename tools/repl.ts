@@ -2,7 +2,7 @@
  * Copyright (C) 2021 William Stein <wstein@sagemath.com>
  * Copyright (C) 2015 Kovid Goyal <kovid at kovidgoyal.net>
  *
- * Distributed under terms of the BSD license.
+ * Distributed under terms of the BSD license
  */
 
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
@@ -10,8 +10,8 @@ import { join } from "path";
 import { runInThisContext } from "vm";
 import { getImportDirs, colored, pathExists } from "./utils";
 import completelib from "./completer";
-import createCompiler from "./compiler";
 import { clearLine, createInterface } from "readline";
+import createCompiler from "./compiler";
 
 const JPython = createCompiler();
 

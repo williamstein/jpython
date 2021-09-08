@@ -1,205 +1,215 @@
 /*
- * compile.js
+ * Copyright (C) 2021 William Stein <wstein@sagemath.com>
  * Copyright (C) 2015 Kovid Goyal <kovid at kovidgoyal.net>
  *
- * Distributed under terms of the BSD license.
+ * Distributed under terms of the BSD license
  */
-"use strict"; /*jshint node:true */
 
-var fs = require("fs");
-var path = require("path");
-var vm = require("vm");
-var RapydScript = require("./compiler").default();
-var utils = require("./utils");
+import { dirname, join, normalize, resolve } from "path";
+import { mkdirSync, writeFileSync, readFileSync } from "fs";
+import { readFile } from "fs/promises";
+import { runInThisContext } from "vm";
+import { getImportDirs, once } from "./utils";
+import createCompiler from "./compiler";
 
-function read_whole_file(filename, cb) {
-  if (!filename) {
-    var chunks = [];
-    process.stdin.setEncoding("utf-8");
-    process.stdin
-      .on("data", function (chunk) {
-        chunks.push(chunk);
-      })
-      .on("end", function () {
-        cb(null, chunks.join(""));
-      });
-    process.openStdin();
-  } else {
-    fs.readFile(filename, "utf-8", cb);
+const JPython = createCompiler();
+
+// TODO
+type Parsed = any;
+
+// Async because also capable of reading to EOF from stdin.
+async function readWholeFile(filename?: string): Promise<string> {
+  if (filename) {
+    return (await readFile(filename)).toString();
   }
+
+  const chunks: string[] = [];
+  process.stdin.setEncoding("utf-8");
+  process.stdin.on("data", (data) => {
+    chunks.push(data.toString());
+  });
+  process.openStdin();
+  await once(process.stdin, "end");
+  return chunks.join("");
 }
 
-function makedirs(dir) {
-  try {
-    fs.mkdirSync(dir);
-  } catch (e) {
-    if (e.code == "EEXIST") return;
-    if (e.code == "ENOENT") {
-      makedirs(path.dirname(dir));
-      fs.mkdirSync(dir);
-    }
-    throw e;
-  }
-}
-
-function process_cache_dir(dir) {
-  dir = path.resolve(path.normalize(dir));
-  makedirs(dir);
+function process_cache_dir(dir: string): string {
+  dir = resolve(normalize(dir));
+  mkdirSync(dir, { recursive: true });
   return dir;
 }
 
-module.exports = function (start_time, argv, base_path, src_path, lib_path) {
+interface OutputOptions {
+  beautify?: boolean;
+  private_scope?: boolean;
+  omit_baselib?: boolean;
+  keep_docstrings?: boolean;
+  discard_asserts?: boolean;
+  module_cache_dir?: string;
+  comments?: Function | boolean;
+  baselib_plain?: string;
+}
+
+export default async function Compile({
+  argv,
+  src_path,
+  lib_path,
+}: {
+  argv: {
+    cache_dir?: string;
+    bare?: boolean;
+    omit_baselib?: boolean;
+    keep_docstrings?: boolean;
+    discard_asserts?: boolean;
+    files: string[];
+    import_path: string;
+    output?: string;
+    execute?: boolean;
+    stats?: boolean;
+    filename_for_stdin?: string;
+    comments?: string;
+  };
+  src_path: string;
+  lib_path: string;
+}): Promise<void> {
   // configure settings for the output
-  var cache_dir = argv.cache_dir ? process_cache_dir(argv.cache_dir) : "";
-  var OUTPUT_OPTIONS = {
+  const module_cache_dir = argv.cache_dir
+    ? process_cache_dir(argv.cache_dir)
+    : "";
+  const outputOptions = {
     beautify: true,
     private_scope: !argv.bare,
     omit_baselib: argv.omit_baselib,
     keep_docstrings: argv.keep_docstrings,
     discard_asserts: argv.discard_asserts,
-    module_cache_dir: cache_dir,
-  };
+    module_cache_dir,
+  } as OutputOptions;
 
-  var files = argv.files.slice();
-  var STATS = {},
-    TOPLEVEL;
-  var num_of_files = files.length || 1;
+  const files: string[] = argv.files.slice();
+  const stats: { [name: string]: number } = {};
+  const count = files.length || 1;
 
-  function parse_file(code, file, toplevel) {
-    return RapydScript.parse(code, {
-      filename: file,
-      toplevel: toplevel,
-      basedir: file !== "<stdin>" ? path.dirname(file) : undefined,
-      libdir: path.join(src_path, "lib"),
-      import_dirs: utils.getImportDirs(argv.import_path),
+  function parseFile(code: string, filename: string): Parsed {
+    return JPython.parse(code, {
+      filename,
+      basedir: filename !== "<stdin>" ? dirname(filename) : undefined,
+      libdir: join(src_path, "lib"),
+      import_dirs: getImportDirs(argv.import_path),
       discard_asserts: argv.discard_asserts,
-      module_cache_dir: cache_dir,
+      module_cache_dir,
     });
   }
 
-  function write_output(output) {
+  function writeOutput(output) {
     if (argv.output) {
-      // Node's filesystem module cannot write directly to /dev/stdout
-      if (argv.output == "/dev/stdout") console.log(output);
-      else if (argv.output == "/dev/stderr") console.error(output);
-      else fs.writeFileSync(argv.output, output, "utf8");
+      if (argv.output == "/dev/stdout") {
+        // Node's filesystem module doesn't write directly to /dev/stdout
+        console.log(output);
+      } else if (argv.output == "/dev/stderr") {
+        console.error(output);
+      } else {
+        writeFileSync(argv.output, output, "utf8");
+      }
     } else if (!argv.execute) {
       console.log(output);
     }
     if (argv.execute) {
       global.__require__ = require;
-      global.require = (name) => __require__(process.cwd() + '/' + name)
-      vm.runInThisContext(output);
+      // @ts-ignore
+      global.require = (name) => __require__(process.cwd() + "/" + name);
+      runInThisContext(output);
     }
   }
 
-  function time_it(name, cont) {
+  function timeIt(name: string, f: () => void): void {
     var t1 = new Date().getTime();
-    var ret = cont();
+    f();
     if (argv.stats) {
       var spent = new Date().getTime() - t1;
-      if (STATS[name]) STATS[name] += spent;
-      else STATS[name] = spent;
+      if (stats[name]) {
+        stats[name] += spent;
+      } else {
+        stats[name] = spent;
+      }
     }
-    return ret;
   }
 
-  function compile_single_file(err, code) {
-    var output;
-    if (err) {
-      console.error("ERROR: can't read file: " + files[0]);
-      process.exit(1);
-    }
-    time_it("parse", function () {
-      var file = files[0] || argv.filename_for_stdin || "<stdin>";
+  async function compileSingleFile(code: string): Promise<void> {
+    let topLevel;
+    timeIt("parse", () => {
+      const filename = files[0] || argv.filename_for_stdin || "<stdin>";
       try {
-        TOPLEVEL = parse_file(code, file, TOPLEVEL);
-      } catch (e) {
-        if (!(e instanceof RapydScript.SyntaxError)) throw e;
-        console.error(e.toString());
+        topLevel = parseFile(code, filename);
+      } catch (err) {
+        if (!(err instanceof JPython.SyntaxError)) {
+          throw err;
+        }
+        console.error(err.toString());
         process.exit(1);
       }
     });
 
+    let output;
     try {
-      output = new RapydScript.OutputStream(OUTPUT_OPTIONS);
-    } catch (ex) {
-      if (ex instanceof RapydScript.DefaultsError) {
-        console.error(ex.message);
+      output = new JPython.OutputStream(outputOptions);
+    } catch (err) {
+      if (err instanceof JPython.DefaultsError) {
+        console.error(err.message);
         process.exit(1);
       }
-      throw ex;
+      throw err;
     }
 
-    time_it("generate", function () {
-      TOPLEVEL.print(output);
+    timeIt("generate", () => {
+      topLevel.print(output);
     });
 
     output = output.get();
-
-    write_output(output);
-
-    files = files.slice(1);
-    if (files.length) {
-      setImmediate(read_whole_file, files[0], compile_single_file);
-      return;
-    }
-    if (argv.stats) {
-      console.error(
-        RapydScript.string_template(
-          "Timing information (compressed {count} files):",
-          {
-            count: num_of_files,
-          }
-        )
-      );
-      for (var i in STATS)
-        if (Object.prototype.hasOwnProperty.call(STATS, i)) {
-          console.error(
-            RapydScript.string_template("- {name}: {time}s", {
-              name: i,
-              time: (STATS[i] / 1000).toFixed(3),
-            })
-          );
-        }
-    }
+    writeOutput(output);
   }
 
   if (argv.comments) {
     if (/^\//.test(argv.comments)) {
-      OUTPUT_OPTIONS.comments = new Function("return(" + argv.comments + ")")(); // jshint ignore:line
+      outputOptions.comments = new Function("return(" + argv.comments + ")")();
     } else if (argv.comments == "all") {
-      OUTPUT_OPTIONS.comments = true;
+      outputOptions.comments = true;
     } else {
-      OUTPUT_OPTIONS.comments = function (node, comment) {
-        var text = comment.value;
-        var type = comment.type;
+      outputOptions.comments = (_, comment) => {
+        const { value } = comment;
+        const { type } = comment;
         if (type == "comment2") {
           // multiline comment
-          return /@preserve|@license|@cc_on/i.test(text);
+          return /@preserve|@license|@cc_on/i.test(value);
         }
       };
     }
   }
 
   if (!argv.omit_baselib) {
-    var which = OUTPUT_OPTIONS.beautify ? "pretty" : "ugly";
-    OUTPUT_OPTIONS.baselib_plain = fs.readFileSync(
-      path.join(lib_path, "baselib-plain-" + which + ".js"),
+    outputOptions.baselib_plain = readFileSync(
+      join(lib_path, "baselib-plain-pretty.js"),
       "utf-8"
     );
   }
 
-  if (
-    files.filter(function (el) {
-      return el == "-";
-    }).length > 1
-  ) {
+  if (files.filter((el) => el == "-").length > 1) {
     console.error(
-      "ERROR: Can read a single file from STDIN (two or more dashes specified)"
+      "ERROR: Can only read a single file from STDIN (two or more dashes specified)"
     );
     process.exit(1);
   }
 
-  setImmediate(read_whole_file, files[0], compile_single_file);
-};
+  if (files.length > 0) {
+    for (const filename of files) {
+      await compileSingleFile(await readWholeFile(filename));
+    }
+  } else {
+    await compileSingleFile(await readWholeFile());
+  }
+
+  if (argv.stats) {
+    console.error(`Timing information (compressed ${count} files):`);
+    for (const name in stats)
+      console.error(`- ${name}: ${(stats[name] / 1000).toFixed(3)}s`);
+  }
+}

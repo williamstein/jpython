@@ -8,6 +8,8 @@
 import { statSync } from "fs";
 import { delimiter } from "path";
 import { createHash } from "crypto";
+import { EventEmitter } from "events";
+import { promisify } from "util";
 
 export const comment_contents =
   /\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)[ \t]*\*\//;
@@ -151,3 +153,15 @@ export function sha1sum(data) {
   return h.digest("hex");
 }
 
+export async function once(obj: EventEmitter, event: string): Promise<any> {
+  if (!(obj instanceof EventEmitter)) {
+    // just in case typescript doesn't catch something:
+    throw Error("obj must be an EventEmitter");
+  }
+  function wait(cb: Function): void {
+    obj.once(event, (...args) => {
+      cb(undefined, args);
+    });
+  }
+  return await promisify(wait)();
+}

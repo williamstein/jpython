@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// vim:ft=javascript:ts=4:et
 
 "use strict";
 
@@ -21,7 +20,6 @@ if (!utils.generators_available()) {
     });
 } else {
 
-    var start_time = new Date().getTime();
     var path = require('path');
 
     var argv = load('cli').argv;
@@ -56,6 +54,6 @@ if (!utils.generators_available()) {
         load('msgfmt').cli(argv, base_path, src_path, lib_path);
     } else
     {
-        load('compile')(start_time, argv, base_path, src_path, lib_path);
+        load('compile').default({argv, src_path, lib_path});
     }
 }

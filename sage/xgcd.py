@@ -33,3 +33,8 @@ def inverse_mod(a, N):
     if b < 0:
         b += N
     return b
+
+
+if __name__ == "__main__":
+    print("inverse_mod(7,15) = ", inverse_mod(7,15))
+    bench_xgcd()
