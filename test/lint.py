@@ -59,6 +59,9 @@ ok_test('def f():\n a = 1; a += 1')
 # Unused bindings
 err_test('def f():\n a=1', 'unused-local', 2, 'a')
 err_test('def f():\n def a():\n  pass', 'unused-local', 2, 'a')
+# But vars starting with _ are OK.
+ok_test("def f():\n _=5")
+ok_test("def f():\n _foo=5")
 
 # Undefined references
 err_test('f()', 'undef', 1, 'f')

@@ -7,6 +7,7 @@
 
 import { statSync } from "fs";
 import { delimiter } from "path";
+import { createHash } from "crypto";
 
 export const comment_contents =
   /\/\*!?(?:\@preserve)?[ \t]*(?:\r\n|\n)([\s\S]*?)(?:\r\n|\n)[ \t]*\*\//;
@@ -143,3 +144,10 @@ export function getImportDirs(paths_string?: string, ignore_env?: boolean) {
   }
   return paths;
 }
+
+export function sha1sum(data) {
+  var h = createHash("sha1");
+  h.update(data);
+  return h.digest("hex");
+}
+

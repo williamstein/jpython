@@ -22,9 +22,7 @@ The way the compiler works, given some JPython source code:
   (list/set/dict) string functions such as `str.format()`, etc. The baselib
   is automatically inserted into the start of the output JavaScript.
 
-The JPython standard library can be found in `src/lib`. The various tools,
-such as the linter, gettext support, the REPL, etc. are in the `tools`
-directory.
+The JPython standard library can be found in `src/lib`. The various tools,such as the the REPL, etc. are in the `tools`directory.
 
 ## Tests
 

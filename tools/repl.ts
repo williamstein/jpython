@@ -10,10 +10,10 @@ import { join } from "path";
 import { runInThisContext } from "vm";
 import { getImportDirs, colored, pathExists } from "./utils";
 import completelib from "./completer";
-import { create_compiler } from "./compiler";
+import createCompiler from "./compiler";
 import { clearLine, createInterface } from "readline";
 
-const JPython = create_compiler();
+const JPython = createCompiler();
 
 const DEFAULT_HISTORY_SIZE = 1000;
 const HOME =

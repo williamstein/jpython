@@ -7,9 +7,11 @@
 "use strict"; /*jshint node:true */
 var path = require("path");
 var fs = require("fs");
-var JPython = require("./compiler").create_compiler();
+import createCompiler from "./compiler";
 var utils = require("./utils");
 var colored = utils.colored;
+
+const JPython = createCompiler();
 
 module.exports = function (argv, base_path, src_path, lib_path) {
   // run all tests and exit

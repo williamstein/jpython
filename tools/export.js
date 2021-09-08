@@ -231,16 +231,6 @@ function init_repl(options) {
   return repl(options);
 }
 
-function gettext_parse(catalog, code, filename) {
-  g = vrequire("tools/gettext.js");
-  g.gettext(catalog, code, filename);
-}
-
-function gettext_output(catalog, options, write) {
-  g = vrequire("tools/gettext.js");
-  g.write_output(catalog, options, write);
-}
-
 function msgfmt(data, options) {
   m = vrequire("tools/msgfmt.js");
   return m.build(data, options);
@@ -256,8 +246,6 @@ if (typeof exports === "object") {
   exports.create_embedded_compiler = create_embedded_compiler;
   exports.web_repl = web_repl;
   exports.init_repl = init_repl;
-  exports.gettext_parse = gettext_parse;
-  exports.gettext_output = gettext_output;
   exports.msgfmt = msgfmt;
   exports.rs_version = rs_version;
   exports.file_data = data;

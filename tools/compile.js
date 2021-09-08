@@ -9,7 +9,7 @@
 var fs = require("fs");
 var path = require("path");
 var vm = require("vm");
-var RapydScript = require("./compiler").create_compiler();
+var RapydScript = require("./compiler").default();
 var utils = require("./utils");
 
 function read_whole_file(filename, cb) {
