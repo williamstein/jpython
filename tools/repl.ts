@@ -8,12 +8,16 @@
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { runInThisContext } from "vm";
-import { getImportDirs, colored, pathExists } from "./utils";
-import completelib from "./completer";
+import {
+  getImportDirs,
+  colored,
+  importPath,
+  libraryPath,
+  pathExists,
+} from "./utils";
+import Completer from "./completer";
 import { clearLine, createInterface } from "readline";
 import createCompiler from "./compiler";
-
-const JPython = createCompiler();
 
 const DEFAULT_HISTORY_SIZE = 1000;
 const HOME =
@@ -27,7 +31,7 @@ const CACHEDIR = process.env.XDG_CACHE_HOME
   ? expandUser(process.env.XDG_CACHE_HOME)
   : join(HOME, ".cache");
 
-interface Options {
+export interface Options {
   input;
   output;
   show_js: boolean;
@@ -37,8 +41,7 @@ interface Options {
   terminal: boolean;
   histfile: string;
   historySize: number;
-  impPath: string;
-  libPath: string;
+  mockReadline?: Function; // for mocking readline (for testing only)
 }
 
 function replDefaults(options: Partial<Options>): Options {
@@ -71,12 +74,6 @@ function replDefaults(options: Partial<Options>): Options {
     options.histfile = join(CACHE, "history");
   }
   options.historySize = options.historySize ?? DEFAULT_HISTORY_SIZE;
-  if (options.impPath == null) {
-    throw Error("impPath must be specified");
-  }
-  if (options.libPath == null) {
-    throw Error("libPath must be specified");
-  }
   return options as Options;
 }
 
@@ -105,11 +102,11 @@ function writeHistory(options: Options, history: string[]): void {
   }
 }
 
-function createReadlineInterface(options: Options) {
+function createReadlineInterface(options: Options, JPython) {
   // See https://nodejs.org/api/readline.html#readline_readline_createinterface_options
-  const completer = completelib(JPython, options);
+  const completer = Completer(JPython);
   const history = options.terminal ? readHistory(options) : [];
-  const readline = createInterface({
+  const readline = (options.mockReadline ?? createInterface)({
     input: options.input,
     output: options.output,
     completer,
@@ -125,9 +122,13 @@ function createReadlineInterface(options: Options) {
 
 export default function Repl(options0: Partial<Options>) {
   const options = replDefaults(options0);
-  const readline = createReadlineInterface(options);
-  const ps1 = colored(options.ps1, "blue");
-  const ps2 = colored(options.ps2, "green");
+  const JPython = createCompiler({ console: options.console });
+  const readline = createReadlineInterface(options, JPython);
+  const colorize = options.mockReadline
+    ? (string, _color?, _bold?) => string
+    : colored;
+  const ps1 = colorize(options.ps1, "blue");
+  const ps2 = colorize(options.ps2, "green");
 
   initContext();
 
@@ -138,7 +139,7 @@ export default function Repl(options0: Partial<Options>) {
   var importDirs = getImportDirs();
 
   options.console.log(
-    colored(
+    colorize(
       `Welcome to JPython.  Using Node.js ${process.version}.`,
       "green",
       true
@@ -148,7 +149,7 @@ export default function Repl(options0: Partial<Options>) {
   /*
   if (options.show_js) {
     options.console.log(
-      colored(
+      colorize(
         "Use show_js=False to stop the REPL from showing compiled JavaScript.",
         "green",
         true
@@ -156,7 +157,7 @@ export default function Repl(options0: Partial<Options>) {
     );
   } else {
     options.console.log(
-      colored(
+      colorize(
         "Use show_js=True to have the REPL show compiled JavaScript before executing it.",
         "green",
         true
@@ -172,10 +173,7 @@ export default function Repl(options0: Partial<Options>) {
       beautify: true,
       keep_docstrings: true,
       baselib_plain: keepBaselib
-        ? readFileSync(
-            join(options.libPath, "baselib-plain-pretty.js"),
-            "utf-8"
-          )
+        ? readFileSync(join(libraryPath, "baselib-plain-pretty.js"), "utf-8")
         : undefined,
     });
     ast.print(output);
@@ -220,15 +218,16 @@ export default function Repl(options0: Partial<Options>) {
   function runJS(js: string): void {
     if (runInThisContext("show_js")) {
       options.console.log(
-        colored("---------- Compiled JavaScript ---------", "green", true)
+        colorize("---------- Compiled JavaScript ---------", "green", true)
       );
       options.console.log(js);
       options.console.log(
-        colored("---------- Running JavaScript ---------", "green", true)
+        colorize("---------- Running JavaScript ---------", "green", true)
       );
     }
     let result;
     try {
+      global.console = options.console;
       result = runInThisContext(js);
     } catch (err) {
       if (err.stack) {
@@ -257,7 +256,7 @@ export default function Repl(options0: Partial<Options>) {
       toplevel = JPython.parse(source, {
         filename: "<repl>",
         basedir: process.cwd(),
-        libdir: options.impPath,
+        libdir: importPath,
         import_dirs: importDirs,
         classes,
         scoped_flags,

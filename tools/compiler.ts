@@ -13,12 +13,16 @@ import { readFileSync as readfile, writeFileSync as writefile } from "fs";
 import { createContext, runInContext } from "vm";
 import { pathExists, sha1sum } from "./utils";
 
-type Compiler = any; // for now
+export type Compiler = any; // for now
 
-export default function createCompiler(): Compiler {
+interface Options {
+  console?;
+}
+
+export default function createCompiler(options: Options = {}): Compiler {
   const compiler_exports: Compiler = {};
   const compiler_context = createContext({
-    console,
+    console: options.console ?? console,
     readfile,
     writefile,
     sha1sum,
