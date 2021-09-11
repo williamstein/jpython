@@ -16,19 +16,19 @@ def as_hex(code, sz):
 
 
 def to_ascii(str_, identifier):
-    return str_.replace(/[\u0080-\uffff]/g, def(ch):
+    def f(ch):
         code = ch.charCodeAt(0).toString(16)
         if code.length <= 2 and not identifier:
             return "\\x" + as_hex(code, 2)
         else:
             return '\\u' + as_hex(code, 4)
 
-    )
+    return str_.replace(/[\u0080-\uffff]/g, f)
 
 def encode_string(str_):
-    return JSON.stringify(str_).replace(DANGEROUS, def(a):
-            return '\\u' + as_hex(a.charCodeAt(0), 4)
-    )
+    def f(a): return '\\u' + as_hex(a.charCodeAt(0), 4)
+    return JSON.stringify(str_).replace(DANGEROUS, f)
+
 require_semi_colon_chars = make_predicate("( [ + * / - , .")
 
 output_stream_defaults = {

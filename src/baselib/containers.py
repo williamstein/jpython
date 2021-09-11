@@ -7,6 +7,8 @@
 def ρσ_equals(a, b):
     if a is b:
         return True
+    if jstype(a) is 'number' and jstype(b) is 'number':  # important special case for speed
+        return a is b
     if a and jstype(a.__eq__) is 'function':
         return a.__eq__(b)
     if b and jstype(b.__eq__) is 'function':
