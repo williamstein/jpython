@@ -1,11 +1,12 @@
 /*
- * test.js
+ * Copyright (C) 2021 William Stein <wstein@sagemath.com>
  * Copyright (C) 2015 Kovid Goyal <kovid at kovidgoyal.net>
  *
- * Distributed under terms of the BSD license.
+ * Distributed under terms of the BSD license
  */
-"use strict"; /*jshint node:true */
-var path = require("path");
+
+import { join } from "path";
+
 var fs = require("fs");
 import createCompiler from "./compiler";
 var utils = require("./utils");
@@ -19,12 +20,12 @@ module.exports = function (argv, base_path, src_path, lib_path) {
   var os = require("os");
   var failures = [];
   var vm = require("vm");
-  var compiler_dir = path.join(base_path, "dev");
-  if (!utils.pathExists(path.join(compiler_dir, "compiler.js")))
-    compiler_dir = path.join(base_path, "release");
-  var test_path = path.join(base_path, "test");
+  var compiler_dir = join(base_path, "dev");
+  if (!utils.pathExists(join(compiler_dir, "compiler.js")))
+    compiler_dir = join(base_path, "release");
+  var test_path = join(base_path, "test");
   var baselib = fs.readFileSync(
-    path.join(lib_path, "baselib-plain-pretty.js"),
+    join(lib_path, "baselib-plain-pretty.js"),
     "utf-8"
   );
   var files;
@@ -70,14 +71,14 @@ module.exports = function (argv, base_path, src_path, lib_path) {
   files.forEach(function (file) {
     const t0 = new Date();
     var ast;
-    var filepath = path.join(test_path, file);
+    var filepath = join(test_path, file);
     var failed = false;
     try {
       ast = JPython.parse(fs.readFileSync(filepath, "utf-8"), {
         filename: file,
         toplevel: ast,
         basedir: test_path,
-        libdir: path.join(src_path, "lib"),
+        libdir: join(src_path, "lib"),
       });
     } catch (e) {
       failures.push(file);
@@ -95,7 +96,7 @@ module.exports = function (argv, base_path, src_path, lib_path) {
     ast.print(output);
 
     // test that output performs correct JS operations
-    var jsfile = path.join(os.tmpdir(), file + ".js");
+    var jsfile = join(os.tmpdir(), file + ".js");
     var code = output.toString();
     try {
       vm.runInNewContext(
